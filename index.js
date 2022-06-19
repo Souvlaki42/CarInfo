@@ -9,7 +9,7 @@ const { generateRandomPhrase } = require("./config/auth");
 
 const app = express();
 const port = 80;
-const database = "mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb";
+const database = "mongodb://shortener.139-162-172-211.ip.linodeusercontent.com:27017";
 
 require("./config/passport")(passport);
 
