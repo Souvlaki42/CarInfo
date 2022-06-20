@@ -8,12 +8,11 @@ const passport = require("passport");
 const { generateRandomPhrase } = require("./config/auth");
 
 const app = express();
-const port = 80;
-const database = "mongodb://shortener.139-162-172-211.ip.linodeusercontent.com:27017";
 
+require("dotenv").config({path: "./config/.env"});
 require("./config/passport")(passport);
 
-mongoose.connect(database, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
+mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
 
 app.use(expressLayouts);
 app.set("view engine", "ejs");
@@ -42,4 +41,4 @@ app.use((req, res, next) => {
 
 app.use("/", require("./config/routes"));
 
-app.listen(port, console.log(`Server Started - ${port}!`));
+app.listen(process.env.PORT, console.log(`Server Started - ${process.env.PORT}!`));
