@@ -5,11 +5,11 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 const {ensureAuthenticated, ensureNotAuthenticated} = require("./auth");
 const User = require("../models/userAuth");
-const ShortUrl = require("../models/shortUrl");
+const Cars = require("../models/newCar");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
-	const shortUrls = await ShortUrl.find().sort({ createdAt: "desc" });
-	res.render("index", {shortUrls: shortUrls, user: req.user});
+	const cars = await Cars.find().sort({ createdAt: "desc" });
+	res.render("index", {cars: cars, user: req.user});
 });
 
 router.get("/register", ensureNotAuthenticated, (req, res) => {
@@ -75,9 +75,9 @@ router.get('/logout', ensureAuthenticated, function(req, res, next) {
 });
 
 router.delete("/account", ensureAuthenticated, async function(req, res, next){
-	const shortUrls = await ShortUrl.find();
-	shortUrls.filter(shortUrl => shortUrl.email === req.user.email).forEach(shortUrl => {
-		ShortUrl.deleteOne({short: shortUrl.short}, function(err) {
+	const cars = await Cars.find();
+	cars.filter(car => car.email === req.user.email).forEach(car => {
+		Cars.deleteOne({bid: car.bid}, function(err) {
 			if (err) {return next(err);}
 		});
 	});
@@ -89,29 +89,20 @@ router.delete("/account", ensureAuthenticated, async function(req, res, next){
 	});
 });
 
-router.post("/shorturls", ensureAuthenticated , async (req, res) => {
-	await ShortUrl.create({long: req.body.longUrl, email: req.user.email});
-	res.redirect("/");
+router.post("/search", ensureAuthenticated , async (req, res) => {
+	const select = req.body.selector;
+    let value = select.options[select.selectedIndex].value;
+    console.log(value);
 });
 
-router.delete("/:shortUrl", ensureAuthenticated, async function(req, res, next){
-    const shortUrl = await ShortUrl.findOne({short: req.params.shortUrl});
-    if (shortUrl == null) return res.sendStatus(404);
+router.delete("/:bid", ensureAuthenticated, async function(req, res, next){
+    const car = await Cars.findOne({bid: req.params.bid});
+    if (car == null) return res.sendStatus(404);
 
-    ShortUrl.deleteOne({short: req.params.shortUrl}, function(err) {
+    Cars.deleteOne({bid: req.params.bid}, function(err) {
         if (err) {return next(err);}
         res.redirect("/");
     });
-});
-
-router.get("/:shortUrl", async (req, res) => {
-	const shortUrl = await ShortUrl.findOne({short: req.params.shortUrl});
-	if (shortUrl == null) return res.sendStatus(404);
-
-	shortUrl.clicks++;
-	shortUrl.save();
-
-	res.redirect(shortUrl.long);
 });
 
 module.exports = router;
