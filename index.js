@@ -1,12 +1,11 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const session = require("express-session");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
-const session = require("express-session");
 const passport = require("passport");
-const { generateRandomPhrase } = require("./config/auth");
-
 const app = express();
 
 require("dotenv").config({path: "./config/.env"});
@@ -18,7 +17,7 @@ app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride("_method"));
-app.use(session({secret: generateRandomPhrase(), resave: true, saveUninitialized: true}));
+app.use(session({secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

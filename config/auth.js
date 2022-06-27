@@ -1,3 +1,5 @@
+const Cars = require("../models/newCar");
+
 module.exports = {
     ensureAuthenticated: function(req, res, next) {
         if(req.isAuthenticated()) {
@@ -14,20 +16,7 @@ module.exports = {
         res.redirect("/");
     },
 
-    generateRandomPhrase: function() {
-        let characters = [];
-        let random = "";
-        const charNumber = 10;
+    returnSearch: async function(req, res, next, cars, user, search, errors, no) {
 
-        for (let i = 32; i < 127; i++){
-            characters.push( String.fromCharCode(i));
-        };
-
-        for (let i = 0; i < charNumber; i++) {
-            let newChar = characters[Math.floor(Math.random() * characters.length)];
-            random = random + newChar;
-        };
-
-        return random;
     }
 }

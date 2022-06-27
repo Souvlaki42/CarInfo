@@ -1,12 +1,9 @@
 {
-  "name": "souvlakishortener",
+  "name": "carinfo",
   "version": "1.0.0",
-  "description": "short your long url in less than five seconds",
+  "description": "Get down and see yor car info in less than five seconds",
   "main": "index.js",
-  "scripts": {
-    "start": "node .",
-    "dev": "nodemon index.js"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,8 +22,5 @@
     "nodemailer": "^6.7.5",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.16"
   }
 }

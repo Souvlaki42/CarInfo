@@ -1,8 +1,9 @@
-<h1>Welcome <%= user.username %>!<br><a href="/add?_method=POST" class="btn btn-primary ml-2">Add Car</a><a href="/logout" class="btn btn-info ml-2">Logout</a><a href="/account?_method=DELETE" class="btn btn-danger ml-2">Delete Account</a></h1>
+<h1>Welcome <%= user.username %>!<br><a href="/new" class="btn btn-primary ml-2">Add Car</a><a href="/logout" class="btn btn-info ml-2">Logout</a><a href="/account?_method=DELETE" class="btn btn-danger ml-2">Delete Account</a></h1>
+<%- include("./partials/messages") %>
 <form action="/search" method="post" class="my-4 form-inline">
-	<input required type="text" name="query" id="query" value="" class="form-control col mr-2">
+	<input type="text" name="query" id="query" value="<%= typeof search != "undefined" ? search : "" %>" class="form-control col mr-2">
     <select class="form-select mr-2" aria-label="Select Type" name="selector">
-        <option selected>Select Type</option>
+        <option value="0" selected>Select Type</option>
         <option value="1">Engine Number</option>
         <option value="2">Frame</option>
         <option value="3">License Plate</option>
@@ -23,10 +24,10 @@
 	<tbody>
 		<% cars.filter(car => car.user === user.email).forEach(car => { %>
 			<tr>
-				<td>ca<%= car.engineNumber %></td>
+				<td><%= car.engineNumber %></td>
 				<td><%= car.frame %></td>
 				<td><%= car.licensePlate %></td>
-                <td><%= car.date.toLocaleDateString() %></td>
+                <td><%= car.date %></td>
                 <td><%= car.price %></td>
                 <td><a class="btn btn-danger ml-4" href="/<%= car.bid %>/?_method=DELETE">Delete</a></td>
 			</tr>

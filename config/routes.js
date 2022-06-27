@@ -9,7 +9,7 @@ const Cars = require("../models/newCar");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
 	const cars = await Cars.find().sort({ createdAt: "desc" });
-	res.render("index", {cars: cars, user: req.user});
+    res.render("index", {cars: cars, user: req.user, search: req.body.query});
 });
 
 router.get("/register", ensureNotAuthenticated, (req, res) => {
@@ -74,6 +74,35 @@ router.get('/logout', ensureAuthenticated, function(req, res, next) {
 	});
 });
 
+router.get("/new", ensureAuthenticated, (req, res) => {
+    res.render("new");
+});
+
+router.post("/new", async (req, res) => {
+    const {engine_number, frame, license_plate, date, price} = req.body;
+    let errors = [];
+
+    if (!engine_number || !frame || !license_plate || !date){
+        errors.push({msg: "Please fill in all fields"});
+    }
+
+    if (errors.length > 0){
+		res.render("new", {errors, engine_number, frame, license_plate, date, price});
+	} else{
+        let car = new Cars({
+            engineNumber: engine_number,
+            frame: frame,
+            licensePlate: license_plate,
+            date: date,
+            price: price || "",
+            user: req.user.email
+        });
+
+        car = await car.save();
+        res.redirect("/");
+    }   
+});
+
 router.delete("/account", ensureAuthenticated, async function(req, res, next){
 	const cars = await Cars.find();
 	cars.filter(car => car.email === req.user.email).forEach(car => {
@@ -90,9 +119,39 @@ router.delete("/account", ensureAuthenticated, async function(req, res, next){
 });
 
 router.post("/search", ensureAuthenticated , async (req, res) => {
-	const select = req.body.selector;
-    let value = select.options[select.selectedIndex].value;
-    console.log(value);
+	let search = req.body.query;
+    let select = req.body.selector;
+    let errors = [];
+    let cars = [];
+
+    if (!search){
+        errors.push({msg: "Please fill the searchbox"});
+    }
+
+    if (select == 0){
+        errors.push({msg: "Please select a type to search"});
+    }
+
+    if (errors.length > 0){
+        cars = await Cars.find().sort({ createdAt: "desc" });
+        res.redirect("/");
+	} else {
+        if (select == "1"){
+            cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.engineNumber.includes(search));
+        }
+        if (select == "2"){
+            cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.frame.includes(search));
+        }
+        if (select == "3"){
+            cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.licensePlate.includes(search));
+        }
+        if (select == "4"){
+            cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.date.includes(search));
+        }
+
+		globalCars = cars;
+        res.redirect("/");
+    }
 });
 
 router.delete("/:bid", ensureAuthenticated, async function(req, res, next){

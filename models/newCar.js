@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const CarSchema = new mongoose.Schema({
-    engineNumber: {type: Number, required: true},
+    engineNumber: {type: String, required: true},
     frame: {type: String, required: true},
     licensePlate: {type: String, required: true},
-    date: {type: Date, required: true},
+    date: {type: String, required: true},
     price: {type: String, required: false},
     createdAt: {type: Date, default: Date.now},
     user: {type: String, required: true},
