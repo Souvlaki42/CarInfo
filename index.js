@@ -3,12 +3,14 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const smws = require("smws");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
 
 require("dotenv").config({path: "./config/.env"});
+// smws.config({defaultLang: "en", languages: ["en","gr"], origin: `http://localhost:${process.env.PORT}`});
 require("./config/passport")(passport);
 
 mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
