@@ -15,7 +15,7 @@
 		<p class="copyright">&copy; Copyright 2022 by <i class="owner">Souvlaki42</i></p>
 		<div>
 			<a href="https://twitter.com/souvlaki42"><i class="bx bxl-twitter social"></i></a>
-			<a href="mailto:souvlaki420@gmail.com"><i class="bx bxl-gmail social"></i></a>
+            <a href="mailto:souvlaki420@gmail.com"><i class="bx bxl-gmail social"></i></a>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -27,6 +27,7 @@
 <style>
 	:root{
 		--second-color: #326ada;
+        --i-link-color: #007bff;
 		--text-color: #172317;
 		--twitter-color: #1da1f2;
 		--gmail-color: #EA4335;
@@ -40,17 +41,23 @@
 		color: var(--text-color);
 	}
 
-    .bx.bx-globe:hover{
-        color: var(--second-color);
+    .i-link{
+		color: var(--text-color);
+        text-decoration: none;
+	}
+
+    .i-link:hover{
+        color: var(--i-link-color);
+        text-decoration: none;
     }
 
 	.bx.bxl-twitter:hover{
 		color: var(--twitter-color);
 	}
 
-	.bx.bxl-gmail:hover{
-		color: var(--gmail-color);
-	}
+    .bx.bxl-gmail:hover{
+        color: var(--gmail-color);
+    }
 
 	.footer{
 		padding: 15px 0;
@@ -62,7 +69,7 @@
 		font-size: 0.938rem;
 	}
     
-    .pass-change{
+    .pass-change {
         transform: translate(-50%, -160%);
         float: right;
         cursor: pointer;
@@ -95,10 +102,10 @@
         const password = document.getElementById("password");
         const button = document.getElementById("togglePass");
 
-        if (button.className == "fas fa-eye"){
-            button.className = "fas fa-eye-slash";
+        if (button.className == "fas fa-eye pass-change"){
+            button.className = "fas fa-eye-slash pass-change";
         } else {
-            button.className = "fas fa-eye";
+            button.className = "fas fa-eye pass-change";
         };
         
         if (password.type === "password"){
@@ -112,10 +119,10 @@
         const password = document.getElementById("password2");
         const button = document.getElementById("togglePass2");
 
-        if (button.className == "fas fa-eye"){
-            button.className = "fas fa-eye-slash";
+        if (button.className == "fas fa-eye pass-change"){
+            button.className = "fas fa-eye-slash pass-change";
         } else {
-            button.className = "fas fa-eye";
+            button.className = "fas fa-eye pass-change";
         };
         
         if (password.type === "password"){
@@ -123,9 +130,5 @@
         } else {
             password.type = "password";
         };
-    };
-
-    function changeLanguage(){
-        
     };
 </script>

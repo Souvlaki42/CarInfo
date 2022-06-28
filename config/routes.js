@@ -9,7 +9,7 @@ const Cars = require("../models/newCar");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
 	const cars = await Cars.find().sort({ createdAt: "desc" });
-    res.render("index", {cars: cars, user: req.user, search: req.body.query});
+    res.render("index", {cars: cars, user: req.user});
 });
 
 router.get("/register", ensureNotAuthenticated, (req, res) => {
@@ -37,7 +37,7 @@ router.post("/register", (req, res) => {
 	}else{
 		User.findOne({email: email}).then(user => {
 			if (user) {
-				errors.push({msg: "Email is alraedy registered"});
+				errors.push({msg: "Email is already registered"});
 				res.render("register", {errors, username, email, password, password2}); 
 			}else{
 				const newUser = new User({username, email, password, token: crypto.randomBytes(64).toString("hex")});
@@ -64,6 +64,47 @@ router.post("/login", (req, res, next) => {
 		failureRedirect: "/login",
 		failureFlash: true
 	})(req, res, next);
+});
+
+router.get("/change-password", (req,res) => {
+    res.render("password");
+});
+
+router.post("/change-password", (req, res) => {
+	const { email, password, password2 } = req.body;
+	let errors = [];
+
+	if (!email || !password || !password2){
+		errors.push({msg: "Please fill in all fields"});
+	};
+
+	if (password !== password2){
+		errors.push({msg: "Passwords do not match"});
+	};
+
+	if (password.length < 8){
+		errors.push({msg: "Password should be at least 8 characters"});
+	};
+
+	if (errors.length > 0){
+		res.render("password", {errors, email, password, password2});
+	}else{
+		User.findOne({email: email}).then(user => {
+			if (!user) {
+				errors.push({msg: "Email is not registered"});
+				res.render("password", {errors, email, password, password2}); 
+			}else{
+                bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+					if (err) throw err;
+					user.password = hash;
+					user.save().then(user => {
+						req.flash("success_msg","Your password changed and can log in");
+						res.redirect("/login");
+					}).catch(err => console.log(err));
+				}));
+			};
+		});
+	};
 });
 
 router.get('/logout', ensureAuthenticated, function(req, res, next) {
@@ -118,11 +159,10 @@ router.delete("/account", ensureAuthenticated, async function(req, res, next){
 	});
 });
 
-router.post("/search", ensureAuthenticated , async (req, res) => {
+router.post("/", ensureAuthenticated , async (req, res) => {
 	let search = req.body.query;
     let select = req.body.selector;
     let errors = [];
-    let cars = [];
 
     if (!search){
         errors.push({msg: "Please fill the searchbox"});
@@ -134,7 +174,7 @@ router.post("/search", ensureAuthenticated , async (req, res) => {
 
     if (errors.length > 0){
         cars = await Cars.find().sort({ createdAt: "desc" });
-        res.redirect("/");
+        res.render("index", {cars: cars, user: req.user, search: req.body.query, errors: errors});
 	} else {
         if (select == "1"){
             cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.engineNumber.includes(search));
@@ -148,9 +188,8 @@ router.post("/search", ensureAuthenticated , async (req, res) => {
         if (select == "4"){
             cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.date.includes(search));
         }
-
-		globalCars = cars;
-        res.redirect("/");
+        
+        res.render("index", {cars: cars, user: req.user, search: req.body.query, show_all: process.env.SHOW_ALL});
     }
 });
 
