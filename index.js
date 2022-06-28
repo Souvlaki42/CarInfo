@@ -10,7 +10,6 @@ const passport = require("passport");
 const app = express();
 
 require("dotenv").config({path: "./config/.env"});
-// smws.config({defaultLang: "en", languages: ["en","gr"], origin: `http://localhost:${process.env.PORT}`});
 require("./config/passport")(passport);
 
 mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
