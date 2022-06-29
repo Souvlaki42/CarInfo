@@ -2,10 +2,11 @@ const express = require("express");
 const passport = require("passport");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
+const Cars = require("../models/newCar");
+const User = require("../models/userAuth");
+
 const router = express.Router();
 const {ensureAuthenticated, ensureNotAuthenticated} = require("./auth");
-const User = require("../models/userAuth");
-const Cars = require("../models/newCar");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
 	const cars = await Cars.find().sort({ createdAt: "desc" });
