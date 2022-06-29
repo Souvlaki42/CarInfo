@@ -67,6 +67,33 @@ router.post("/login", (req, res, next) => {
 	})(req, res, next);
 });
 
+router.get("/verify", (req, res) => {
+    res.render("verify", {scope: scope});
+});
+
+router.post("/verify", (req, res) => {
+    const { email } = req.body;
+    let errors = [];
+
+    if (!email){
+        errors.push({msg: "Please fill your email"});
+    }
+
+    if (errors.length > 0){
+        res.render("verify", {errors, email});
+    } else{
+        User.findOne({email: email}).then(user => {
+            if (!user){
+                errors.push({msg: "Email is not registered"});
+                res.render("verify", {errors, email});
+            } else {
+                link = process.env.DOMAIN + "/" + user.token;
+                console.log("Link: " + link);
+            }
+        });
+    }
+});
+
 router.get("/change-password", (req,res) => {
     res.render("password");
 });
