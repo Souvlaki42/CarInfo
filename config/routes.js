@@ -68,7 +68,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/verify", (req, res) => {
-    res.render("verify", {scope: scope});
+    res.render("verify");
 });
 
 router.post("/verify", (req, res) => {
