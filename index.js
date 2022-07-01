@@ -1,11 +1,12 @@
 const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
-const session = require("express-session");
 const mongoose = require("mongoose");
-const crypto = require("crypto");
+const expressLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
+const Translator = require("./config/localize");
+const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const crypto = require("crypto");
 const app = express();
 
 require("dotenv").config({path: "./config/.env"});
@@ -34,6 +35,14 @@ app.use((req, res, next) => {
 		req.method = req.query._method;
 		req.url = req.path;
 	} 
+    next();
+});
+
+app.use((req, res, next) => {
+    const language = req.headers["accept-language"];
+    // console.log(`Language: ${language}`);
+    Translator.setLocale("en");
+    if (language.includes("gr") || language.includes("el")){Translator.setLocale("gr")};
     next();
 });
 

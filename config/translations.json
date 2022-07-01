@@ -1,0 +1,130 @@
+{
+    "Welcome": {
+        "en": "Welcome",
+        "gr": "Καλώς όρισες"
+    },
+    "Add Car": {
+        "en": "Add Car",
+        "gr": "Προσθήκη Αυτοκινήτου"
+    },
+    "Logout": {
+        "en": "Logout",
+        "gr": "Αποσύνδεση"
+    },
+    "Delete Account": {
+        "en": "Delete Account",
+        "gr": "Διαγραφή Λογαριασμού"
+    },
+    "Select Type": {
+        "en": "Select Type",
+        "gr": "Διάλεξε Τύπο"
+    },
+    "Engine Number": {
+        "en": "Engine Number",
+        "gr": "Αριθμός Κινητήρα"
+    },
+    "Frame": {
+        "en": "Frame",
+        "gr": "Πλαίσιο"
+    },
+    "License Plate": {
+        "en": "License Plate",
+        "gr": "Πινακίδα Κυκλοφορίας"
+    },
+    "Date": {
+        "en": "Date",
+        "gr": "Χρονολογία"
+    },
+    "Search": {
+        "en": "Search",
+        "gr": "Αναζήτηση"
+    },
+    "Price": {
+        "en": "Price",
+        "gr": "Τιμή"
+    },
+    "Actions": {
+        "en": "Actions",
+        "gr": "Κινήσεις"
+    },
+    "Please fill in all fields": {
+        "en": "Please fill in all fields",
+        "gr": "Παρακαλώ συμπληρώστε όλα τα πεδία"
+    },
+    "Passwords do not match": {
+        "en": "Passwords do not match",
+        "gr": "Οι κωδικοί δεν ταιριάζουν"
+    },
+    "Password should be at least 8 characters": {
+        "en": "Password should be at least 8 characters",
+        "gr": "Ο κωδικός πρέπει να είναι τουλάχιστον 8 χαρακτήρες"
+    },
+    "Email is already registered": {
+        "en": "Email is already registered",
+        "gr": "Αυτό το email είναι ήδη εγγεγραμμένο"
+    },
+    "You are registered and can log in": {
+        "en": "You are registered and can log in",
+        "gr": "Είσαι εγγεγραμμένος και μπορείς να συνδεθείς"
+    },
+    "You are logged out": {
+        "en": "You are logged out",
+        "gr": "Αποσυνδέθηκες"
+    },
+    "Your account was deleted": {
+        "en": "Your account was deleted",
+        "gr": "Ο λογαριασμός διαγράφτηκε"
+    },
+    "Please fill the searchbox": {
+        "en": "Please fill the searchbox",
+        "gr": "Παρακαλώ σημπλήρωσε την μπάρα αναζήτησης"
+    },
+    "Please select a type to search": {
+        "en": "Please select a type to search",
+        "gr": "Παρακαλώ είλεξε έναν τύπο να ψάξεις"
+    },
+    "That email is not registered": {
+        "en": "That email is not registered",
+        "gr": "Αυτό το email δεν έχει εγγραφεί"
+    },
+    "That email is not verified": {
+        "en": "That email is not verified",
+        "gr": "Αυτό το email δεν έχει επιβεβαιωθεί"
+    },
+    "Username": {
+        "en": "Username",
+        "gr": "Ψευδόνυμο"
+    },
+    "Password": {
+        "en": "Password",
+        "gr": "Κωδικός"
+    },
+    "Password incorrect": {
+        "en": "Password incorrect",
+        "gr": "Λάθος κωδικός"
+    },
+    "Confirm Password": {
+        "en": "Confirm Password",
+        "gr": "Επαλήθευση Κωδικού"
+    },
+    "Register": {
+        "en": "Register",
+        "gr": "Εγγραφή"
+    },
+    "Login": {
+        "en": "Login",
+        "gr": "Σύνδεση"
+    },
+    "Already a member?": {
+        "en": "Already a member?",
+        "gr": "Ήδη μέλος;"
+    },
+    "Not a member?": {
+        "en": "Not a member?",
+        "gr": "Όχι μέλος;"
+    },
+    "Forgot Password?": {
+        "en": "Forgot Password?",
+        "gr": "Ξέχασες τον κωδικό;"
+    }
+}

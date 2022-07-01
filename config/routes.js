@@ -4,17 +4,18 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const Cars = require("../models/newCar");
 const User = require("../models/userAuth");
+const Translator = require("../config/localize");
 
 const router = express.Router();
 const {ensureAuthenticated, ensureNotAuthenticated} = require("./auth");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
 	const cars = await Cars.find().sort({ createdAt: "desc" });
-    res.render("index", {cars: cars, user: req.user});
+    res.render("index", {cars: cars, user: req.user, Translator: Translator});
 });
 
 router.get("/register", ensureNotAuthenticated, (req, res) => {
-	res.render("register");
+	res.render("register", {Translator: Translator});
 });
 
 router.post("/register", (req, res) => {
@@ -22,31 +23,31 @@ router.post("/register", (req, res) => {
 	let errors = [];
 
 	if (!username || !email || !password || !password2){
-		errors.push({msg: "Please fill in all fields"});
+		errors.push({msg: Translator.translate("Please fill in all fields")});
 	};
 
 	if (password !== password2){
-		errors.push({msg: "Passwords do not match"});
+		errors.push({msg: Translator.translate("Passwords do not match")});
 	};
 
 	if (password.length < 8){
-		errors.push({msg: "Password should be at least 8 characters"});
+		errors.push({msg: Translator.translate("Password should be at least 8 characters")});
 	};
 
 	if (errors.length > 0){
-		res.render("register", {errors, username, email, password, password2});
+		res.render("register", {errors, username, email, password, password2, Translator: Translator});
 	}else{
 		User.findOne({email: email}).then(user => {
 			if (user) {
-				errors.push({msg: "Email is already registered"});
-				res.render("register", {errors, username, email, password, password2}); 
+				errors.push({msg: Translator.translate("Email is already registered")});
+				res.render("register", {errors, username, email, password, password2, Translator: Translator}); 
 			}else{
 				const newUser = new User({username, email, password, token: crypto.randomBytes(64).toString("hex")});
 				bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
 					if (err) throw err;
 					newUser.password = hash;
 					newUser.save().then(user => {
-						req.flash("success_msg","You are registered and can log in");
+						req.flash("success_msg", Translator.translate("You are registered and can log in"));
 						res.redirect("/login");
 					}).catch(err => console.log(err));
 				}));
@@ -56,7 +57,7 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/login", ensureNotAuthenticated, (req, res) => {
-	res.render("login");
+	res.render("login", {Translator: Translator});
 }); 
 
 router.post("/login", (req, res, next) => {
@@ -68,7 +69,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/verify", (req, res) => {
-    res.render("verify");
+    res.render("verify", {Τranslator: Translator});
 });
 
 router.post("/verify", (req, res) => {
@@ -80,12 +81,12 @@ router.post("/verify", (req, res) => {
     }
 
     if (errors.length > 0){
-        res.render("verify", {errors, email});
+        res.render("verify", {errors, email, Τranslator: Translator});
     } else{
         User.findOne({email: email}).then(user => {
             if (!user){
                 errors.push({msg: "Email is not registered"});
-                res.render("verify", {errors, email});
+                res.render("verify", {errors, email, Τranslator: Translator});
             } else {
                 link = process.env.DOMAIN + "/" + user.token;
                 console.log("Link: " + link);
@@ -95,7 +96,7 @@ router.post("/verify", (req, res) => {
 });
 
 router.get("/change-password", (req,res) => {
-    res.render("password");
+    res.render("password", {Τranslator: Translator});
 });
 
 router.post("/change-password", (req, res) => {
@@ -103,24 +104,24 @@ router.post("/change-password", (req, res) => {
 	let errors = [];
 
 	if (!email || !password || !password2){
-		errors.push({msg: "Please fill in all fields"});
+		errors.push({msg: Translator.translate("Please fill in all fields")});
 	};
 
 	if (password !== password2){
-		errors.push({msg: "Passwords do not match"});
+		errors.push({msg: Translator.translate("Passwords do not match")});
 	};
 
 	if (password.length < 8){
-		errors.push({msg: "Password should be at least 8 characters"});
+		errors.push({msg: Translator.translate("Password should be at least 8 characters")});
 	};
 
 	if (errors.length > 0){
-		res.render("password", {errors, email, password, password2});
+		res.render("password", {errors, email, password, password2, Τranslator: Translator});
 	}else{
 		User.findOne({email: email}).then(user => {
 			if (!user) {
 				errors.push({msg: "Email is not registered"});
-				res.render("password", {errors, email, password, password2}); 
+				res.render("password", {errors, email, password, password2, Τranslator: Translator}); 
 			}else{
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
 					if (err) throw err;
@@ -135,16 +136,16 @@ router.post("/change-password", (req, res) => {
 	};
 });
 
-router.get('/logout', ensureAuthenticated, function(req, res, next) {
+router.get("/logout", ensureAuthenticated, function(req, res, next) {
 	req.logout(function(err) {
 		if (err) {return next(err);}
-		req.flash("success_msg", "You are logged out");
-	  	res.redirect('/login');
+		req.flash("success_msg", Translator.translate("You are logged out"));
+	  	res.redirect("/login");
 	});
 });
 
 router.get("/new", ensureAuthenticated, (req, res) => {
-    res.render("new");
+    res.render("new", {Τranslator: Translator});
 });
 
 router.post("/new", async (req, res) => {
@@ -152,11 +153,11 @@ router.post("/new", async (req, res) => {
     let errors = [];
 
     if (!engine_number || !frame || !license_plate || !date){
-        errors.push({msg: "Please fill in all fields"});
+        errors.push({msg: Translator.translate("Please fill in all fields")});
     }
 
     if (errors.length > 0){
-		res.render("new", {errors, engine_number, frame, license_plate, date, price});
+		res.render("new", {errors, engine_number, frame, license_plate, date, price, Τranslator: Translator});
 	} else{
         let car = new Cars({
             engineNumber: engine_number,
@@ -182,7 +183,7 @@ router.delete("/account", ensureAuthenticated, async function(req, res, next){
 
 	User.deleteOne({email: req.user.email}, function(err) {
 		if (err) {return next(err);}
-		req.flash("success_msg", "Your account was deleted");
+		req.flash("success_msg", Translator.translate("Your account was deleted"));
 		res.redirect("/register");
 	});
 });
@@ -193,16 +194,16 @@ router.post("/", ensureAuthenticated , async (req, res) => {
     let errors = [];
 
     if (!search){
-        errors.push({msg: "Please fill the searchbox"});
+        errors.push({msg: Translator.translate("Please fill the searchbox")});
     }
 
     if (select == 0){
-        errors.push({msg: "Please select a type to search"});
+        errors.push({msg: Translator.translate("Please select a type to search")});
     }
 
     if (errors.length > 0){
         cars = await Cars.find().sort({ createdAt: "desc" });
-        res.render("index", {cars: cars, user: req.user, search: req.body.query, errors: errors});
+        res.render("index", {cars: cars, user: req.user, search: req.body.query, errors: errors, Τranslator: Translator});
 	} else {
         if (select == "1"){
             cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.engineNumber.includes(search));
@@ -217,7 +218,7 @@ router.post("/", ensureAuthenticated , async (req, res) => {
             cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.date.includes(search));
         }
         
-        res.render("index", {cars: cars, user: req.user, search: req.body.query, show_all: process.env.SHOW_ALL});
+        res.render("index", {cars: cars, user: req.user, search: req.body.query, show_all: process.env.SHOW_ALL, Τranslator: Translator});
     }
 });
 
