@@ -40,7 +40,6 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     const language = req.headers["accept-language"];
-    // console.log(`Language: ${language}`);
     Translator.setLocale("en");
     if (language.includes("gr") || language.includes("el")){Translator.setLocale("gr")};
     next();
