@@ -3,9 +3,9 @@
         "en": "Welcome",
         "gr": "Καλώς όρισες"
     },
-    "Add Car": {
-        "en": "Add Car",
-        "gr": "Προσθήκη Αυτοκινήτου"
+    "Car Info": {
+        "en": "Car Info",
+        "gr": "Πληροφορίες Αυτοκινήτων"
     },
     "Logout": {
         "en": "Logout",
@@ -67,6 +67,10 @@
         "en": "You are registered and can log in",
         "gr": "Είσαι εγγεγραμμένος και μπορείς να συνδεθείς"
     },
+    "Your password was just changed and can log in": {
+        "en": "Your password was just changed and can log in",
+        "gr": "Ο κωδικός σου μόλις άλλαξε και μπορεις να συνδεθείς"
+    },
     "You are logged out": {
         "en": "You are logged out",
         "gr": "Αποσυνδέθηκες"
@@ -87,9 +91,37 @@
         "en": "That email is not registered",
         "gr": "Αυτό το email δεν έχει εγγραφεί"
     },
+    "Your password was just changed": {
+        "en": "Your password was just changed",
+        "gr": "Ο κωδικός σου μόλις άλλαξε"
+    },
+    "if you weren't the one who changed your password": {
+        "en": "if you weren't the one who changed your password",
+        "gr": "αν δεν ήσουν εσύ που άλλαξες τον κωδικό σου"
+    },
     "That email is not verified": {
         "en": "That email is not verified",
         "gr": "Αυτό το email δεν έχει επιβεβαιωθεί"
+    },
+    "Telephone number should be 10 characters long": {
+        "en": "Telephone number should be 10 characters long",
+        "gr": "Ο αριθμός τηλεφώνου πρέπει να έχει μήκος δέκα χαρακτήρες"
+    },
+    "Telephone number should be an integer number": {
+        "en": "Telephone number should be an integer number",
+        "gr": "Ο αριθμός τηλεφώνου πρέπει να είναι ένας ακέραιος αριθμός"
+    },
+    "You are registered and must verify your email": {
+        "en": "You are registered and must verify your email",
+        "gr": "Είσαι εγγεγραμμένος και πρέπει να επαληθεύσεις το email σου"
+    },
+    "Please log in to access this page": {
+        "en": "Please log in to access this page",
+        "gr": "Παρακαλώ συνδέσου για να αποκτήσεις πρόσβαση σε αυτή τη σελίδα"
+    },
+    "Please log out to access this page": {
+        "en": "Please log out to access this page",
+        "gr": "Παρακαλώ αποσυνδέσου για να αποκτήσεις πρόσβαση σε αυτή τη σελίδα"
     },
     "Username": {
         "en": "Username",
@@ -107,6 +139,42 @@
         "en": "Confirm Password",
         "gr": "Επαλήθευση Κωδικού"
     },
+    "Change Password": {
+        "en": "Change Password",
+        "gr": "Αλλαγή Κωδικού"
+    },
+    "Please verify your email": {
+        "en": "Please verify your email",
+        "gr": "Παράκαλω επιβεβαιώσε το email σου"
+    },
+    "Please click this": {
+        "en": "Please click this",
+        "gr": "Παρακαλώ κάνε κλικ σε αυτόν τον"
+    },
+    "to verify your email address":{
+        "en": "to verify your email address",
+        "gr": "για να επιβεβαιώσεις την διεύθυνση email σου"
+    },
+    "Enter your username": {
+        "en": "Enter your username",
+        "gr": "Βάλε το ψευδόνυμο σου"
+    },
+    "Enter your email": {
+        "en": "Enter your email",
+        "gr": "Βάλε το email σου"
+    },
+    "Enter your telephone number": {
+        "en": "Enter your telephone number",
+        "gr": "Βάλε τον αριθμό τηλεφώνου σου"
+    },
+    "Enter your secret password": {
+        "en": "Enter your secret password",
+        "gr": "Βάλε τον μυστικό κωδικό σου"
+    },
+    "Enter your secret password again": {
+        "en": "Enter your secret password again",
+        "gr": "Βάλε τον μυστικό κωδικό σου ξανά"
+    },
     "Register": {
         "en": "Register",
         "gr": "Εγγραφή"
@@ -114,6 +182,10 @@
     "Login": {
         "en": "Login",
         "gr": "Σύνδεση"
+    },
+    "link": {
+        "en": "link",
+        "gr": "σύνδεσμο"
     },
     "Already a member?": {
         "en": "Already a member?",
@@ -126,5 +198,29 @@
     "Forgot Password?": {
         "en": "Forgot Password?",
         "gr": "Ξέχασες τον κωδικό;"
+    },
+    "Did you remember him?": {
+        "en": "Did you remember him?",
+        "gr": "Τον θυμήθηκες;"
+    },
+    "Delete": {
+        "en": "Delete",
+        "gr": "Διαγραφή"
+    },
+    "New Car": {
+        "en": "New Car",
+        "gr": "Νέο Αυτοκίνητο"
+    },
+    "Save": {
+        "en": "Save",
+        "gr": "Αποθήκευση"
+    },
+    "Cancel": {
+        "en": "Cancel",
+        "gr": "Ακύρωση"
+    },
+    "Telephone Number": {
+        "en": "Telephone Number",
+        "gr": "Αριθμός Τηλεφώνου"
     }
 }

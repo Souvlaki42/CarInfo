@@ -1,26 +1,26 @@
-<h1 class="mb-4">New Car</h1>
+<h1 class="mb-4"><%= Translator.translate("New Car") %></h1>
 <%- include("./partials/messages") %>
 <form action="/new" method="POST">
     <div class="form-group">
-        <label for="engine_number">Engine Number</label>
+        <label for="engine_number"><%= Translator.translate("Engine Number") %></label>
         <input value="<%= typeof engine_number != "undefined" ? engine_number : "" %>" type="text" name="engine_number" id="engine_number" class="form-control">
     </div>
     <div class="form-group">
-        <label for="frame">Frame</label>
+        <label for="frame"><%= Translator.translate("Frame") %></label>
         <input value="<%= typeof frame != "undefined" ? frame : "" %>" type="text" name="frame" id="frame" class="form-control">
     </div>
     <div class="form-group">
-        <label for="license_plate">License Plate</label>
+        <label for="license_plate"><%= Translator.translate("License Plate") %></label>
         <input value="<%= typeof license_plate != "undefined" ? license_plate : "" %>" type="text" name="license_plate" id="license_plate" class="form-control">
     </div>
     <div class="form-group">
-        <label for="date">Date</label>
+        <label for="date"><%= Translator.translate("Date") %></label>
         <input value="<%= typeof date != "undefined" ? date : "" %>" type="text" name="date" id="date" class="form-control">
     </div>
     <div class="form-group">
-        <label for="price">Price</label>
+        <label for="price"><%= Translator.translate("Price") %></label>
         <input value="<%= typeof price != "undefined" ? price : "" %>" type="text" name="price" id="price" class="form-control">
     </div>
-      <a href="/" class="btn btn-secondary">Cancel</a>
-      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/" class="btn btn-secondary"><%= Translator.translate("Cancel") %></a>
+      <button type="submit" class="btn btn-primary"><%= Translator.translate("Save") %></button>
 </form>

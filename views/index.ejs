@@ -31,7 +31,7 @@
 				<td><%= car.licensePlate %></td>
                 <td><%= car.date %></td>
                 <td><%= car.price %></td>
-                <td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE">Delete</a></td>
+                <td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE"><%= Translator.translate("Delete") %></a></td>
 			</tr>
 		<% }); %> 
 	</tbody>
