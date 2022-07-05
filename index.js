@@ -31,16 +31,16 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-	if (req.query._method){
+	if (req.query._method) {
 		req.method = req.query._method;
 		req.url = req.path;
-	} 
+    } 
     next();
 });
 
 app.use((req, res, next) => {
-    const language = req.headers["accept-language"];
     Translator.setLocale("en");
+    const language = req.headers["accept-language"];
     if (language.includes("gr") || language.includes("el")){Translator.setLocale("gr")};
     next();
 });

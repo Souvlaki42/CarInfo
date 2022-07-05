@@ -3,9 +3,9 @@
         "en": "Welcome",
         "gr": "Καλώς όρισες"
     },
-    "Car Info": {
-        "en": "Car Info",
-        "gr": "Πληροφορίες Αυτοκινήτων"
+    "Add Car":{
+        "en": "Add Car",
+        "gr": "Προσθήκη Αυτοκινήτου"
     },
     "Logout": {
         "en": "Logout",
