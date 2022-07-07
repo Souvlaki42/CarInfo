@@ -169,6 +169,12 @@ router.delete("/account", ensureAuthenticated, async function(req, res, next){
 	});
 });
 
+router.get("/license", ensureNotAuthenticated, async (req, res) => {
+    res.render("license", {Translator: Translator});
+});
+
+router.post("/buy-license")
+
 router.post("/", ensureAuthenticated , async (req, res) => {
 	let search = req.body.query;
 	let select = req.body.selector;

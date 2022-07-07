@@ -127,6 +127,10 @@
         "en": "Username",
         "gr": "Ψευδόνυμο"
     },
+    "Telephone Number": {
+        "en": "Telephone Number",
+        "gr": "Αριθμός Τηλεφώνου"
+    },
     "Password": {
         "en": "Password",
         "gr": "Κωδικός"
@@ -146,6 +150,10 @@
     "Please verify your email": {
         "en": "Please verify your email",
         "gr": "Παράκαλω επιβεβαιώσε το email σου"
+    },
+    "License": {
+        "en": "License",
+        "gr": "Άδεια"
     },
     "Please click this": {
         "en": "Please click this",
@@ -187,6 +195,10 @@
         "en": "link",
         "gr": "σύνδεσμο"
     },
+    "here": {
+        "en": "here",
+        "gr": "εδώ"
+    },
     "Already a member?": {
         "en": "Already a member?",
         "gr": "Ήδη μέλος;"
@@ -219,8 +231,40 @@
         "en": "Cancel",
         "gr": "Ακύρωση"
     },
-    "Telephone Number": {
-        "en": "Telephone Number",
-        "gr": "Αριθμός Τηλεφώνου"
+    "Buy License": {
+        "en": "Buy License",
+        "gr": "Αγορά Άδειας"
+    },
+    "Move License": {
+        "en": "Move License",
+        "gr": "Μεταφορά Άδειας"
+    },
+    "Cancel License": {
+        "en": "Cancel License",
+        "gr": "Ακύρωση Άδειας"
+    },
+    "Get License": {
+        "en": "Get License",
+        "gr": "Πάρε Άδεια"
+    },
+    "If you want to buy a new subcription license": {
+        "en": "If you want to buy a new subcription license",
+        "gr": "Αν θες να αγοράσεις μία νέα συνδρομιτική άδεια"
+    },
+    "If you want to move your license to a new email": {
+        "en": "If you want to move your license to a new email",
+        "gr": "Αν θες να μετακινήσεις την άδεια σου σε νέο email"
+    },
+    "If you want to cancel your subcription license": {
+        "en": "If you want to cancel your subcription license",
+        "gr": "Αν θες να ακυρώσεις την συνδρομιτική σου άδεια"
+    },
+    "If you have a coupon to get a free, cheaper or lifetime license": {
+        "en": "If you have a coupon to get a free, cheaper or lifetime license",
+        "gr": "Αν έχεις ένα κουπόνι για να πάρεις μία δωρεάν, φτηνότερη ή εφ' όρου ζωής άδεια"
+    },
+    "If you want to buy a license for multiple accounts with a discount click": {
+        "en": "If you want to buy a license for multiple accounts with a discount click",
+        "gr": "Αν θες να αγοράσεις μία άδεια για πολλαπλούς λογαριασμούς με μία έκπτωση κλίκαρε"
     }
 }
