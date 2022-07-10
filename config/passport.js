@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./../models/userAuth"); 
 const {Translator} = require("./utils");
 
-module.exports = function(passport){
+function passportSetup(passport) {
     passport.use(new LocalStrategy({usernameField: "email"}, (email, password, done) => {
         User.findOne({email: email})
         .then(user => {
@@ -35,3 +35,5 @@ module.exports = function(passport){
         User.findById(id,(err, user) => {done(err, user);});
     });
 };
+
+module.exports = {passportSetup};

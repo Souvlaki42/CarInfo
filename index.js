@@ -2,15 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
+const {passportSetup} = require("./config/passport");
 const {Translator} = require("./config/utils");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const crypto = require("crypto");
+const dotenv = require("dotenv");
 const app = express();
 
-require("dotenv").config({path: "./config/.env"});
-require("./config/passport")(passport);
+dotenv.config({path: "./config/.env"});
+passportSetup(passport);
 
 mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
 
@@ -18,6 +20,7 @@ app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride("_method"));
+app.use(express.static("views/src"));
 app.use(session({secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: 60000}}));
 app.use(passport.initialize());
 app.use(passport.session());

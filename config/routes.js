@@ -4,7 +4,7 @@ const express = require("express");
 const passport = require("passport");
 const Cars = require("../models/newCar");
 const User = require("../models/userAuth");
-const {Translator, ensureAuthenticated, ensureNotAuthenticated, sendAnEmail} = require("./utils");
+const {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, comparePassword} = require("./utils");
 
 const router = express.Router();
 
@@ -50,7 +50,7 @@ router.post("/register", (req, res) => {
 					if (err) throw err;
 					newUser.password = hash;
 					newUser.save().then(user => {
-						sendAnEmail(req, res, user.email, "Please verify your email", `<b>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, "You are registered and must verify your email", "/login");
+						emailSend([req, res], user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, "You are registered and must verify your email", "/login");
 					}).catch(err => console.log(err));
 				}));
 			};
@@ -99,7 +99,7 @@ router.post("/password", async (req, res) => {
 				if (err) throw err;
 				user.password = hash;
 				user.save()
-				sendAnEmail(req, res, user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/password">${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`, "Your password was just changed and can log in", "/login");
+				emailSend([req, res], user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/password">${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`, "Your password was just changed and can log in", "/login");
 			}));
 		}
 	}
@@ -155,25 +155,23 @@ router.post("/new", async (req, res) => {
 });
 
 router.delete("/account", ensureAuthenticated, async function(req, res, next){
-	const cars = await Cars.find();
-	cars.filter(car => car.email === req.user.email).forEach(car => {
-		Cars.deleteOne({bid: car.bid}, function(err) {
-			if (err) {return next(err);}
-		});
-	});
+    const cars = await Cars.find();
+    cars.filter(car => car.email === req.user.email).forEach(car => {
+        Cars.deleteOne({bid: car.bid}, function(err) {
+            if (err) {return next(err);}
+        });
+    });
 
-	User.deleteOne({email: req.user.email}, function(err) {
-		if (err) {return next(err);}
-		req.flash("success_msg", Translator.translate("Your account was deleted"));
-		res.redirect("/register");
-	});
+    User.deleteOne({email: req.user.email}, function(err) {
+        if (err) {return next(err);}
+        req.flash("success_msg", Translator.translate("Your account was deleted"));
+        res.redirect("/register");
+    });
 });
 
 router.get("/license", ensureNotAuthenticated, async (req, res) => {
     res.render("license", {Translator: Translator});
 });
-
-router.post("/buy-license")
 
 router.post("/", ensureAuthenticated , async (req, res) => {
 	let search = req.body.query;
