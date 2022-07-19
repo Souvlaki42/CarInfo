@@ -20,5 +20,5 @@ function togglePassword(input, button){
         Button.className = "fas fa-eye-slash pass-change";
     } else {
         Button.className = "fas fa-eye pass-change";
-    }
+    };
 };
