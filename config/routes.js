@@ -4,6 +4,7 @@ const express = require("express");
 const passport = require("passport");
 const Cars = require("../models/newCar");
 const User = require("../models/userAuth");
+const Config = require("./config.json");
 const {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, comparePassword} = require("./utils");
 
 const router = express.Router();
@@ -50,7 +51,7 @@ router.post("/register", (req, res) => {
 					if (err) throw err;
 					newUser.password = hash;
 					newUser.save().then(user => {
-						emailSend([req, res], user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, "You are registered and must verify your email", "/login");
+						emailSend([req, res], user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${Config.Domain}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, "You are registered and must verify your email", "/login");
 					}).catch(err => console.log(err));
 				}));
 			};
@@ -99,7 +100,7 @@ router.post("/password", async (req, res) => {
 				if (err) throw err;
 				user.password = hash;
 				user.save()
-				emailSend([req, res], user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href="${process.env.DOMAIN}/password">${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`, "Your password was just changed and can log in", "/login");
+				emailSend([req, res], user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href="${Config.Domain}/password">${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`, "Your password was just changed and can log in", "/login");
 			}));
 		}
 	}
@@ -203,7 +204,7 @@ router.post("/", ensureAuthenticated , async (req, res) => {
 			cars = await (await Cars.find().sort({createdAt: "desc"})).filter(car => car.date.includes(search));
 		}
 		
-		res.render("index", {cars: cars, user: req.user, search: req.body.query, show_all: process.env.SHOW_ALL, Translator: Translator});
+		res.render("index", {cars: cars, user: req.user, search: req.body.query, show_all: Config.ShowAll, Translator: Translator});
 	}
 });
 

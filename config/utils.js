@@ -1,9 +1,9 @@
 const Localize = require("localize");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
-
+const Config = require("./config.json");
 const Translator = new Localize("./config");
-const From = `Souvlaki42 ${process.env.EMAIL}`;
+const From = `Souvlaki42 ${Config.Email}`;
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
@@ -18,7 +18,7 @@ function ensureNotAuthenticated(req, res, next) {
 }
 
 function emailSend(headers, receiver, subject, message, success_msg, redirect_link) {    
-    const Transporter = nodemailer.createTransport({host: "smtp.gmail.com", port: 465, secure: true, auth: {user: process.env.EMAIL, pass: process.env.PASSWORD}});
+    const Transporter = nodemailer.createTransport({host: "smtp.gmail.com", port: 465, secure: true, auth: {user: Config.Email, pass: Config.Password}});
     let emailOptions = {from: From, to: receiver, subject: Translator.translate(subject), html: message};
 
     Transporter.sendMail(emailOptions, (error, info) => {
