@@ -6,10 +6,6 @@
 		--gmail-color: #EA4335;
 	}
 
-	.owner{
-		color: var(--second-color);
-	}
-
 	.social{
 		color: var(--text-color);
 	}

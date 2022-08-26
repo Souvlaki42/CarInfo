@@ -22,7 +22,7 @@ app.use(methodOverride("_method"));
 app.use(express.static("views/src"));
 app.use(session({secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: 60000}}));
 app.use(passport.initialize());
-app.use(passport.session({cookie: {maxAge: Config.SessionMaxAge, secure: true}}));
+app.use(passport.session({cookie: {secure: true}}));
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -49,4 +49,4 @@ app.use((req, res, next) => {
 
 app.use("/", require("./config/routes"));
 
-app.listen(Config.Port, console.log(`Server Started - ${Config.Port}!`));
+app.listen(Config.Port, console.log(`Listening on http://localhost:${Config.Port}/`));

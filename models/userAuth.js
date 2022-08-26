@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const {Schema, model} = require("mongoose");
 const crypto = require("crypto");
 
-const UserAuthSchema = new mongoose.Schema({
+const UserAuthSchema = new Schema({
     username: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
@@ -10,4 +10,4 @@ const UserAuthSchema = new mongoose.Schema({
     verified: {type: Boolean, default: false}
 });
 
-module.exports = mongoose.model("User", UserAuthSchema);
+module.exports = model("User", UserAuthSchema);

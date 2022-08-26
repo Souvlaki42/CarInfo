@@ -12,27 +12,29 @@
     </select>
     <button type="submit" class="btn btn-success"><%= Translator.translate("Search") %></button>
 </form>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th><%= Translator.translate("Engine Number") %></th> 
-			<th><%= Translator.translate("Frame") %></th>
-            <th><%= Translator.translate("License Plate") %></th>
-			<th><%= Translator.translate("Date") %></th>
-            <th><%= Translator.translate("Price") %></th>
-            <th><%= Translator.translate("Actions") %></th>
-		</tr>
-	</thead>
-	<tbody>
-		<% cars.filter(car => car.user === user.email).forEach(car => { %>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
 			<tr>
-				<td><%= car.engineNumber %></td>
-				<td><%= car.frame %></td>
-				<td><%= car.licensePlate %></td>
-                <td><%= car.date %></td>
-                <td><%= car.price %></td>
-                <td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE"><%= Translator.translate("Delete") %></a></td>
+				<th><%= Translator.translate("Engine Number") %></th> 
+				<th><%= Translator.translate("Frame") %></th>
+				<th><%= Translator.translate("License Plate") %></th>
+				<th><%= Translator.translate("Date") %></th>
+				<th><%= Translator.translate("Price") %></th>
+				<th><%= Translator.translate("Actions") %></th>
 			</tr>
-		<% }); %> 
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<% cars.filter(car => car.user === user.email).forEach(car => { %>
+				<tr>
+					<td><%= car.engineNumber %></td>
+					<td><%= car.frame %></td>
+					<td><%= car.licensePlate %></td>
+					<td><%= car.date %></td>
+					<td><%= car.price %></td>
+					<td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE"><%= Translator.translate("Delete") %></a></td>
+				</tr>
+			<% }); %> 
+		</tbody>
+	</table>
+</div>

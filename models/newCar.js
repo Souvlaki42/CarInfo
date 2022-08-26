@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const {Schema, model} = require("mongoose");
 
-const CarSchema = new mongoose.Schema({
+const CarSchema = new Schema({
     engineNumber: {type: String, required: true},
     frame: {type: String, required: true},
     licensePlate: {type: String, required: true},
@@ -11,4 +11,4 @@ const CarSchema = new mongoose.Schema({
     bid: {type: String, unique: true, default: () => Math.floor(Math.random() * 10000000000)}
 });
 
-module.exports = mongoose.model("Cars", CarSchema);
+module.exports = model("Cars", CarSchema);

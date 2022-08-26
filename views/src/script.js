@@ -1,24 +1,13 @@
-function togglePassword1(){
-    togglePassword("password", "togglePass");
+const togglePass = document.getElementById("togglePass");
+const togglePass2 = document.getElementById("togglePass2");
+
+function togglePassword(input_id, button_id){
+    const Input = document.getElementById(input_id);
+    const Button = document.getElementById(button_id);
+
+    Input.setAttribute("type", Input.getAttribute("type") == "text" ? "password" : "text");
+    Button.classList.toggle("fa-eye-slash");
 };
 
-function togglePassword2(){
-    togglePassword("password2", "togglePass2");
-};
-
-function togglePassword(input, button){
-    const Input = document.getElementById(input);
-    const Button = document.getElementById(button);
-
-    if (Input.type === "password"){
-        Input.type = "text";
-    } else {
-        Input.type = "password";
-    }
-
-    if (Button.className == "fas fa-eye pass-change"){
-        Button.className = "fas fa-eye-slash pass-change";
-    } else {
-        Button.className = "fas fa-eye pass-change";
-    }
-};
+if (togglePass) togglePass.addEventListener("click", () => togglePassword("password", "togglePass"));
+if (togglePass2) togglePass2.addEventListener("click", () => togglePassword("password2", "togglePass2"));

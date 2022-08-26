@@ -8,7 +8,7 @@
 	<div class="form-group">
 		<label class="required" for="password"><%= Translator.translate("Password") %></label>
 		<input value="<%= typeof password != "undefined" ? password : "" %>"  autocomplete="current-password" type="password" name="password" id="password" class="form-control" placeholder="<%= Translator.translate("Enter your secret password") %>">
-        <i class="fas fa-eye pass-change" id="togglePass" onclick="togglePassword1()"></i>
+        <i class="fas fa-eye pass-change" id="togglePass"></i>
 	</div>
     <p><a href="/password" class="i-link"><%= Translator.translate("Forgot Password?") %></a></p>
 	<button type="submit" class="btn btn-primary"><%= Translator.translate("Login") %></button>
