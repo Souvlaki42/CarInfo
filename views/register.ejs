@@ -1,5 +1,5 @@
 <h1><%= Translator.translate("Register") %></h1>
-<%- include("./partials/messages") %>
+<%- include("./_messages.ejs") %>
 <form action="/register" method="post">
 	<div class="form-group">
 		<label class="required" for="username"><%= Translator.translate("Username") %></label>

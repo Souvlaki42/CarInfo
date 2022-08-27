@@ -1,5 +1,5 @@
 <h1 class="mb-4"><%= Translator.translate("New Car") %></h1>
-<%- include("./partials/messages") %>
+<%- include("./_messages.ejs") %>
 <form action="/new" method="POST">
     <div class="form-group">
         <label class="required" for="engine_number"><%= Translator.translate("Engine Number") %></label>

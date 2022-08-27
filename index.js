@@ -13,14 +13,14 @@ const app = express();
 
 passportSetup(passport);
 
-mongoose.connect(Config.Database, {useNewUrlParser: true, useUnifiedTopology: true}).then(console.log("Database Connected!")).catch(err => console.log(err));
+mongoose.connect(Config.Database, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => console.log(err));
 
 app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride("_method"));
-app.use(express.static("views/src"));
-app.use(session({secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: 60000}}));
+app.use(express.static("public"));
+app.use(session({secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: Config.ConnectionTimeout}}));
 app.use(passport.initialize());
 app.use(passport.session({cookie: {secure: true}}));
 app.use(flash());
@@ -49,4 +49,4 @@ app.use((req, res, next) => {
 
 app.use("/", require("./config/routes"));
 
-app.listen(Config.Port, console.log(`Listening on http://localhost:${Config.Port}/`));
+app.listen(Config.Port);
