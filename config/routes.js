@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const path = require("path");
 const bcrypt = require("bcryptjs");
 const express = require("express");
 const passport = require("passport");
@@ -126,6 +127,11 @@ router.get("/logout", ensureAuthenticated, function(req, res, next) {
 	});
 });
 
+
+router.get("/todo", (req, res) => {
+	res.sendFile(path.join(__dirname, "../views", "todo.html"));
+})
+
 router.get("/new", ensureAuthenticated, (req, res) => {
 	res.render("new", {Translator: Translator});
 });
@@ -156,22 +162,18 @@ router.post("/new", async (req, res) => {
 });
 
 router.delete("/account", ensureAuthenticated, async function(req, res, next){
-    const cars = await Cars.find();
-    cars.filter(car => car.email === req.user.email).forEach(car => {
-        Cars.deleteOne({bid: car.bid}, function(err) {
-            if (err) {return next(err);}
-        });
-    });
+	const cars = await Cars.find();
+	cars.filter(car => car.email === req.user.email).forEach(car => {
+		Cars.deleteOne({bid: car.bid}, function(err) {
+			if (err) {return next(err);}
+		});
+	});
 
-    User.deleteOne({email: req.user.email}, function(err) {
-        if (err) {return next(err);}
-        req.flash("success_msg", Translator.translate("Your account was deleted"));
-        res.redirect("/register");
-    });
-});
-
-router.get("/license", ensureNotAuthenticated, async (req, res) => {
-    res.render("license", {Translator: Translator});
+	User.deleteOne({email: req.user.email}, function(err) {
+		if (err) {return next(err);}
+		req.flash("success_msg", Translator.translate("Your account was deleted"));
+		res.redirect("/register");
+	});
 });
 
 router.post("/", ensureAuthenticated , async (req, res) => {
