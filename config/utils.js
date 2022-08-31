@@ -28,11 +28,4 @@ function emailSend(headers, receiver, subject, message, success_msg, redirect_li
     });
 };
 
-function comparePassword(password, password2) {
-    bcrypt.compare(password, password2, (err, isMatch) => {
-        if(err) console.log(err);
-        return isMatch;
-    });
-};
-
-module.exports = {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, comparePassword};
+module.exports = {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend};

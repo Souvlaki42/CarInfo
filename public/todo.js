@@ -1,6 +1,22 @@
-let calendar = document.querySelector(".calendar")
+let calendar = document.querySelector(".calendar");
+const dayList = {
+    "en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "gr": ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"]
+}
 
-const month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+isLanguage = (lang) => {
+    const language = window.navigator.userLanguage || window.navigator.language;
+    return language.includes(lang);
+}
+
+getMonthNames = () => {
+    if (isLanguage("gr") || isLanguage("el")) {
+        return dayList.gr;
+    }
+    return dayList.en;
+}
+
+const month_names = getMonthNames();
 
 isLeapYear = (year) => {
     return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 ===0)
@@ -12,6 +28,29 @@ getFebDays = (year) => {
 
 getSelectedDate = () => {
     return {day: document.querySelector(".curr-date") ? parseInt(document.querySelector(".curr-date").innerText) : 0, month: curr_month.value + 1, year: curr_year.value}
+}
+
+updateClickEvents = () => {
+    const todoListItems = document.querySelectorAll(".todoListItem")
+    const closeBtn = document.querySelectorAll(".close")
+    
+    for (let item of todoListItems) {
+        item.addEventListener("click", () => {
+            completeTodoListItem(item)
+        })
+    }
+
+    for (let close of closeBtn) {
+        close.innerText = "\u00D7"
+        close.addEventListener("click", () => {
+            deleteTodoListItem(close.parentElement)
+        })
+    }
+}
+
+updateDate = () => {
+    const date = getSelectedDate()
+    location.replace(`http://localhost:5000/todo?day=${date.day}&month=${date.month}&year=${date.year}`)
 }
 
 generateCalendar = (month, year) => {
@@ -54,6 +93,8 @@ generateCalendar = (month, year) => {
             const curr_date = document.querySelector(".curr-date")
             if (curr_date) curr_date.classList.remove("curr-date")
             day.classList.add("curr-date")
+            updateClickEvents()
+            updateDate()
         })
     }
 }
@@ -100,3 +141,72 @@ dark_mode_toggle.onclick = () => {
     document.querySelector("body").classList.toggle("light")
     document.querySelector("body").classList.toggle("dark")
 }
+
+updateTodoListTitle = () => {
+    let list = document.querySelector(".todoList")
+    let title = document.querySelector("#todoTitle")
+    let allItems = document.querySelectorAll(".todoListItem")
+    let remainingItems = []
+    
+    for (let item of allItems) {
+        if (item.classList.contains("completed")) continue
+        remainingItems.push(item)
+    }
+
+    title.innerText = `Todo List <${list.childElementCount},${remainingItems.length}>`
+}
+
+
+completeTodoListItem = (item) => {
+    item.classList.toggle("completed")
+    updateTodoListTitle()
+}
+
+deleteTodoListItem = (item) => {
+    item.remove()
+    updateTodoListTitle()
+}
+
+addTodoListItem = () => {
+    let input = document.querySelector("#todoInput")
+    if (!input.value) return
+
+    let list = document.querySelector(".todoList")
+    let item = document.createElement("li")
+    let close = document.createElement("span")
+    let text = null
+    
+    close.classList.add("close")
+    close.innerText = "\u00D7"
+    close.addEventListener("click", () => {
+        deleteTodoListItem(item)
+    })
+    
+    item.classList.add("todoListItem")
+    text = input.value
+    item.innerText = text
+    item.appendChild(close)
+    item.addEventListener("click", () => {
+        completeTodoListItem(item)
+    })
+    input.value = ""
+    list.appendChild(item)
+    updateTodoListTitle()
+    const date = getSelectedDate()
+    axios.post(`/todo/add?item=${text}&day=${date.day}&month=${date.month}&year=${date.year}`).then(res => {return}).catch(err => console.log(err))
+}
+
+document.querySelector(".todoAddBtn").addEventListener("click", () => {
+    addTodoListItem()
+})
+
+window.addEventListener("keydown", (event) => {
+    let active = document.activeElement
+    let input = document.querySelector("#todoInput")
+
+    if (event.key === "Enter" && !event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey && input == active) {
+        addTodoListItem()
+    }
+})
+
+updateClickEvents()

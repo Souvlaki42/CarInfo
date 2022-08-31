@@ -1,6 +1,6 @@
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
-const User = require("./../models/userAuth"); 
+const User = require("../models/User"); 
 const {Translator} = require("./utils");
 
 function passportSetup(passport) {

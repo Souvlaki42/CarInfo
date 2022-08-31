@@ -270,5 +270,37 @@
     "If you want to buy a license for multiple accounts with a discount click": {
         "en": "If you want to buy a license for multiple accounts with a discount click",
         "gr": "Αν θες να αγοράσεις μία άδεια για πολλαπλούς λογαριασμούς με μία έκπτωση κλίκαρε"
+    },
+    "Mon": {
+        "en": "Mon",
+        "gr": "Δευ"
+    },
+    "Tue": {
+        "en": "Tue",
+        "gr": "Τρι"
+    },
+    "Wed": {
+        "en": "Wed",
+        "gr": "Τετ"
+    },
+    "Thu": {
+        "en": "Thu",
+        "gr": "Πεμ"
+    },
+    "Fri": {
+        "en": "Fri",
+        "gr": "Παρ"
+    },
+    "Sat": {
+        "en": "Sat",
+        "gr": "Σαβ"
+    },
+    "Sun": {
+        "en": "Sun",
+        "gr": "Κυρ"
+    },
+    "Dark Mode": {
+        "en": "Dark Mode",
+        "gr": "Σκοτεινή λειτουργία"
     }
 }

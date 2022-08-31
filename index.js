@@ -17,6 +17,7 @@ mongoose.connect(Config.Database, {useNewUrlParser: true, useUnifiedTopology: tr
 
 app.use(expressLayouts);
 app.set("view engine", "ejs");
+app.set("layout todo", false);
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", require("./config/routes"));
+app.use("/", require("./routes/main"));
+app.use("/todo", require("./routes/todo"));
 
-app.listen(Config.Port);
+app.listen(5000);

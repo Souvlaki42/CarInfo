@@ -1,12 +1,11 @@
 const crypto = require("crypto");
-const path = require("path");
 const bcrypt = require("bcryptjs");
 const express = require("express");
 const passport = require("passport");
-const Cars = require("../models/newCar");
-const User = require("../models/userAuth");
-const Config = require("./config.json");
-const {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, comparePassword} = require("./utils");
+const Cars = require("../models/Car");
+const User = require("../models/User");
+const Config = require("../config/config.json");
+const {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend} = require("../config/utils");
 
 const router = express.Router();
 
@@ -126,11 +125,6 @@ router.get("/logout", ensureAuthenticated, function(req, res, next) {
 	  	res.redirect("/login");
 	});
 });
-
-
-router.get("/todo", (req, res) => {
-	res.sendFile(path.join(__dirname, "../views", "todo.html"));
-})
 
 router.get("/new", ensureAuthenticated, (req, res) => {
 	res.render("new", {Translator: Translator});
