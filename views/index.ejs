@@ -1,27 +1,30 @@
-<h1><%= Translator.translate("Welcome") + " " + user.username %>!<br>
+<h1><%= Translator("Welcome") + " " + user.username %>!<br>
+    <a href="/new" class="btn btn-primary"><%= Translator("Add Car") %></a>
+    <a href="/logout" class="btn btn-info"><%= Translator("Logout") %></a>
+    <a href="/account?_method=DELETE" class="btn btn-danger"><%= Translator("Delete Account") %></a>
+</h1>
 <%- include("./_messages.ejs") %>
-<a href="/new" class="btn btn-primary ml-2"><%= Translator.translate("Add Car") %></a><%- typeof show_all != "undefined" ? show_all : "" %><a href="/logout" class="btn btn-info ml-2"><%= Translator.translate("Logout") %></a><a href="/account?_method=DELETE" class="btn btn-danger ml-2"><%= Translator.translate("Delete Account") %></a></h1>
 <form action="/" method="post" class="my-4 form-inline">
 	<input type="text" name="query" id="query" value="<%= typeof search != "undefined" ? search : "" %>" class="form-control col mr-2">
     <select class="form-select mr-2" aria-label="Select Type" name="selector">
-        <option value="0" selected><%= Translator.translate("Select Type") %></option>
-        <option value="1"><%= Translator.translate("Engine Number") %></option>
-        <option value="2"><%= Translator.translate("Frame") %></option>
-        <option value="3"><%= Translator.translate("License Plate") %></option>
-        <option value="4"><%= Translator.translate("Date") %></option>
+        <option value="0" selected><%= Translator("Select Type") %></option>
+        <option value="1"><%= Translator("Engine Number") %></option>
+        <option value="2"><%= Translator("Frame") %></option>
+        <option value="3"><%= Translator("License Plate") %></option>
+        <option value="4"><%= Translator("Date") %></option>
     </select>
-    <button type="submit" class="btn btn-success"><%= Translator.translate("Search") %></button>
+    <button type="submit" class="btn btn-success"><%= Translator("Search") %></button>
 </form>
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th><%= Translator.translate("Engine Number") %></th> 
-				<th><%= Translator.translate("Frame") %></th>
-				<th><%= Translator.translate("License Plate") %></th>
-				<th><%= Translator.translate("Date") %></th>
-				<th><%= Translator.translate("Price") %></th>
-				<th><%= Translator.translate("Actions") %></th>
+				<th><%= Translator("Engine Number") %></th> 
+				<th><%= Translator("Frame") %></th>
+				<th><%= Translator("License Plate") %></th>
+				<th><%= Translator("Date") %></th>
+				<th><%= Translator("Price") %></th>
+				<th><%= Translator("Actions") %></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,7 +35,7 @@
 					<td><%= car.licensePlate %></td>
 					<td><%= car.date %></td>
 					<td><%= car.price %></td>
-					<td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE"><%= Translator.translate("Delete") %></a></td>
+					<td><a class="btn btn-danger" href="/<%= car.bid %>/?_method=DELETE"><%= Translator("Delete") %></a></td>
 				</tr>
 			<% }); %> 
 		</tbody>

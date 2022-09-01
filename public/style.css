@@ -28,13 +28,13 @@
         color: var(--gmail-color);
     }
 
-	.footer{
+	footer{
 		padding: 15px 0;
 		display: flex;
 		justify-content: space-between;
 	}
 
-	.footer p{
+	footer p{
 		font-size: 0.938rem;
 	}
     

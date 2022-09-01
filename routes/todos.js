@@ -1,5 +1,4 @@
 const express = require("express");
-const { Translator } = require("../config/utils");
 const Todo = require("../models/Todo");
 
 const router = express.Router();
@@ -11,7 +10,7 @@ router.get("/", async (req, res) => {
     const date = {day: day, month: month, year: year};
     const todos = await (Todo.find({reference: date}));
     const stringTodos = JSON.stringify(todos);
-    res.render("todo", { layout: "todo", Translator: Translator, todos: stringTodos });
+    res.render("todo", { layout: "todo", todos: stringTodos });
 });
 
 router.post("/add", async (req, res) => {

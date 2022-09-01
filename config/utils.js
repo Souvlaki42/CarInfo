@@ -1,9 +1,8 @@
 const Localize = require("localize");
 const nodemailer = require("nodemailer");
-const bcrypt = require("bcryptjs");
-const Config = require("./config.json");
+const { MAIL_USER, MAIL_KEY } = require("./main.json");
 const Translator = new Localize("./config");
-const From = `Souvlaki42 ${Config.Email}`;
+const From = `Souvlaki42 ${MAIL_USER}`;
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
@@ -17,9 +16,9 @@ function ensureNotAuthenticated(req, res, next) {
     res.redirect("/");
 }
 
-function emailSend(headers, receiver, subject, message, success_msg, redirect_link) {    
-    const Transporter = nodemailer.createTransport({host: "smtp.gmail.com", port: 465, secure: true, auth: {user: Config.Email, pass: Config.Password}});
-    let emailOptions = {from: From, to: receiver, subject: Translator.translate(subject), html: message};
+function emailSend(headers, receiver, subject, message, success_msg, redirect_link) {
+    const Transporter = nodemailer.createTransport({ host: "smtp.gmail.com", port: 465, secure: true, auth: { user: MAIL_USER, pass: MAIL_KEY } });
+    let emailOptions = { from: From, to: receiver, subject: Translator.translate(subject), html: message };
 
     Transporter.sendMail(emailOptions, (error, info) => {
         if (error) return console.log(error);
@@ -28,4 +27,8 @@ function emailSend(headers, receiver, subject, message, success_msg, redirect_li
     });
 };
 
-module.exports = {Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend};
+function minutesToMiliseconds(minutes) {
+    return minutes * 60000;
+}
+
+module.exports = { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, minutesToMiliseconds };
