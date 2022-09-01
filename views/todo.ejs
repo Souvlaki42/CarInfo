@@ -49,14 +49,14 @@
 		<div class="todoMain">
 			<div class="todoHeader">
 				<h2 id="todoTitle">Todo List <0,0></h2>
-				<input type="text" id="todoInput" placeholder="Add a new todo">
+				<input type="text" id="todoInput" placeholder="Add a new todo...">
 				<span onclick="" class="todoAddBtn">Add</span>
 			</div>
 			<ul class="todoList">
-                <% const finalTodos = JSON.parse(todos); %>
-                <% for (let todo of finalTodos) { %>
-                    <li class="todoListItem"><%= todo %><span class="close"></span></li>
-                <% } %>    
+                <% const normalTodos = JSON.parse(todos); %>
+                <% for (let todo of normalTodos) { %>
+                    <li class="todoListItem <%= todo.completed ? 'completed' : '' %>"><%= todo.text %><span class="close"></span></li>
+                <% }; %>
             </ul>
 		</div>
 	</div>

@@ -49,6 +49,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/", require("./routes/main"));
-app.use("/todo", require("./routes/todo"));
+app.use("/todo", require("./routes/todos"));
 
 app.listen(5000);

@@ -36,7 +36,7 @@ updateClickEvents = () => {
     
     for (let item of todoListItems) {
         item.addEventListener("click", () => {
-            completeTodoListItem(item)
+            toggleCompleteTodoListItem(item)
         })
     }
 
@@ -157,14 +157,18 @@ updateTodoListTitle = () => {
 }
 
 
-completeTodoListItem = (item) => {
+toggleCompleteTodoListItem = (item) => {
+    const text = item.innerText.slice(0, -1)
+    const date = getSelectedDate()
     item.classList.toggle("completed")
-    updateTodoListTitle()
+    axios.post(`/todo/toggleComplete?text=${text}&day=${date.day}&month=${date.month}&year=${date.year}`).then(res => {return updateTodoListTitle()}).catch(err => console.log(err))
 }
 
 deleteTodoListItem = (item) => {
+    const text = item.innerText.slice(0, -1)
     item.remove()
-    updateTodoListTitle()
+    const date = getSelectedDate()
+    axios.post(`/todo/delete?text=${text}&day=${date.day}&month=${date.month}&year=${date.year}`).then(res => {return updateTodoListTitle()}).catch(err => console.log(err))
 }
 
 addTodoListItem = () => {
@@ -187,13 +191,12 @@ addTodoListItem = () => {
     item.innerText = text
     item.appendChild(close)
     item.addEventListener("click", () => {
-        completeTodoListItem(item)
+        toggleCompleteTodoListItem(item)
     })
     input.value = ""
     list.appendChild(item)
-    updateTodoListTitle()
     const date = getSelectedDate()
-    axios.post(`/todo/add?item=${text}&day=${date.day}&month=${date.month}&year=${date.year}`).then(res => {return}).catch(err => console.log(err))
+    axios.post(`/todo/add?text=${text}&day=${date.day}&month=${date.month}&year=${date.year}`).then(res => {return updateTodoListTitle()}).catch(err => console.log(err))
 }
 
 document.querySelector(".todoAddBtn").addEventListener("click", () => {
@@ -210,3 +213,4 @@ window.addEventListener("keydown", (event) => {
 })
 
 updateClickEvents()
+updateTodoListTitle()
