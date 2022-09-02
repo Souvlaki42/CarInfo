@@ -5,7 +5,7 @@ const passport = require("passport");
 const Cars = require("../models/Car");
 const User = require("../models/User");
 const { HOST } = require("../config/main.json");
-const { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend } = require("../config/utils");
+const { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend } = require("../config/api");
 
 const router = express.Router();
 
@@ -89,12 +89,12 @@ router.post("/password", async (req, res) => {
     }
 
     if (errors.length > 0) {
-        res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2});
+        res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
     } else {
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
             errors.push(Translator.translate("That email is not registered"));
-            res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2});
+            res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
         } else {
             bcrypt.genSalt(10, (err, salt) => bcrypt.hash(req.body.password, salt, (err, hash) => {
                 if (err) throw err;

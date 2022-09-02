@@ -10,7 +10,7 @@ const crypto = require("crypto");
 const app = express();
 
 //CONSTANTS
-const { Translator, minutesToMiliseconds } = require("./config/utils");
+const { Translator, minutesToMiliseconds } = require("./config/api");
 const SESSION_SETTINGS = { secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: { maxAge: minutesToMiliseconds(10) } };
 const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
 const { passportSetup } = require("./config/passport");
@@ -33,24 +33,24 @@ app.use(flash());
 
 // MIDDLEWARE
 app.use((req, res, next) => {
-	res.locals.success_msg = req.flash("success_msg");
-	res.locals.error_msg = req.flash("error_msg");
-	res.locals.error = req.flash("error");
-	res.locals.Translator = Translator.translate;
-	next();
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    res.locals.Translator = Translator.translate;
+    next();
 });
 app.use((req, res, next) => {
-	if (req.query._method) {
-		req.method = req.query._method;
-		req.url = req.path;
-	}
-	next();
+    if (req.query._method) {
+        req.method = req.query._method;
+        req.url = req.path;
+    }
+    next();
 });
 app.use((req, res, next) => {
-	Translator.setLocale("en");
-	const language = req.acceptsLanguages();
-	if (language[0].includes("gr") || language[0].includes("el")) { Translator.setLocale("gr") };
-	next();
+    Translator.setLocale("en");
+    const language = req.acceptsLanguages();
+    if (language[0].includes("gr") || language[0].includes("el")) { Translator.setLocale("gr") };
+    next();
 });
 
 // ROUTES
