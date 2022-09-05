@@ -11,6 +11,10 @@
         "en": "Logout",
         "gr": "Αποσύνδεση"
     },
+    "Settings": {
+        "en": "Settings",
+        "gr": "Ρυθμίσεις"
+    },
     "Delete Account": {
         "en": "Delete Account",
         "gr": "Διαγραφή Λογαριασμού"
@@ -141,11 +145,15 @@
     },
     "Confirm Password": {
         "en": "Confirm Password",
-        "gr": "Επαλήθευση Κωδικού"
+        "gr": "Επαλήθευσε Κωδικό"
     },
     "Change Password": {
         "en": "Change Password",
-        "gr": "Αλλαγή Κωδικού"
+        "gr": "Άλλαξε Κωδικό"
+    },
+    "Reset Password": {
+        "en": "Reset Password",
+        "gr": "Επανέφερε Κωδικό"
     },
     "Please verify your email": {
         "en": "Please verify your email",

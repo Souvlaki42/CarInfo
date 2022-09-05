@@ -1,48 +1,42 @@
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-const { Translator } = require("./api");
+const { Translator } = require("../config/api");
 
-function testUser(user) {
-    if (!user) {
-        return done(null, false, { message: Translator.translate("That email is not registered") });
-    }
-
-    if (user.verified == false) {
-        return done(null, false, { message: Translator.translate("That email is not verified") });
-    }
-};
-
-function comparePasswords(inputPassword, userPassword, done, user) {
-    bcrypt.compare(inputPassword, userPassword, (err, isMatch) => {
-        if (err) throw err;
-        if (isMatch) {
-            return done(null, user);
-        } else {
-            return done(null, false, { message: Translator.translate("Password incorrect") });
+module.exports = function(passport) {
+  passport.use(
+    new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
+      User.findOne({
+        email: email
+      }).then(user => {
+        
+        if (!user) {
+          return done(null, false, { message: Translator.translate("That email is not registered") });
         }
+
+        if(!user.verified){
+            return done(null, false, {message: Translator.translate("That email is not verified")});
+        }
+
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) throw err;
+          if (isMatch) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: Translator.translate("Password incorrect") });
+          }
+        });
+      });
+    })
+  );
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
     });
+  });
 };
-
-function checkUser(email, password, done) {
-    User.findOne({ email: email }).then(user => {
-        testUser(user);
-        comparePasswords(password, user.password, done, user);
-    }).catch(err => console.log(err));
-};
-
-function passportSetup(passport) {
-    passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-        checkUser(email, password, done);
-    }));
-
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => { done(err, user); });
-    });
-};
-
-module.exports = { passportSetup };

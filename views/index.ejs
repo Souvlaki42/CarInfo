@@ -1,8 +1,16 @@
-<h1><%= Translator("Welcome") + " " + user.username %>!<br>
-    <a href="/new" class="btn btn-primary"><%= Translator("Add Car") %></a>
-    <a href="/logout" class="btn btn-info"><%= Translator("Logout") %></a>
-    <a href="/account?_method=DELETE" class="btn btn-danger"><%= Translator("Delete Account") %></a>
+<h1><%= Translator("Welcome")%>! 
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= user %>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item item-1" href="/new"><%= Translator("Add Car") %></a>
+          <a class="dropdown-item item-2" href="/settings"><%= Translator("Settings") %></a>
+          <a class="dropdown-item item-3" href="/logout?_method=POST"><%= Translator("Logout") %></a>
+        </div>
+      </div>
 </h1>
+    <!-- <a href="/account?_method=DELETE" class="btn btn-danger"><%= Translator("Delete Account") %></a> -->
 <%- include("./_messages.ejs") %>
 <form action="/" method="post" class="my-4 form-inline">
 	<input type="text" name="query" id="query" value="<%= typeof search != "undefined" ? search : "" %>" class="form-control col mr-2">

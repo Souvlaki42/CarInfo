@@ -6,16 +6,14 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const crypto = require("crypto");
 const app = express();
 
 //CONSTANTS
-const { Translator, minutesToMiliseconds } = require("./config/api");
-const SESSION_SETTINGS = { secret: crypto.randomBytes(64).toString("hex"), resave: true, saveUninitialized: true, rolling: true, cookie: { maxAge: minutesToMiliseconds(10) } };
-const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
-const { passportSetup } = require("./config/passport");
-const PASSPORT_SETTINGS = { cookie: { secure: true } };
 const { DB_URI } = require("./config/main.json");
+const { Translator, minToMs, generateCrypto } = require("./config/api");
+const SESSION_SETTINGS = { secret: generateCrypto(64), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: minToMs(10)} };
+const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
+const PASSPORT_SETTINGS = { cookie: { secure: true } };
 
 // CONFIGURATION
 app.use(express.urlencoded({ extended: false }));
@@ -26,9 +24,8 @@ app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.set("view engine", "ejs");
-app.set("layout todo", false);
 app.use(expressLayouts);
-passportSetup(passport);
+require("./config/passport")(passport);
 app.use(flash());
 
 // MIDDLEWARE
