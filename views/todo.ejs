@@ -1,0 +1,56 @@
+<h1><%= Translator("Welcome")%>!</h1>
+<%- include("./_messages.ejs") %>
+<form action="/todo/search" method="post" class="my-4 form-inline">
+	<input type="text" name="todoText" placeholder="Add a new item..." id="text" class="form-control col mr-2">
+	<select class="form-select mr-2" aria-label="Select Type" name="daySelect" data-daySelect>
+		<% days.forEach((item) => { %>
+		<option value="<%= item %>"><%= item %></option>
+		<% }) %>
+	</select>
+	<select class="form-select mr-2" aria-label="Select Type" name="monthSelect" data-monthSelect>
+		<% months.forEach((item) => { %>
+			<option value="<%= item %>"><%= item %></option>
+		<% }) %>
+	</select>
+	<select class="form-select mr-2" aria-label="Select Type" name="yearSelect" data-yearSelect>
+		<% years.forEach((item) => { %>
+			<option value="<%= item %>"><%= item %></option>
+		<% }) %>
+	</select>
+	<button type="submit" class="btn btn-success mr-2"><%= Translator("Search") %></button>
+	<button type="submit" class="btn btn-success mr-2" formaction="/todo/add?_method=POST"><%= Translator("Add Item") %></button>
+</form>
+<div class="table-responsive">
+	<table class="table table-striped todo-tab">
+		<thead>
+			<tr>
+				<th><%= Translator("Engine Number") %></th> 
+				<th><%= Translator("Frame") %></th>
+				<th><%= Translator("License Plate") %></th>
+				<th><%= Translator("Date") %></th>
+				<th><%= Translator("Price") %></th>
+				<th><%= Translator("Actions") %></th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<script>
+		const daySelect = document.querySelector("[data-daySelect]");
+		const monthSelect = document.querySelector("[data-monthSelect]");
+		const yearSelect = document.querySelector("[data-yearSelect]");
+
+		for (let item of daySelect.options) {
+			if (item.value === new Date().getDate().toString()) item.selected = true;
+		}
+
+		for (let item of monthSelect.options) {
+			if (item.value === (new Date().getMonth() + 1).toString()) item.selected = true;
+		}
+
+		for (let item of yearSelect.options) {
+			if (item.value === new Date().getFullYear().toString()) item.selected = true;
+		}
+		console.log(days);
+	</script>
+</div>

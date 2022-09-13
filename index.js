@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const back = require("express-back");
 const flash = require("connect-flash");
 const passport = require("passport");
 const app = express();
@@ -18,6 +19,7 @@ const PASSPORT_SETTINGS = { cookie: { secure: true } };
 // CONFIGURATION
 app.use(express.urlencoded({ extended: false }));
 app.use(session(SESSION_SETTINGS));
+app.use(back());
 app.use(passport.session(PASSPORT_SETTINGS));
 mongoose.connect(DB_URI, DB_SETTINGS);
 app.use(methodOverride("_method"));

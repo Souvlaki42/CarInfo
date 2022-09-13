@@ -35,4 +35,18 @@ function generateCrypto(key) {
     return crypto.randomBytes(key).toString("hex");
 }
 
-module.exports = { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, minToMs, generateCrypto };
+function generateArrayRange(firstNumber, lastNumber) {
+    let array = [];
+    let number = firstNumber;
+    while (number < lastNumber + 1) {
+        array.push(number);
+        number++;
+    }
+    return array;
+}
+
+function daysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+}
+
+module.exports = { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, minToMs, generateCrypto, generateArrayRange, daysInMonth };

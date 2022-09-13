@@ -120,12 +120,13 @@ router.post("/password", async (req, res) => {
 })
 
 router.get("/login", ensureNotAuthenticated, (req, res) => {
-	res.render("login");
+    const back = req.prevPath;
+	res.render("login", { back: back });
 });
 
 router.post("/login", (req, res, next) => {
 	passport.authenticate("local", {
-		successRedirect: "/",
+		successRedirect: req.query.back,
 		failureRedirect: "/login",
 		failureFlash: true
 	})(req, res, next);
