@@ -1,0 +1,45 @@
+<h1 class="mb-4"><%= Translator("New Car") %></h1>
+<%- include("./_messages.ejs") %>
+    <form action="/new" method="POST">
+        <div class="form-group">
+            <label class="required" for="engine_number">
+                <%= Translator("Engine Number") %>
+            </label>
+            <input value="<%= typeof engine_number != "undefined" ? engine_number : "" %>" type="text"
+            name="engine_number" id="engine_number" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="required" for="frame">
+                <%= Translator("Frame") %>
+            </label>
+            <input value="<%= typeof frame != "undefined" ? frame : "" %>" type="text" name="frame" id="frame"
+            class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="required" for="license_plate">
+                <%= Translator("License Plate") %>
+            </label>
+            <input value="<%= typeof license_plate != "undefined" ? license_plate : "" %>" type="text"
+            name="license_plate" id="license_plate" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="required" for="date">
+                <%= Translator("Date") %>
+            </label>
+            <input value="<%= typeof date != "undefined" ? date : "" %>" type="text" name="date" id="date"
+            class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="price">
+                <%= Translator("Price") %>
+            </label>
+            <input value="<%= typeof price != "undefined" ? price : "" %>" type="text" name="price" id="price"
+            class="form-control">
+        </div>
+        <a href="/" class="btn btn-secondary">
+            <%= Translator("Cancel") %>
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <%= Translator("Save") %>
+        </button>
+    </form>

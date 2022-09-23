@@ -1,0 +1,318 @@
+{
+    "Welcome": {
+        "en": "Welcome",
+        "gr": "Καλώς όρισες"
+    },
+    "Add Car":{
+        "en": "Add Car",
+        "gr": "Προσθήκη Αυτοκινήτου"
+    },
+    "Add Item": {
+        "en": "Add Item",
+        "gr": "Προσθήκη Αντικειμένου"
+    },
+    "Logout": {
+        "en": "Logout",
+        "gr": "Αποσύνδεση"
+    },
+    "Settings": {
+        "en": "Settings",
+        "gr": "Ρυθμίσεις"
+    },
+    "Delete Account": {
+        "en": "Delete Account",
+        "gr": "Διαγραφή Λογαριασμού"
+    },
+    "Select Type": {
+        "en": "Select Type",
+        "gr": "Διάλεξε Τύπο"
+    },
+    "Engine Number": {
+        "en": "Engine Number",
+        "gr": "Αριθμός Κινητήρα"
+    },
+    "Frame": {
+        "en": "Frame",
+        "gr": "Πλαίσιο"
+    },
+    "License Plate": {
+        "en": "License Plate",
+        "gr": "Πινακίδα Κυκλοφορίας"
+    },
+    "Date": {
+        "en": "Date",
+        "gr": "Χρονολογία"
+    },
+    "Search": {
+        "en": "Search",
+        "gr": "Αναζήτηση"
+    },
+    "Price": {
+        "en": "Price",
+        "gr": "Τιμή"
+    },
+    "Actions": {
+        "en": "Actions",
+        "gr": "Κινήσεις"
+    },
+    "Please fill in all fields": {
+        "en": "Please fill in all fields",
+        "gr": "Παρακαλώ συμπληρώστε όλα τα πεδία"
+    },
+    "Passwords do not match": {
+        "en": "Passwords do not match",
+        "gr": "Οι κωδικοί δεν ταιριάζουν"
+    },
+    "Password should be at least 8 characters": {
+        "en": "Password should be at least 8 characters",
+        "gr": "Ο κωδικός πρέπει να είναι τουλάχιστον 8 χαρακτήρες"
+    },
+    "Email is already registered": {
+        "en": "Email is already registered",
+        "gr": "Αυτό το email είναι ήδη εγγεγραμμένο"
+    },
+    "You are registered and can log in": {
+        "en": "You are registered and can log in",
+        "gr": "Είσαι εγγεγραμμένος και μπορείς να συνδεθείς"
+    },
+    "Your password was just changed and can log in": {
+        "en": "Your password was just changed and can log in",
+        "gr": "Ο κωδικός σου μόλις άλλαξε και μπορεις να συνδεθείς"
+    },
+    "You are logged out": {
+        "en": "You are logged out",
+        "gr": "Αποσυνδέθηκες"
+    },
+    "Your account was deleted": {
+        "en": "Your account was deleted",
+        "gr": "Ο λογαριασμός διαγράφτηκε"
+    },
+    "Please fill the searchbox": {
+        "en": "Please fill the searchbox",
+        "gr": "Παρακαλώ σημπλήρωσε την μπάρα αναζήτησης"
+    },
+    "Please select a type to search": {
+        "en": "Please select a type to search",
+        "gr": "Παρακαλώ είλεξε έναν τύπο να ψάξεις"
+    },
+    "That email is not registered": {
+        "en": "That email is not registered",
+        "gr": "Αυτό το email δεν έχει εγγραφεί"
+    },
+    "Your password was just changed": {
+        "en": "Your password was just changed",
+        "gr": "Ο κωδικός σου μόλις άλλαξε"
+    },
+    "if you weren't the one who changed your password": {
+        "en": "if you weren't the one who changed your password",
+        "gr": "αν δεν ήσουν εσύ που άλλαξες τον κωδικό σου"
+    },
+    "That email is not verified": {
+        "en": "That email is not verified",
+        "gr": "Αυτό το email δεν έχει επιβεβαιωθεί"
+    },
+    "Telephone number should be 10 characters long": {
+        "en": "Telephone number should be 10 characters long",
+        "gr": "Ο αριθμός τηλεφώνου πρέπει να έχει μήκος δέκα χαρακτήρες"
+    },
+    "Telephone number should be an integer number": {
+        "en": "Telephone number should be an integer number",
+        "gr": "Ο αριθμός τηλεφώνου πρέπει να είναι ένας ακέραιος αριθμός"
+    },
+    "You are registered and must verify your email": {
+        "en": "You are registered and must verify your email",
+        "gr": "Είσαι εγγεγραμμένος και πρέπει να επαληθεύσεις το email σου"
+    },
+    "Please log in to access this page": {
+        "en": "Please log in to access this page",
+        "gr": "Παρακαλώ συνδέσου για να αποκτήσεις πρόσβαση σε αυτή τη σελίδα"
+    },
+    "Please log out to access this page": {
+        "en": "Please log out to access this page",
+        "gr": "Παρακαλώ αποσυνδέσου για να αποκτήσεις πρόσβαση σε αυτή τη σελίδα"
+    },
+    "Username": {
+        "en": "Username",
+        "gr": "Ψευδόνυμο"
+    },
+    "Telephone Number": {
+        "en": "Telephone Number",
+        "gr": "Αριθμός Τηλεφώνου"
+    },
+    "Password": {
+        "en": "Password",
+        "gr": "Κωδικός"
+    },
+    "Password incorrect": {
+        "en": "Password incorrect",
+        "gr": "Λάθος κωδικός"
+    },
+    "Confirm Password": {
+        "en": "Confirm Password",
+        "gr": "Επαλήθευσε Κωδικό"
+    },
+    "Change Password": {
+        "en": "Change Password",
+        "gr": "Άλλαξε Κωδικό"
+    },
+    "Reset Password": {
+        "en": "Reset Password",
+        "gr": "Επανέφερε Κωδικό"
+    },
+    "Please verify your email": {
+        "en": "Please verify your email",
+        "gr": "Παράκαλω επιβεβαιώσε το email σου"
+    },
+    "License": {
+        "en": "License",
+        "gr": "Άδεια"
+    },
+    "Thank you for registering": {
+        "en": "Thank you for registering",
+        "gr": "Σε ευχαριστώ που εγγράφηκες"
+    },
+    "Please click this": {
+        "en": "Please click this",
+        "gr": "Παρακαλώ κάνε κλικ σε αυτόν τον"
+    },
+    "to verify your email address":{
+        "en": "to verify your email address",
+        "gr": "για να επιβεβαιώσεις την διεύθυνση email σου"
+    },
+    "Enter your username": {
+        "en": "Enter your username",
+        "gr": "Βάλε το ψευδόνυμο σου"
+    },
+    "Enter your email": {
+        "en": "Enter your email",
+        "gr": "Βάλε το email σου"
+    },
+    "Enter your telephone number": {
+        "en": "Enter your telephone number",
+        "gr": "Βάλε τον αριθμό τηλεφώνου σου"
+    },
+    "Enter your secret password": {
+        "en": "Enter your secret password",
+        "gr": "Βάλε τον μυστικό κωδικό σου"
+    },
+    "Enter your secret password again": {
+        "en": "Enter your secret password again",
+        "gr": "Βάλε τον μυστικό κωδικό σου ξανά"
+    },
+    "Register": {
+        "en": "Register",
+        "gr": "Εγγραφή"
+    },
+    "Login": {
+        "en": "Login",
+        "gr": "Σύνδεση"
+    },
+    "link": {
+        "en": "link",
+        "gr": "σύνδεσμο"
+    },
+    "here": {
+        "en": "here",
+        "gr": "εδώ"
+    },
+    "Already a member?": {
+        "en": "Already a member?",
+        "gr": "Ήδη μέλος;"
+    },
+    "Not a member?": {
+        "en": "Not a member?",
+        "gr": "Όχι μέλος;"
+    },
+    "Forgot Password?": {
+        "en": "Forgot Password?",
+        "gr": "Ξέχασες τον κωδικό;"
+    },
+    "Did you remember him?": {
+        "en": "Did you remember him?",
+        "gr": "Τον θυμήθηκες;"
+    },
+    "Delete": {
+        "en": "Delete",
+        "gr": "Διαγραφή"
+    },
+    "New Car": {
+        "en": "New Car",
+        "gr": "Νέο Αυτοκίνητο"
+    },
+    "Save": {
+        "en": "Save",
+        "gr": "Αποθήκευση"
+    },
+    "Cancel": {
+        "en": "Cancel",
+        "gr": "Ακύρωση"
+    },
+    "Buy License": {
+        "en": "Buy License",
+        "gr": "Αγορά Άδειας"
+    },
+    "Move License": {
+        "en": "Move License",
+        "gr": "Μεταφορά Άδειας"
+    },
+    "Cancel License": {
+        "en": "Cancel License",
+        "gr": "Ακύρωση Άδειας"
+    },
+    "Get License": {
+        "en": "Get License",
+        "gr": "Πάρε Άδεια"
+    },
+    "If you want to buy a new subcription license": {
+        "en": "If you want to buy a new subcription license",
+        "gr": "Αν θες να αγοράσεις μία νέα συνδρομιτική άδεια"
+    },
+    "If you want to move your license to a new email": {
+        "en": "If you want to move your license to a new email",
+        "gr": "Αν θες να μετακινήσεις την άδεια σου σε νέο email"
+    },
+    "If you want to cancel your subcription license": {
+        "en": "If you want to cancel your subcription license",
+        "gr": "Αν θες να ακυρώσεις την συνδρομιτική σου άδεια"
+    },
+    "If you have a coupon to get a free, cheaper or lifetime license": {
+        "en": "If you have a coupon to get a free, cheaper or lifetime license",
+        "gr": "Αν έχεις ένα κουπόνι για να πάρεις μία δωρεάν, φτηνότερη ή εφ' όρου ζωής άδεια"
+    },
+    "If you want to buy a license for multiple accounts with a discount click": {
+        "en": "If you want to buy a license for multiple accounts with a discount click",
+        "gr": "Αν θες να αγοράσεις μία άδεια για πολλαπλούς λογαριασμούς με μία έκπτωση κλίκαρε"
+    },
+    "Mon": {
+        "en": "Mon",
+        "gr": "Δευ"
+    },
+    "Tue": {
+        "en": "Tue",
+        "gr": "Τρι"
+    },
+    "Wed": {
+        "en": "Wed",
+        "gr": "Τετ"
+    },
+    "Thu": {
+        "en": "Thu",
+        "gr": "Πεμ"
+    },
+    "Fri": {
+        "en": "Fri",
+        "gr": "Παρ"
+    },
+    "Sat": {
+        "en": "Sat",
+        "gr": "Σαβ"
+    },
+    "Sun": {
+        "en": "Sun",
+        "gr": "Κυρ"
+    },
+    "Dark Mode": {
+        "en": "Dark Mode",
+        "gr": "Σκοτεινή λειτουργία"
+    }
+}
