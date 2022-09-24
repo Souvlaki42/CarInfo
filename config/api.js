@@ -9,7 +9,7 @@ const From = `Souvlaki42 ${MAIL_USER}`;
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
     req.flash("error_msg", Translator.translate("Please log in to access this page"));
-    res.redirect("/login");
+    res.redirect("/auth/login");
 }
 
 function ensureNotAuthenticated(req, res, next) {

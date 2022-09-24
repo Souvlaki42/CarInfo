@@ -1,6 +1,6 @@
 <h1><%= Translator("Register") %></h1>
 <%- include("./_messages.ejs") %>
-    <form action="/register" method="post">
+    <form action="/auth/register" method="post">
         <div class="form-group">
             <label class="required" for="username">
                 <%= Translator("Username") %>
@@ -40,7 +40,7 @@
             <%= Translator("Register") %>
         </button>
         <p class="d-inline ml-3">
-            <%= Translator("Already a member?") %> <a href="/login">
+            <%= Translator("Already a member?") %> <a href="/auth/login">
                     <%= Translator("Login") %>
                 </a>
         </p>

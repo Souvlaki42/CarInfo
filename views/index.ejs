@@ -24,7 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<% cars.filter(car => car.user === user.email).forEach(car => { %>
+			<% cars.filter(car => car.creator === user.email).forEach(car => { %>
 				<tr>
 					<td><%= car.engineNumber %></td>
 					<td><%= car.frame %></td>

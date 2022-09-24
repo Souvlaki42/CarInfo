@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     res.locals.error_msg = req.flash("error_msg");
     res.locals.error = req.flash("error");
     res.locals.Translator = Translator.translate;
-    if (req.user) res.locals.user = req.user.username;
+    if (req.user) res.locals.user = req.user;
     next();
 });
 app.use((req, res, next) => {
@@ -55,9 +55,9 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use("/", require("./routes/main"));
+app.use("/cars", require("./routes/cars"));
+app.use("/auth", require("./routes/auth"));
 app.use("/tasks", require("./routes/tasks"));
-
-
 
 // MAIN
 app.listen(5000);

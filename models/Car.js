@@ -7,7 +7,7 @@ const CarSchema = new Schema({
     date: {type: String, required: true},
     price: {type: String, required: false},
     createdAt: {type: Date, default: Date.now},
-    user: {type: String, required: true},
+    creator: {type: String, required: true},
     bid: {type: String, unique: true, default: () => Math.floor(Math.random() * 10000000000)}
 });
 
