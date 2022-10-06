@@ -9,6 +9,6 @@ router.get("/new", ensureAuthenticated, getNew);
 
 router.post("/new", postNew);
 
-router.delete("/:bid", ensureAuthenticated, deleteCar);
+router.delete("/:id", ensureAuthenticated, deleteCar);
 
 module.exports = router;

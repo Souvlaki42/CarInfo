@@ -1,60 +1,45 @@
 <%- include("./_nav.ejs") %>
 <%- include("./_messages.ejs") %>
-<form action="/tasks/add" method="post" class="my-4 form-inline">
+<form action="/tasks" method="post" class="my-4 form-inline">
 	<input type="text" name="text" placeholder="Add a new item..." id="text" class="form-control col mr-2">
-    <input type="date" name="date" class="form-control mr-2">
-	<!-- <select class="form-select mr-2" aria-label="Day Select" name="days" data-daySelect>
-		<% days.forEach((item) => { %>
-		<option value="<%= item %>"><%= item %></option>
-		<% }) %>
-	</select>
-	<select class="form-select mr-2" aria-label="Month Select" name="months" data-monthSelect>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-	</select>
-	<select class="form-select mr-2" aria-label="Year Select" name="years" data-yearSelect>
-		<% years.forEach((item) => { %>
-			<option value="<%= item %>"><%= item %></option>
-		<% }) %>
-	</select> -->
-	<button type="submit" class="btn btn-success mr-2"><%= Translator("Add Task") %></button>
+    <input type="date" name="date" class="form-control mr-2" data-date>
+	<button type="submit" class="btn btn-primary mr-2" formaction="/tasks/add?_method=POST"><%= Translator("Add Task") %></button>
+    <button type="submit" class="btn btn-success" formaction="/tasks?_method=POST"><%= Translator("Search") %></button>
 </form>
 <div class="table-responsive">
 	<table class="table table-striped todo-tab">
 		<thead>
 			<tr>
+				<th><%= Translator("Day") %></th> 
+				<th><%= Translator("Month") %></th> 
+				<th><%= Translator("Year") %></th> 
 				<th><%= Translator("Task") %></th> 
+				<th><%= Translator("Done") %></th> 
 				<th><%= Translator("Actions") %></th>
 			</tr>
 		</thead>
 		<tbody>
+			<% tasks.filter(task => task.creator === user.email).forEach(task => { %>
+				<tr>
+					<td><%= task.day %></td>
+					<td><%= task.month %></td>
+					<td><%= task.year %></td>
+					<td><%= task.text %></td>
+					<td><%= task.completed === true ? Translator("Yes") : Translator("No") %></td>
+					<td><a class="btn btn-secondary" href="/tasks/<%= task.uuid %>/?_method=PUT"><%= Translator("Toggle") %></a>
+					<a class="btn btn-danger mr-2" href="/tasks/<%= task.uuid %>/?_method=DELETE"><%= Translator("Delete") %></a></td>
+				</tr>
+			<% }); %> 
 		</tbody>
 	</table>
 	<script>
-		const daySelect = document.querySelector("[data-daySelect]");
-		const monthSelect = document.querySelector("[data-monthSelect]");
-		const yearSelect = document.querySelector("[data-yearSelect]");
-
-		for (let item of daySelect.options) {
-			if (item.value === new Date().getDate().toString()) item.selected = true;
-		}
-
-		for (let item of monthSelect.options) {
-			if (item.value === (new Date().getMonth() + 1).toString()) item.selected = true;
-		}
-
-		for (let item of yearSelect.options) {
-			if (item.value === new Date().getFullYear().toString()) item.selected = true;
-		}
+		const dateSelect = document.querySelector("[data-date]");
+		if (dateSelect.value === "") {
+			const nowDay = new Date().getDate().toString();
+			const nowMonth = (new Date().getMonth() + 1).toString();
+			const nowYear = new Date().getFullYear().toString();
+			dateSelect.value = `${nowYear}-${nowMonth}-${nowDay.length === 1 ? "0" + nowDay : nowDay}`;
+		} 
+		
 	</script>
 </div>

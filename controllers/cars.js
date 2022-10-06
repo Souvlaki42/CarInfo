@@ -31,10 +31,10 @@ async function postNew(req, res) {
 }
 
 async function deleteCar(req, res, next) {
-	const car = await Cars.findOne({ bid: req.params.bid });
+	const car = await Cars.findOne({ id: req.params.id });
 	if (car == null) return res.sendStatus(404);
 
-	Cars.deleteOne({ bid: req.params.bid }, function (err) {
+	Cars.deleteOne({ id: req.params.id }, function (err) {
 		if (err) { return next(err); }
 		res.redirect("/");
 	});

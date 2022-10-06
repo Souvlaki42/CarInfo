@@ -125,7 +125,7 @@ function postLogout(req, res, next) {
 async function deleteAccount(req, res, next) {
 	const cars = await Cars.find();
 	cars.filter(car => car.email === req.user.email).forEach(car => {
-		Cars.deleteOne({ bid: car.bid }, (err) => {
+		Cars.deleteOne({ uuid: car.uuid }, (err) => {
 			if (err) { return next(err); }
 	    });
     });
