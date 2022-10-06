@@ -30,7 +30,7 @@
 					<td><%= car.frame %></td>
 					<td><%= car.licensePlate %></td>
 					<td><%= car.date %></td>
-					<td><%= car.price ? car.price : Translator("Free") %></td>
+					<td><%= car.price && car.price !== "0" ? car.price : Translator("Free") %></td>
 					<td><a class="btn btn-danger" href="/cars/<%= car.uuid %>/?_method=DELETE"><%= Translator("Delete") %></a></td>
 				</tr>
 			<% }); %> 

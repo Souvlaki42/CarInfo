@@ -1,7 +1,7 @@
 <%- include("./_nav.ejs") %>
 <%- include("./_messages.ejs") %>
 <form action="/tasks" method="post" class="my-4 form-inline">
-	<input type="text" name="text" placeholder="Add a new item..." id="text" class="form-control col mr-2">
+	<input type="text" name="text" placeholder="<%= Translator('Add a new task') %>..." id="text" class="form-control col mr-2">
     <input type="date" name="date" class="form-control mr-2" data-date>
 	<button type="submit" class="btn btn-primary mr-2" formaction="/tasks/add?_method=POST"><%= Translator("Add Task") %></button>
     <button type="submit" class="btn btn-success" formaction="/tasks?_method=POST"><%= Translator("Search") %></button>

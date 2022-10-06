@@ -1,8 +1,5 @@
 {
-    "Welcome": {
-        "gr": "Καλώς όρισες"
-    },
-    "Add Car":{
+    "Add Car": {
         "gr": "Προσθήκη Αυτοκινήτου"
     },
     "Add Task": {
@@ -70,6 +67,9 @@
     },
     "Please fill the task": {
         "gr": "Παρακαλώ σημπλήρωσε την εργασία"
+    },
+    "Add a new task": {
+        "gr": "Πρόσθεσε μία νέα εργασία"
     },
     "Please select a type to search": {
         "gr": "Παρακαλώ είλεξε έναν τύπο να ψάξεις"
@@ -190,33 +190,6 @@
     },
     "Cars": {
         "gr": "Αυτοκίνητα"
-    },
-    "Buy License": {
-        "gr": "Αγορά Άδειας"
-    },
-    "Move License": {
-        "gr": "Μεταφορά Άδειας"
-    },
-    "Cancel License": {
-        "gr": "Ακύρωση Άδειας"
-    },
-    "Get License": {
-        "gr": "Πάρε Άδεια"
-    },
-    "If you want to buy a new subcription license": {
-        "gr": "Αν θες να αγοράσεις μία νέα συνδρομιτική άδεια"
-    },
-    "If you want to move your license to a new email": {
-        "gr": "Αν θες να μετακινήσεις την άδεια σου σε νέο email"
-    },
-    "If you want to cancel your subcription license": {
-        "gr": "Αν θες να ακυρώσεις την συνδρομιτική σου άδεια"
-    },
-    "If you have a coupon to get a free, cheaper or lifetime license": {
-        "gr": "Αν έχεις ένα κουπόνι για να πάρεις μία δωρεάν, φτηνότερη ή εφ' όρου ζωής άδεια"
-    },
-    "If you want to buy a license for multiple accounts with a discount click": {
-        "gr": "Αν θες να αγοράσεις μία άδεια για πολλαπλούς λογαριασμούς με μία έκπτωση κλίκαρε"
     },
     "Mon": {
         "gr": "Δευ"
