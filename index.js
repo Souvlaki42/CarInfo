@@ -23,7 +23,6 @@ app.use(back());
 app.use(passport.session(PASSPORT_SETTINGS));
 mongoose.connect(DB_URI, DB_SETTINGS);
 app.use(methodOverride("_method"));
-app.use(express.static("public"));
 app.use(passport.initialize());
 app.set("view engine", "ejs");
 app.use(expressLayouts);

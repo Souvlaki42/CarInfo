@@ -1,4 +1,5 @@
 const Tasks = require("../models/Task");
+const { Translator } = require("../config/api");
 
 async function getTasks(req, res) {
     const tasks = await (await Tasks.find().sort({ creation: "desc" }));
@@ -16,7 +17,20 @@ async function postTasks(req, res) {
 }
 
 async function postAdd(req, res) {
+	const errors = [];
+
     const text = req.body.text;
+
+	if (!text) {
+		errors.push({ msg: Translator.translate("Please fill the task") });
+	}
+	
+	if (errors.length > 0) {
+		const tasks = await (await Tasks.find().sort({ creation: "desc" }));
+		res.render("tasks", { tasks: tasks, errors: errors });
+		return;
+	}
+
 	const date = req.body.date.split("-");
 	const day = parseInt(date[2][0] === "0" ? date[2][1] : date[2]);
 	const month = parseInt(date[1]);
