@@ -1,9 +1,10 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
-const { Translator } = require("../config/api");
+import passportLocal from "passport-local";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
+import { Translator } from "../config/api.js";
+const LocalStrategy = passportLocal.Strategy;
 
-module.exports = function(passport) {
+export default function(passport) {
   passport.use(
     new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
       User.findOne({

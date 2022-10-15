@@ -1,6 +1,6 @@
-const express = require("express");
-const { ensureAuthenticated } = require("../config/api");
-const { getTasks, postTasks, postAdd, deleteTask, toggleTask } = require("../controllers/tasks");
+import express from "express";
+import { ensureAuthenticated } from "../config/api.js";
+import { getTasks, postTasks, postAdd, deleteTask, toggleTask } from "../controllers/tasks.js";
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.delete("/:id", deleteTask);
 
 router.put("/:id", toggleTask);
 
-module.exports = router;
+export default router;

@@ -1,15 +1,15 @@
-const { Translator, emailSend, generateCrypto } = require("../config/api");
-const bcrypt = require("bcryptjs");
-const passport = require("passport");
-const Cars = require("../models/Car");
-const User = require("../models/User");
-const { HOST } = require("../config/main.json");
+import { Translator, emailSend, generateCrypto } from "../config/api.js";
+import bcrypt from "bcryptjs";
+import passport from "passport";
+import Cars from "../models/Car.js";
+import User from "../models/User.js";
+import jsonMain from "../config/main.json" assert {type: "json"};
 
-function getRegister(req, res) {
+export function getRegister(req, res) {
 	res.render("register");
 }
 
-function postRegister(req, res) {
+export function postRegister(req, res) {
 	const { username, email, password, password2, phone } = req.body;
 	let errors = [];
 
@@ -42,7 +42,7 @@ function postRegister(req, res) {
 					if (err) throw err;
 					newUser.password = hash;
 					newUser.save().then(user => {
-						emailSend(user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${HOST}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, false);
+						emailSend(user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${jsonMain.HOST}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, false);
 						req.flash("success_msg", Translator.translate("You are registered and must verify your email"));
 						res.redirect("/auth/register");
 					}).catch(err => console.log(err));
@@ -52,7 +52,7 @@ function postRegister(req, res) {
 	};
 }
 
-async function getVerified(req, res) {
+export async function getVerified(req, res) {
 	const user = await User.findOne({ token: req.params.token });
 	if (!user) return res.sendStatus(404);
 	user.verified = true;
@@ -62,11 +62,11 @@ async function getVerified(req, res) {
 	res.redirect("/auth/login");
 }
 
-function getPassword(req, res) {
+export function getPassword(req, res) {
 	res.render("password");
 }
 
-async function postPassword(req, res) {
+export async function postPassword(req, res) {
 	let errors = [];
 
 	if (!req.body.email || !req.body.password || !req.body.password2) {
@@ -101,12 +101,12 @@ async function postPassword(req, res) {
 	}
 }
 
-function getLogin(req, res) {
+export function getLogin(req, res) {
     const back = req.prevPath;
 	res.render("login", { back: back });
 }
 
-function postLogin(req, res, next) {
+export function postLogin(req, res, next) {
 	passport.authenticate("local", {
 		successRedirect: req.query.back,
 		failureRedirect: "/auth/login",
@@ -114,7 +114,7 @@ function postLogin(req, res, next) {
 	})(req, res, next);
 }
 
-function postLogout(req, res, next) {
+export function postLogout(req, res, next) {
 	req.logout(err => {
 		if (err) { return next(err); }
 		req.flash("success_msg", Translator.translate("You are logged out"));
@@ -122,7 +122,7 @@ function postLogout(req, res, next) {
 	});
 }
 
-async function deleteAccount(req, res, next) {
+export async function deleteAccount(req, res, next) {
 	const cars = await Cars.find();
 	cars.filter(car => car.email === req.user.email).forEach(car => {
 		Cars.deleteOne({ uuid: car.uuid }, (err) => {
@@ -136,5 +136,3 @@ async function deleteAccount(req, res, next) {
         res.redirect("/auth/register");
     });
 }
-
-module.exports = {getRegister,postRegister,getVerified,getPassword,postPassword,getLogin,postLogin,postLogout,deleteAccount};

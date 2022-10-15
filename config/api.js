@@ -1,24 +1,24 @@
-const Localize = require("localize");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
-const { MAIL_USER, MAIL_KEY } = require("./main.json");
-const Translator = new Localize("./config");
-const Transporter = nodemailer.createTransport({ host: "smtp.gmail.com", port: 465, secure: true, auth: { user: MAIL_USER, pass: MAIL_KEY } });
-const From = `Souvlaki42 ${MAIL_USER}`;
+import  Localize from "localize";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+import jsonMain from "./main.json" assert {type: "json"};
+export const Translator = new Localize("./config");
+const Transporter = nodemailer.createTransport({ host: "smtp.gmail.com", port: 465, secure: true, auth: { user: jsonMain.MAIL_USER, pass: jsonMain.MAIL_PASS } });
+const From = `Souvlaki42 ${jsonMain.MAIL_USER}`;
 
-function ensureAuthenticated(req, res, next) {
+export function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
     req.flash("error_msg", Translator.translate("Please log in to access this page"));
     res.redirect("/auth/login");
-}
+};
 
-function ensureNotAuthenticated(req, res, next) {
+export function ensureNotAuthenticated(req, res, next) {
     if (!req.isAuthenticated()) return next();
     req.flash("error_msg", Translator.translate("Please log out to access this page"));
     res.redirect("/");
-}
+};
 
-function emailSend(receiver, subject, message, returnInfo = false) {
+export function emailSend(receiver, subject, message, returnInfo = false) {
     let emailOptions = { from: From, to: receiver, subject: Translator.translate(subject), html: message };
 
     Transporter.sendMail(emailOptions, (error, info) => {
@@ -27,37 +27,6 @@ function emailSend(receiver, subject, message, returnInfo = false) {
     });
 };
 
-function minToMs(min) {
-    return min * 60000;
-}
-
-function generateCrypto(key) {
+export function generateCrypto(key) {
     return crypto.randomBytes(key).toString("hex");
-}
-
-function generateArrayRange(firstNumber, lastNumber) {
-    let array = [];
-    let number = firstNumber;
-    while (number < lastNumber + 1) {
-        array.push(number);
-        number++;
-    }
-    return array;
-}
-
-function daysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
-}
-
-function yearCheck(year, part = 100) {
-    const math = (year, part) => year - year % part;
-    return {prev: math(year, part) - part, curr: math(year, part), next: math(year, part) + part};
-}
-
-function getCalendarItems(month, year) {
-    const days = generateArrayRange(1, daysInMonth(month, year));
-	const years = generateArrayRange(yearCheck(year, 100).prev, yearCheck(year, 200).next);
-    return {days: days, years: years};
-}
-
-module.exports = { Translator, ensureAuthenticated, ensureNotAuthenticated, emailSend, minToMs, generateCrypto, generateArrayRange, daysInMonth, yearCheck, getCalendarItems };
+};

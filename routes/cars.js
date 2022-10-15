@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const { ensureAuthenticated } = require("../config/api");
+import { ensureAuthenticated } from "../config/api.js";
 
-const { getNew, postNew, deleteCar } = require("../controllers/cars");
+import { getNew, postNew, deleteCar } from "../controllers/cars.js";
 
 router.get("/new", ensureAuthenticated, getNew);
 
@@ -11,4 +11,4 @@ router.post("/new", postNew);
 
 router.delete("/:id", ensureAuthenticated, deleteCar);
 
-module.exports = router;
+export default router;

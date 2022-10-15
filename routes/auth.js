@@ -1,6 +1,6 @@
-const express = require("express");
-const {getRegister, postRegister, getVerified, getPassword, postPassword, getLogin, postLogin, postLogout, deleteAccount} = require("../controllers/auth");
-const { ensureAuthenticated, ensureNotAuthenticated } = require("../config/api");
+import express from "express";
+import { getRegister, postRegister, getVerified, getPassword, postPassword, getLogin, postLogin, postLogout, deleteAccount } from "../controllers/auth.js";
+import { ensureAuthenticated, ensureNotAuthenticated } from "../config/api.js";
 const router = express.Router();
 
 router.get("/register", ensureNotAuthenticated, getRegister);
@@ -21,4 +21,4 @@ router.post("/logout", ensureAuthenticated, postLogout);
 
 router.delete("/account", ensureAuthenticated, deleteAccount);
 
-module.exports = router;
+export default router;

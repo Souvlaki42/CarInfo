@@ -1,11 +1,11 @@
-const Cars = require("../models/Car");
+import Cars from "../models/Car.js";
 
-async function getIndex(req, res)  {
+export async function getIndex(req, res)  {
 	const cars = await Cars.find().sort({ createdAt: "desc" });
 	res.render("index", { cars: cars });
 }
 
-async function postIndex(req, res) {
+export async function postIndex(req, res) {
 	let search = req.body.query;
 	let select = req.body.selector;
 	let errors = [];
@@ -38,5 +38,3 @@ async function postIndex(req, res) {
 		res.render("index", { cars: cars, search: req.body.query });
 	}
 }
-
-module.exports = { getIndex, postIndex };

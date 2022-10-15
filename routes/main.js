@@ -1,7 +1,7 @@
-const express = require("express");
-const { ensureAuthenticated } = require("../config/api");
+import express from "express";
+import { ensureAuthenticated } from "../config/api.js";
 
-const {getIndex, postIndex} = require("../controllers/main");
+import { getIndex, postIndex } from "../controllers/main.js";
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get("/", ensureAuthenticated, getIndex);
 
 router.post("/", ensureAuthenticated, postIndex);
 
-module.exports = router;
+export default router;

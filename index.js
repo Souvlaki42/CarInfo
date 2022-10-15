@@ -1,32 +1,38 @@
 // IMPORTS
-const express = require("express");
-const mongoose = require("mongoose");
-const expressLayouts = require("express-ejs-layouts");
-const methodOverride = require("method-override");
-const session = require("express-session");
-const back = require("express-back");
-const flash = require("connect-flash");
-const passport = require("passport");
+import express from "express";
+import { connect as dbConnect } from "mongoose";
+import expressLayouts from "express-ejs-layouts";
+import methodOverride from "method-override";
+import session from "express-session";
+import back from "express-back";
+import flash from "connect-flash";
+import passport from "passport";
 const app = express();
 
 //CONSTANTS
-const { DB_URI } = require("./config/main.json");
-const { Translator, minToMs, generateCrypto } = require("./config/api");
-const SESSION_SETTINGS = { secret: generateCrypto(64), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: minToMs(10)} };
+import jsonMain from "./config/main.json" assert {type: "json"};
+import { Translator, generateCrypto } from "./config/api.js";
+import passportConfig from "./config/passport.js";
+const SESSION_SETTINGS = { secret: generateCrypto(64), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: 600000} };
 const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
 const PASSPORT_SETTINGS = { cookie: { secure: true } };
+
+import mainRoute from "./routes/main.js";
+import carsRoute from "./routes/cars.js";
+import authRoute from "./routes/auth.js";
+import tasksRoute from "./routes/tasks.js";
 
 // CONFIGURATION
 app.use(express.urlencoded({ extended: false }));
 app.use(session(SESSION_SETTINGS));
 app.use(back());
 app.use(passport.session(PASSPORT_SETTINGS));
-mongoose.connect(DB_URI, DB_SETTINGS);
+dbConnect(jsonMain.DB_URI, DB_SETTINGS, console.log("Database Connected!"));
 app.use(methodOverride("_method"));
 app.use(passport.initialize());
+passportConfig(passport);
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-require("./config/passport")(passport);
 app.use(flash());
 
 // MIDDLEWARE
@@ -53,10 +59,10 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.use("/", require("./routes/main"));
-app.use("/cars", require("./routes/cars"));
-app.use("/auth", require("./routes/auth"));
-app.use("/tasks", require("./routes/tasks"));
+app.use("/", mainRoute);
+app.use("/cars", carsRoute);
+app.use("/auth", authRoute);
+app.use("/tasks", tasksRoute);
 
 // MAIN
-app.listen(5000);
+app.listen(5000, console.log("Server Connected!"));

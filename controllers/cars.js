@@ -1,11 +1,11 @@
-const Cars = require("../models/Car");
-const { Translator } = require("../config/api");
+import Cars from "../models/Car.js";
+import { Translator } from "../config/api.js";
 
-function getNew(req, res) {
+export function getNew(req, res) {
 	res.render("new");
 }
 
-async function postNew(req, res) {
+export async function postNew(req, res) {
 	const { engine_number, frame, license_plate, date, price } = req.body;
 	let errors = [];
 
@@ -30,7 +30,7 @@ async function postNew(req, res) {
 	}
 }
 
-async function deleteCar(req, res, next) {
+export async function deleteCar(req, res, next) {
 	const car = await Cars.findOne({ id: req.params.id });
 	if (car == null) return res.sendStatus(404);
 
@@ -39,5 +39,3 @@ async function deleteCar(req, res, next) {
 		res.redirect("/");
 	});
 }
-
-module.exports = { getNew, postNew, deleteCar };
