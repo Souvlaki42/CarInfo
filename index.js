@@ -1,4 +1,4 @@
-// IMPORTS
+{/* IMPORTS */}
 import express from "express";
 import { connect as dbConnect } from "mongoose";
 import expressLayouts from "express-ejs-layouts";
@@ -9,7 +9,7 @@ import flash from "connect-flash";
 import passport from "passport";
 const app = express();
 
-//CONSTANTS
+{/* CONSTANTS */}
 import jsonMain from "./config/main.json" assert {type: "json"};
 import { Translator, generateCrypto } from "./config/api.js";
 import passportConfig from "./config/passport.js";
@@ -17,12 +17,7 @@ const SESSION_SETTINGS = { secret: generateCrypto(64), resave: true, saveUniniti
 const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
 const PASSPORT_SETTINGS = { cookie: { secure: true } };
 
-import mainRoute from "./routes/main.js";
-import carsRoute from "./routes/cars.js";
-import authRoute from "./routes/auth.js";
-import tasksRoute from "./routes/tasks.js";
-
-// CONFIGURATION
+{/* CONFIGURATION */}
 app.use(express.urlencoded({ extended: false }));
 app.use(session(SESSION_SETTINGS));
 app.use(back());
@@ -35,7 +30,7 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(flash());
 
-// MIDDLEWARE
+{/* MIDDLEWARE */}
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash("success_msg");
     res.locals.error_msg = req.flash("error_msg");
@@ -44,6 +39,7 @@ app.use((req, res, next) => {
     if (req.user) res.locals.user = req.user;
     next();
 });
+
 app.use((req, res, next) => {
     if (req.query._method) {
         req.method = req.query._method;
@@ -51,6 +47,7 @@ app.use((req, res, next) => {
     }
     next();
 });
+
 app.use((req, res, next) => {
     Translator.setLocale("en");
     const language = req.acceptsLanguages();
@@ -58,11 +55,16 @@ app.use((req, res, next) => {
     next();
 });
 
-// ROUTES
+{/* ROUTES */}
+import mainRoute from "./routes/main.js";
+import carsRoute from "./routes/cars.js";
+import authRoute from "./routes/auth.js";
+import tasksRoute from "./routes/tasks.js";
+
 app.use("/", mainRoute);
 app.use("/cars", carsRoute);
 app.use("/auth", authRoute);
 app.use("/tasks", tasksRoute);
 
-// MAIN
-app.listen(5000, console.log("Server Connected!"));
+{/* LISTENER */}
+app.listen(jsonMain.PORT, console.log("Server Connected!"));

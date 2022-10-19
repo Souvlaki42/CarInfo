@@ -1,6 +1,6 @@
 {
     "DB_URI": "mongodb+srv://Souvlaki42:0IJtfcmamqSoQSQP@souvlaki42.2oc5g.mongodb.net/carinfo?retryWrites=true&w=majority",
     "MAIL_USER": "souvlaki420@gmail.com",
-    "MAIL_KEY": "lrrckstdomhtjatt",
-    "HOST": "http://localhost:5000"
+    "MAIL_KEY": "sdpcwtmyzeoforvj",
+    "PORT": 5000
 }

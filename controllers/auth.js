@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import passport from "passport";
 import Cars from "../models/Car.js";
 import User from "../models/User.js";
-import jsonMain from "../config/main.json" assert {type: "json"};
 
 export function getRegister(req, res) {
 	res.render("register");
@@ -12,7 +11,7 @@ export function getRegister(req, res) {
 export function postRegister(req, res) {
 	const { username, email, password, password2, phone } = req.body;
 	let errors = [];
-
+	
 	if (!username || !email || !password || !password2 || !phone) {
 		errors.push({ msg: Translator.translate("Please fill in all fields") });
 	}
@@ -20,15 +19,15 @@ export function postRegister(req, res) {
 	if (password !== password2) {
 		errors.push({ msg: Translator.translate("Passwords do not match") });
 	}
-
+	
 	if (password.length < 8) {
 		errors.push({ msg: Translator.translate("Password should be at least 8 characters") });
 	}
-
+	
 	if (phone.length != 10) {
 		errors.push({ msg: Translator.translate("Telephone number should be 10 characters long") });
 	}
-
+	
 	if (errors.length > 0) {
 		res.render("register", { errors, username, email, password, password2, phone });
 	} else {
@@ -42,7 +41,11 @@ export function postRegister(req, res) {
 					if (err) throw err;
 					newUser.password = hash;
 					newUser.save().then(user => {
-						emailSend(user.email, "Car Info Email Verification", `<b>${Translator.translate("Thank you for registering")}!<br>${Translator.translate("Please click this")} <a href="${jsonMain.HOST}/verify/${user.token}">${Translator.translate("link")}</a> ${Translator.translate("to verify your email address")}</b>`, false);
+						const emailLink = `${req.protocol}://${req.headers.host}/auth/verify/${user.token}`;
+						emailSend(user.email, "Car Info Email Verification", `
+						${Translator.translate("Thank you for registering")}!<br>
+						${Translator.translate("Please click this")} <a href=${emailLink}>link</a> ${Translator.translate("to verify your email address")}<br>
+						`);
 						req.flash("success_msg", Translator.translate("You are registered and must verify your email"));
 						res.redirect("/auth/register");
 					}).catch(err => console.log(err));
@@ -82,18 +85,19 @@ export async function postPassword(req, res) {
 	}
 
 	if (errors.length > 0) {
-		res.render("settings", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
+		res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
 	} else {
 		const user = await User.findOne({ email: req.body.email });
 		if (!user) {
 			errors.push(Translator.translate("That email is not registered"));
-			res.render("settings", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
+			res.render("password", { errors, email: req.body.email, password: req.body.password, password2: req.body.password2 });
 		} else {
 			bcrypt.genSalt(10, (err, salt) => bcrypt.hash(req.body.password, salt, (err, hash) => {
 				if (err) throw err;
 				user.password = hash;
 				user.save()
-				emailSend(user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href="${Config.Domain}/settings">${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`);
+				const emailLink = `${req.protocol}://${req.headers.host}/auth/password`;
+				emailSend(user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href=${emailLink}>${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`);
 				req.flash("success_msg", "Your password was just changed and can log in");
 				res.redirect("/auth/login");
 			}));

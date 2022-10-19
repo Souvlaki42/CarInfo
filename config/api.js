@@ -1,10 +1,9 @@
-import  Localize from "localize";
+import Localize from "localize";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import jsonMain from "./main.json" assert {type: "json"};
 export const Translator = new Localize("./config");
-const Transporter = nodemailer.createTransport({ host: "smtp.gmail.com", port: 465, secure: true, auth: { user: jsonMain.MAIL_USER, pass: jsonMain.MAIL_PASS } });
-const From = `Souvlaki42 ${jsonMain.MAIL_USER}`;
+const Transporter = nodemailer.createTransport({host: "smtp.gmail.com", port: 465, secure: true, auth: {user: jsonMain.MAIL_USER, pass: jsonMain.MAIL_KEY}});
 
 export function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
@@ -18,13 +17,9 @@ export function ensureNotAuthenticated(req, res, next) {
     res.redirect("/");
 };
 
-export function emailSend(receiver, subject, message, returnInfo = false) {
-    let emailOptions = { from: From, to: receiver, subject: Translator.translate(subject), html: message };
-
-    Transporter.sendMail(emailOptions, (error, info) => {
-        if (error) return console.log(error);
-        if (returnInfo) return console.log(info);
-    });
+export function emailSend(receiver, subject, message) {
+    const emailOptions = {from: `CarInfo ${jsonMain.MAIL_USER}`, to: receiver, subject: Translator.translate(subject), text: message, html: message};
+    Transporter.sendMail(emailOptions, error => {if (error) console.log(error)});
 };
 
 export function generateCrypto(key) {
