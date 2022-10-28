@@ -4,7 +4,6 @@ import { connect as dbConnect } from "mongoose";
 import expressLayouts from "express-ejs-layouts";
 import methodOverride from "method-override";
 import session from "express-session";
-import back from "express-back";
 import flash from "connect-flash";
 import passport from "passport";
 const app = express();
@@ -20,7 +19,6 @@ const PASSPORT_SETTINGS = { cookie: { secure: true } };
 {/* CONFIGURATION */}
 app.use(express.urlencoded({ extended: false }));
 app.use(session(SESSION_SETTINGS));
-app.use(back());
 app.use(passport.session(PASSPORT_SETTINGS));
 dbConnect(jsonMain.DB_URI, DB_SETTINGS, console.log("Database Connected!"));
 app.use(methodOverride("_method"));
@@ -37,6 +35,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.Translator = Translator.translate;
     if (req.user) res.locals.user = req.user;
+    res.locals.jsonMain = jsonMain;
     next();
 });
 

@@ -80,8 +80,8 @@
     "Your password was just changed": {
         "gr": "Ο κωδικός σου μόλις άλλαξε"
     },
-    "if you weren't the one who changed your password": {
-        "gr": "αν δεν ήσουν εσύ που άλλαξες τον κωδικό σου"
+    "If you haven't changed your password": {
+        "gr": "Αν δεν άλλαξες εσύ τον κωδικό σου"
     },
     "That email is not verified": {
         "gr": "Αυτό το email δεν έχει επιβεβαιωθεί"
@@ -131,8 +131,8 @@
     "Thank you for registering": {
         "gr": "Σε ευχαριστώ που εγγράφηκες"
     },
-    "Please click this": {
-        "gr": "Παρακαλώ κάνε κλικ σε αυτόν τον"
+    "click this": {
+        "gr": "κάνε κλικ σε αυτόν τον"
     },
     "to verify your email address":{
         "gr": "για να επιβεβαιώσεις την διεύθυνση email σου"
@@ -244,5 +244,11 @@
     },
     "Free": {
         "gr": "Δωρεάν"
+    },
+    "to change it now or this": {
+        "gr": "για να τον αλλάξεις τώρα ή αυτόν τον"
+    },
+    "to contact support": {
+        "gr": "για να επικοινωνήσεις με την υποστήριξη"
     }
 }

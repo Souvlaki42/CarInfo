@@ -1,3 +1,4 @@
+import jsonMain from "../config/main.json" assert {type: "json"};
 import { Translator, emailSend, generateCrypto } from "../config/api.js";
 import bcrypt from "bcryptjs";
 import passport from "passport";
@@ -96,8 +97,9 @@ export async function postPassword(req, res) {
 				if (err) throw err;
 				user.password = hash;
 				user.save()
-				const emailLink = `${req.protocol}://${req.headers.host}/auth/password`;
-				emailSend(user.email, "Your password was just changed", `<b>${Translator.translate("Please click this")} <a href=${emailLink}>${Translator.translate("link")}</a> ${Translator.translate("if you weren't the one who changed your password")}</b>`);
+				const emailLink1 = `${req.protocol}://${req.headers.host}/auth/password`;
+				emailSend(user.email, "Your password was just changed",
+				`<b>${Translator.translate("If you haven't changed your password")} ${Translator.translate("click this")} <a href=${emailLink1}>${Translator.translate("link")}</a> ${Translator.translate("to change it now or this")} <a href="mailto:${jsonMain.MAIL_USER}">${Translator.translate("link")}</a> ${Translator.translate("to contact support")}</b>`);
 				req.flash("success_msg", "Your password was just changed and can log in");
 				res.redirect("/auth/login");
 			}));
@@ -106,13 +108,12 @@ export async function postPassword(req, res) {
 }
 
 export function getLogin(req, res) {
-    const back = req.prevPath;
-	res.render("login", { back: back });
+	res.render("login");
 }
 
 export function postLogin(req, res, next) {
 	passport.authenticate("local", {
-		successRedirect: req.query.back,
+		successRedirect: "/",
 		failureRedirect: "/auth/login",
 		failureFlash: true
 	})(req, res, next);

@@ -1,6 +1,6 @@
 <h1><%= Translator("Login") %></h1>
 <%- include("./_messages.ejs") %>
-<form action="/auth/login?back=<%= back %>" method="post">
+<form action="/auth/login" method="post">
 	<div class="form-group">
 		<label class="required" for="email">Email</label>
 		<input value="<%= typeof email != "undefined" ? email : "" %>" autocomplete="username" type="email" name="email" id="email" class="form-control" placeholder="<%= Translator("Enter your email") %>">
