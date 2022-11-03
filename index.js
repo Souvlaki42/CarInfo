@@ -49,8 +49,8 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     Translator.setLocale("en");
-    const language = req.acceptsLanguages();
-    if (language[0].includes("gr") || language[0].includes("el")) { Translator.setLocale("gr") };
+    const language = req.acceptsLanguages()[0];
+    if (language.includes("gr") || language.includes("el")) { Translator.setLocale("gr") };
     next();
 });
 
@@ -66,4 +66,4 @@ app.use("/auth", authRoute);
 app.use("/tasks", tasksRoute);
 
 {/* LISTENER */}
-app.listen(jsonMain.PORT, console.log("Server Connected!"));
+app.listen(jsonMain.PORT, console.log(`Server Connected! ${jsonMain.PORT}`));
