@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
 
-export default model("Tasks",new Schema({
+export default model("Tasks", new Schema({
     day: {type: Number, required: true},
     month: {type: Number, required: true},
     year: {type: Number, required: true},

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
 
-export default model("Cars",  new Schema({
+export default model("Cars", new Schema({
     engineNumber: {type: String, required: true},
     frame: {type: String, required: true},
     licensePlate: {type: String, required: true},
