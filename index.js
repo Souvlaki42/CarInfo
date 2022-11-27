@@ -6,21 +6,20 @@ import methodOverride from "method-override";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
-const app = express();
 
 {/* CONSTANTS */}
 import jsonMain from "./config/main.json" assert {type: "json"};
 import { Translator, generateCrypto } from "./config/api.js";
 import passportConfig from "./config/passport.js";
 const SESSION_SETTINGS = { secret: generateCrypto(64), resave: true, saveUninitialized: true, rolling: true, cookie: {maxAge: 600000} };
-const DB_SETTINGS = { useNewUrlParser: true, useUnifiedTopology: true };
 const PASSPORT_SETTINGS = { cookie: { secure: true } };
+const app = express();
 
 {/* CONFIGURATION */}
 app.use(express.urlencoded({ extended: false }));
 app.use(session(SESSION_SETTINGS));
 app.use(passport.session(PASSPORT_SETTINGS));
-dbConnect(jsonMain.DB_URI, DB_SETTINGS, console.log("Database Connected!"));
+dbConnect(jsonMain.DB_URI, console.log("Database Connected!"));
 app.use(methodOverride("_method"));
 app.use(passport.initialize());
 passportConfig(passport);
@@ -66,4 +65,4 @@ app.use("/auth", authRoute);
 app.use("/tasks", tasksRoute);
 
 {/* LISTENER */}
-app.listen(jsonMain.PORT, console.log(`Server Connected! ${jsonMain.PORT}`));
+app.listen(jsonMain.PORT, console.log(`Server Connected! http://localhost:${jsonMain.PORT}`));
