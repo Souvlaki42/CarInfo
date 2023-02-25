@@ -1,7 +1,7 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { User } from "../models/user";
-import NavBarLoggedInView from "./views/NavBarLoggedInView";
-import NavBarLoggedOutView from "./views/NavBarLoggedOutView";
+import { NavBarLoggedInView } from "./views/NavBarLoggedInView";
+import { NavBarLoggedOutView } from "./views/NavBarLoggedOutView";
 import { Link } from "react-router-dom";
 
 interface NavBarProps {
@@ -11,7 +11,7 @@ interface NavBarProps {
 	onLogoutSuccessful: () => void;
 }
 
-const NavBar = ({
+export const NavBar = ({
 	loggedInUser,
 	onSignUpClicked,
 	onLoginClicked,
@@ -51,5 +51,3 @@ const NavBar = ({
 		</Navbar>
 	);
 };
-
-export default NavBar;

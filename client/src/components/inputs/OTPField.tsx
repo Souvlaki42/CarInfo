@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
-import TextInputField from "./TextInputField";
+import { PlainText } from "./PlainText";
 
-interface OTPInputFieldProps {
+interface OTPFieldProps {
 	name: string;
 	label: string;
 	register: UseFormRegister<any>;
@@ -12,7 +12,7 @@ interface OTPInputFieldProps {
 	[x: string]: any;
 }
 
-const OTPInputField = ({
+export const OTPField = ({
 	name,
 	label,
 	register,
@@ -20,9 +20,9 @@ const OTPInputField = ({
 	error,
 	button,
 	...props
-}: OTPInputFieldProps) => {
+}: OTPFieldProps) => {
 	return (
-		<TextInputField
+		<PlainText
 			{...props}
 			name={name}
 			label={label}
@@ -30,9 +30,7 @@ const OTPInputField = ({
 			register={register}
 			registerOptions={registerOptions}
 			error={error}
-			inputText={button}
+			inputGroupText={button}
 		/>
 	);
 };
-
-export default OTPInputField;

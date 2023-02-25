@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginModal from "./components/modals/LoginModal";
-import NavBar from "./components/NavBar";
-import SignUpModal from "./components/modals/SignUpModal";
+import { LoginModal } from "./components/modals/LoginModal";
+import { NavBar } from "./components/NavBar";
+import { SignUpModal } from "./components/modals/SignUpModal";
 import { User } from "./models/user";
 import * as UsersApi from "./network/users_api";
-import NotesPage from "./pages/NotesPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import PrivacyPage from "./pages/PrivacyPage";
+import { NotesPage } from "./pages/NotesPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { PrivacyPage } from "./pages/PrivacyPage";
 import styles from "./styles/App.module.css";
 
-function App() {
+export function App() {
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -40,7 +40,10 @@ function App() {
 				/>
 				<Container className={styles.pageContainer}>
 					<Routes>
-						<Route path="/notes" element={<NotesPage loggedInUser={loggedInUser}/>} />
+						<Route
+							path="/notes"
+							element={<NotesPage loggedInUser={loggedInUser} />}
+						/>
 						<Route path="/privacy" element={<PrivacyPage />} />
 						<Route path="/*" element={<NotFoundPage />} />
 					</Routes>
@@ -67,5 +70,3 @@ function App() {
 		</BrowserRouter>
 	);
 }
-
-export default App;

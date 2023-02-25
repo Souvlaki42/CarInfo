@@ -7,7 +7,7 @@ interface NavBarLoggedInViewProps {
 	onLogoutSuccessful: () => void;
 }
 
-const NavBarLoggedInView = ({
+export const NavBarLoggedInView = ({
 	user,
 	onLogoutSuccessful,
 }: NavBarLoggedInViewProps) => {
@@ -29,5 +29,3 @@ const NavBarLoggedInView = ({
 		</>
 	);
 };
-
-export default NavBarLoggedInView;

@@ -6,25 +6,25 @@ export interface SearchQuery {
 	setSearchQuery: Dispatch<SetStateAction<string>>;
 }
 
-interface SearchInputFieldProps {
+interface SearchFieldProps {
 	name: string;
 	query: SearchQuery;
 	[x: string]: any;
 }
 
-const SearchInputField = ({ name, query, ...props }: SearchInputFieldProps) => {
+export const SearchField = ({ name, query, ...props }: SearchFieldProps) => {
 	return (
 		<Container fluid>
 			<Form.Group className="mb-3" controlId={`${name}-input`}>
 				<InputGroup>
 					<Form.Control
 						{...props}
-						onChange={(e) => { query.setSearchQuery(e.target.value)}}
+						onChange={(e) => {
+							query.setSearchQuery(e.target.value);
+						}}
 					/>
 				</InputGroup>
 			</Form.Group>
 		</Container>
 	);
 };
-
-export default SearchInputField;

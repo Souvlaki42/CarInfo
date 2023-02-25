@@ -5,11 +5,11 @@ import { Note as NoteModel } from "../../models/note";
 import * as NotesApi from "../../network/notes_api";
 import styles from "../../styles/NotesPage.module.css";
 import styleUtils from "../../styles/utils.module.css";
-import AddEditNoteModal from "../modals/AddEditNoteModal";
-import Note from "../Note";
-import SearchInputField from "../SearchInputField";
+import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
+import { Note } from "../Note";
+import { SearchField } from "../inputs/SearchField";
 
-const NotesPageLoggedInView = () => {
+export const NotesPageLoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
 	const [notesLoading, setNotesLoading] = useState(true);
 	const [showNotesLoadingError, setShowNotesLoadingError] = useState(false);
@@ -81,7 +81,11 @@ const NotesPageLoggedInView = () => {
 
 	return (
 		<>
-		<SearchInputField name="search" placeholder="Search..." query={{searchQuery, setSearchQuery}}/>
+			<SearchField
+				name="search"
+				placeholder="Search..."
+				query={{ searchQuery, setSearchQuery }}
+			/>
 			<Button
 				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
 				onClick={() => setShowAddNoteModal(true)}
@@ -103,7 +107,7 @@ const NotesPageLoggedInView = () => {
 				</>
 			)}
 			{showAddNoteModal && (
-				<AddEditNoteModal
+				<AddEditNoteDialog
 					onDismiss={() => setShowAddNoteModal(false)}
 					onNoteSaved={(newNote) => {
 						setNotes([...notes, newNote]);
@@ -112,7 +116,7 @@ const NotesPageLoggedInView = () => {
 				/>
 			)}
 			{noteToEdit && (
-				<AddEditNoteModal
+				<AddEditNoteDialog
 					noteToEdit={noteToEdit}
 					onDismiss={() => setNoteToEdit(null)}
 					onNoteSaved={(updatedNote) => {
@@ -130,5 +134,3 @@ const NotesPageLoggedInView = () => {
 		</>
 	);
 };
-
-export default NotesPageLoggedInView;

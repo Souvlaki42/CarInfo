@@ -12,7 +12,7 @@ interface NoteProps {
 	className?: string,
 }
 
-const Note = ({ note, onNoteClicked, onDeleteNoteClicked, className }: NoteProps) => {
+export const Note = ({ note, onNoteClicked, onDeleteNoteClicked, className }: NoteProps) => {
 	const { title, text, createdAt, updatedAt } = note;
 
 	let createdUpdatedText: string;
@@ -37,5 +37,3 @@ const Note = ({ note, onNoteClicked, onDeleteNoteClicked, className }: NoteProps
 		</Card>
 	);
 };
-
-export default Note;

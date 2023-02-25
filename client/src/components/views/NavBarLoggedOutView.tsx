@@ -5,7 +5,7 @@ interface NavBarLoggedOutViewProps {
 	onLoginClicked: () => void;
 }
 
-const NavBarLoggedOutView = ({
+export const NavBarLoggedOutView = ({
 	onSignUpClicked,
 	onLoginClicked,
 }: NavBarLoggedOutViewProps) => {
@@ -16,5 +16,3 @@ const NavBarLoggedOutView = ({
 		</>
 	);
 };
-
-export default NavBarLoggedOutView;

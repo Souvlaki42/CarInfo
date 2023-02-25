@@ -6,17 +6,17 @@ import { User } from "../../models/user";
 import * as UsersApi from "../../network/users_api";
 import { SignUpCredentials } from "../../network/users_api";
 import styleUtils from "../../styles/utils.module.css";
-import DismissibleAlert from "../DismissibleAlert";
-import TextInputField from "../TextInputField";
-import PasswordInputField from "../PasswordInputField";
-import OTPInputField from "../OTPInputField";
+import { DismissibleAlert } from "../DismissibleAlert";
+import { PlainText } from "../inputs/PlainText";
+import { PasswordField } from "../inputs/PasswordField";
+import { OTPField } from "../inputs/OTPField";
 
 interface SignUpModalProps {
 	onDismiss: () => void;
 	onSignUpSuccessful: (user: User) => void;
 }
 
-const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
+export const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [otpSent, setOtpSent] = useState<boolean>(false);
 	const {
@@ -63,7 +63,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 					<DismissibleAlert variant="danger" text={errorText} />
 				)}
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<TextInputField
+					<PlainText
 						name="username"
 						label="Username"
 						type="text"
@@ -72,7 +72,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 						registerOptions={{ required: "Required" }}
 						error={errors.username}
 					/>
-					<TextInputField
+					<PlainText
 						name="email"
 						label="Email"
 						type="email"
@@ -81,23 +81,36 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 						registerOptions={{ required: "Required" }}
 						error={errors.email}
 					/>
-					<PasswordInputField
+					<PasswordField
 						name="password"
 						label="Password"
 						register={register}
 						placeholder="Password"
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
+						forgotPasswordText={false}
 					/>
-					<OTPInputField
+					<OTPField
 						name="otp"
 						label="One Time Password"
 						register={register}
-						registerOptions={otpSent ? {
-							required: "Required",
-						} : {}}
+						registerOptions={
+							otpSent
+								? {
+										required: "Required",
+								  }
+								: {}
+						}
 						error={errors.otp}
-						button={<Button variant="outline-primary" type={"submit"} disabled={isSubmitting}>Send OTP</Button>}
+						button={
+							<Button
+								variant="outline-primary"
+								type={"submit"}
+								disabled={isSubmitting}
+							>
+								Send OTP
+							</Button>
+						}
 					/>
 					<Button
 						type="submit"
@@ -112,5 +125,3 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 		</Modal>
 	);
 };
-
-export default SignUpModal;

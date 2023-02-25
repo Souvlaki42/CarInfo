@@ -6,16 +6,16 @@ import { User } from "../../models/user";
 import * as UsersApi from "../../network/users_api";
 import { LoginCredentials } from "../../network/users_api";
 import styleUtils from "../../styles/utils.module.css";
-import DismissibleAlert from "../DismissibleAlert";
-import TextInputField from "../TextInputField";
-import PasswordInputField from "../PasswordInputField";
+import { DismissibleAlert } from "../DismissibleAlert";
+import { PlainText } from "../inputs/PlainText";
+import { PasswordField } from "../inputs/PasswordField";
 
 interface LoginModalProps {
 	onDismiss: () => void;
 	onLoginSuccessful: (user: User) => void;
 }
 
-const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
+export const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 
 	const {
@@ -48,7 +48,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 					<DismissibleAlert variant="danger" text={errorText} />
 				)}
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<TextInputField
+					<PlainText
 						name="username"
 						label="Username"
 						type="text"
@@ -57,15 +57,15 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 						registerOptions={{ required: "Required" }}
 						error={errors.username}
 					/>
-					<PasswordInputField
+					<PasswordField
 						name="password"
 						label="Password"
 						register={register}
 						placeholder="Password"
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
+						forgotPasswordText={true}
 					/>
-					<Form.Label className="mb-3">Forgot Password?</Form.Label>
 					<Button
 						type="submit"
 						disabled={isSubmitting}
@@ -78,5 +78,3 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
 		</Modal>
 	);
 };
-
-export default LoginModal;
