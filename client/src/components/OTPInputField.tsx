@@ -1,5 +1,6 @@
-import { Form, InputGroup } from "react-bootstrap";
+import { ReactNode } from "react";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
+import TextInputField from "./TextInputField";
 
 interface OTPInputFieldProps {
 	name: string;
@@ -7,6 +8,7 @@ interface OTPInputFieldProps {
 	register: UseFormRegister<any>;
 	registerOptions?: RegisterOptions;
 	error?: FieldError;
+	button: ReactNode;
 	[x: string]: any;
 }
 
@@ -16,53 +18,20 @@ const OTPInputField = ({
 	register,
 	registerOptions,
 	error,
+	button,
 	...props
 }: OTPInputFieldProps) => {
 	return (
-		<Form.Group className="mb-3" controlId={`${name}-input`}>
-			<Form.Label>{label}</Form.Label>
-			<InputGroup>
-				<Form.Control
-					{...props}
-					maxLength={1}
-					{...register(`${name}_1`, registerOptions)}
-					isInvalid={!!error}
-					/>
-				<Form.Control
-					maxLength={1}
-					{...props}
-					{...register(`${name}_2`, registerOptions)}
-					isInvalid={!!error}
-					/>
-				<Form.Control
-					{...props}
-					maxLength={1}
-					{...register(`${name}_3`, registerOptions)}
-					isInvalid={!!error}
-					/>
-				<Form.Control
-					{...props}
-					maxLength={1}
-					{...register(`${name}_4`, registerOptions)}
-					isInvalid={!!error}
-					/>
-				<Form.Control
-					{...props}
-					maxLength={1}
-					{...register(`${name}_5`, registerOptions)}
-					isInvalid={!!error}
-					/>
-				<Form.Control
-					{...props}
-					maxLength={1}
-					{...register(`${name}_6`, registerOptions)}
-					isInvalid={!!error}
-				/>
-			</InputGroup>
-			<Form.Control.Feedback type="invalid">
-				{error?.message}
-			</Form.Control.Feedback>
-		</Form.Group>
+		<TextInputField
+			{...props}
+			name={name}
+			label={label}
+			placeholder={"Enter OTP"}
+			register={register}
+			registerOptions={registerOptions}
+			error={error}
+			inputText={button}
+		/>
 	);
 };
 

@@ -35,7 +35,7 @@ const PasswordInputField = ({
 				<InputGroup.Text
 					onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 				>
-					{isPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+					{isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
 				</InputGroup.Text>
 			}
 		/>

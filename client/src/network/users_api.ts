@@ -10,12 +10,7 @@ export interface SignUpCredentials {
 	username: string;
 	email: string;
 	password: string;
-	otp_1: string;
-	otp_2: string;
-	otp_3: string;
-	otp_4: string;
-	otp_5: string;
-	otp_6: string;
+	otp: string;
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {

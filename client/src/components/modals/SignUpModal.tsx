@@ -28,13 +28,20 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 	async function onSubmit(credentials: SignUpCredentials) {
 		try {
 			if (otpSent) {
-				if (await UsersApi.verifyOTP({email: credentials.email, otp: `${credentials.otp_1}${credentials.otp_2}${credentials.otp_3}${credentials.otp_4}${credentials.otp_5}${credentials.otp_6}`})) {
+				if (
+					await UsersApi.verifyOTP({
+						email: credentials.email,
+						otp: credentials.otp,
+					})
+				) {
 					const newUser = await UsersApi.signUp(credentials);
 					onSignUpSuccessful(newUser);
 				}
 			} else {
-				await UsersApi.sendOTP({ email: credentials.email, username: credentials.username });
-				setOtpSent(true);
+				await UsersApi.sendOTP({
+					email: credentials.email,
+					username: credentials.username,
+				});
 			}
 		} catch (error) {
 			if (error instanceof ConflictError) {
@@ -86,17 +93,19 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 						name="otp"
 						label="One Time Password"
 						register={register}
-						registerOptions={
-							otpSent ? { required: "Required" } : {}
-						}
-						error={errors.otp_1}
+						registerOptions={otpSent ? {
+							required: "Required",
+						} : {}}
+						error={errors.otp}
+						button={<Button variant="outline-primary" type={"submit"} disabled={isSubmitting}>Send OTP</Button>}
 					/>
 					<Button
 						type="submit"
 						disabled={isSubmitting}
 						className={styleUtils.width100}
+						onClick={() => setOtpSent(true)}
 					>
-						{otpSent ? "Sign Up" : "Send OTP"}
+						Sign Up
 					</Button>
 				</Form>
 			</Modal.Body>
