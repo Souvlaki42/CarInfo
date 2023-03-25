@@ -1,33 +1,34 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { ConflictError } from "../../utils/httpErrors";
+import { UnauthorizedError } from "../../utils/httpErrors";
 import { User } from "../../models/user";
 import * as UsersApi from "../../network/users_api";
-import { SignUpCredentials } from "../../network/users_api";
+import { PasswordResetCredentials } from "../../network/users_api";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
-import { TextInputField } from "../TextInputField";
 import { PasswordInputField } from "../PasswordInputField";
+import { TextInputField } from "../TextInputField";
 
-interface SignUpModalProps {
+interface PasswordResetModalProps {
 	onDismiss: () => void;
-	onSignUpSuccessful: (user: User) => void;
+	onPasswordResetSuccessful: (user: User) => void;
 }
 
-export const SignUpModal = ({
+const PasswordResetModal = ({
 	onDismiss,
-	onSignUpSuccessful,
-}: SignUpModalProps) => {
+	onPasswordResetSuccessful,
+}: PasswordResetModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [otpSent, setOtpSent] = useState<boolean>(false);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<SignUpCredentials>();
+	} = useForm<PasswordResetCredentials>();
 
-	async function onSubmit(credentials: SignUpCredentials) {
+	async function onSubmit(credentials: PasswordResetCredentials) {
 		try {
 			if (otpSent) {
 				if (
@@ -36,22 +37,19 @@ export const SignUpModal = ({
 						otp: credentials.otp,
 					})
 				) {
-					const newUser = await UsersApi.signUp(credentials);
-					onSignUpSuccessful(newUser);
+					const user = await UsersApi.passwordReset(credentials);
+					onPasswordResetSuccessful(user);
 				}
 			} else {
 				await UsersApi.sendOTP(
-					{
-						email: credentials.email,
-						username: credentials.username,
-					},
-					"Email Verification",
-					"Please verify your account using this one time password:"
+					{ email: credentials.email },
+					"Reset Password",
+					"Please verify your password reset request using this one time password:"
 				);
 				setOtpSent(true);
 			}
 		} catch (error) {
-			if (error instanceof ConflictError) {
+			if (error instanceof UnauthorizedError) {
 				setErrorText(error.message);
 			} else {
 				alert(error);
@@ -63,22 +61,13 @@ export const SignUpModal = ({
 	return (
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
-				<Modal.Title>Sign Up</Modal.Title>
+				<Modal.Title>Password Reset</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				{errorText && (
 					<DismissibleAlert variant="danger" text={errorText} />
 				)}
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<TextInputField
-						name="username"
-						label="Username"
-						type="text"
-						placeholder="Username"
-						register={register}
-						registerOptions={{ required: "Required" }}
-						error={errors.username}
-					/>
 					<TextInputField
 						name="email"
 						label="Email"
@@ -96,6 +85,14 @@ export const SignUpModal = ({
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
 					/>
+					<PasswordInputField
+						name="password2"
+						label="Verify Password"
+						register={register}
+						placeholder="Verify Password"
+						registerOptions={{ required: "Required" }}
+						error={errors.password2}
+					/>
 					<TextInputField
 						name="otp"
 						label="One Time Password"
@@ -112,10 +109,12 @@ export const SignUpModal = ({
 						disabled={isSubmitting}
 						className={styleUtils.width100}
 					>
-						{otpSent ? "Sign Up" : "Send OTP"}
+						{otpSent ? "Reset Password" : "Send OTP"}
 					</Button>
 				</Form>
 			</Modal.Body>
 		</Modal>
 	);
 };
+
+export default PasswordResetModal;

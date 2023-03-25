@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
-interface PlainTextProps {
+interface TextInputFieldProps {
 	name: string;
 	label: string;
 	register: UseFormRegister<any>;
@@ -13,7 +13,7 @@ interface PlainTextProps {
 	[x: string]: any;
 }
 
-export const PlainText = ({
+export const TextInputField = ({
 	name,
 	label,
 	register,
@@ -22,7 +22,7 @@ export const PlainText = ({
 	inputGroupText,
 	afterInputComponent,
 	...props
-}: PlainTextProps) => {
+}: TextInputFieldProps) => {
 	return (
 		<Form.Group className={"mb-3"} controlId={`${name}-input`}>
 			<Form.Label>{label}</Form.Label>

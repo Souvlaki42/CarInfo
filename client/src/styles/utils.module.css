@@ -14,3 +14,7 @@
 .width100 {
     width: 100%;
 }
+
+.link:hover {
+    color: #0d6efd;
+}

@@ -1,3 +1,4 @@
+import { json } from "react-router-dom";
 import { User } from "../models/user";
 import { fetchData } from "../utils/fetchData";
 
@@ -29,8 +30,15 @@ export interface LoginCredentials {
 	password: string;
 }
 
+export interface PasswordResetCredentials {
+	email: string;
+	password: string;
+	password2: string;
+	otp: string;
+}
+
 export interface SendOTPCredentials {
-	username: string;
+	username?: string;
 	email: string;
 }
 
@@ -50,15 +58,26 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 	return response.json();
 }
 
+export async function passwordReset(credentials: PasswordResetCredentials): Promise<User> {
+	const response = await fetchData("/api/users/reset-password", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(credentials),
+	});
+	return response.json();
+}
+
 export async function logout() {
 	await fetchData("/api/users/logout", { method: "POST" });
 }
 
-export async function sendOTP(credentials: SendOTPCredentials): Promise<User> {
+export async function sendOTP(credentials: SendOTPCredentials, title: string, text: string): Promise<User> {
 	const response = await fetchData("/api/users/sendOTP", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(credentials),
+		body: JSON.stringify({...credentials, title, text}),
 	});
 	return response.json();
 }

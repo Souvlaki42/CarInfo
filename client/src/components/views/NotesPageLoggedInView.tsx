@@ -7,7 +7,7 @@ import styles from "../../styles/NotesPage.module.css";
 import styleUtils from "../../styles/utils.module.css";
 import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
 import { Note } from "../Note";
-import { SearchField } from "../inputs/SearchField";
+import { SearchInputField } from "../SearchInputField";
 
 export const NotesPageLoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -39,9 +39,13 @@ export const NotesPageLoggedInView = () => {
 			try {
 				setShowNotesLoadingError(false);
 				setNotesLoading(true);
-				if (searchQuery === "") return;
-				const notes = await NotesApi.searchNotes(searchQuery);
-				setNotes(notes);
+				if (!searchQuery || searchQuery === "") {
+					const notes = await NotesApi.fetchNotes();
+					setNotes(notes);
+				} else {
+					const notes = await NotesApi.searchNotes(searchQuery);
+					setNotes(notes);
+				}
 			} catch (error) {
 				console.error(error);
 				setShowNotesLoadingError(true);
@@ -81,11 +85,7 @@ export const NotesPageLoggedInView = () => {
 
 	return (
 		<>
-			<SearchField
-				name="search"
-				placeholder="Search..."
-				query={{ searchQuery, setSearchQuery }}
-			/>
+		<SearchInputField name="search" placeholder="Search" query={{searchQuery, setSearchQuery}}/>
 			<Button
 				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
 				onClick={() => setShowAddNoteModal(true)}

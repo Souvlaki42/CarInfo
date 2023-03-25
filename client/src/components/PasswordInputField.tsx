@@ -1,32 +1,30 @@
 import { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { PlainText } from "./PlainText";
-import "../../styles/componentStyles.css";
+import { TextInputField } from "./TextInputField";
+import "../styles/componentStyles.css";
 
-interface PasswordFieldProps {
+interface PasswordInputFieldProps {
 	name: string;
 	label: string;
 	register: UseFormRegister<any>;
 	placeholder?: string;
 	registerOptions?: RegisterOptions;
 	error?: FieldError;
-	forgotPasswordText: boolean;
 }
 
-export const PasswordField = ({
+export const PasswordInputField = ({
 	name,
 	label,
 	register,
 	placeholder = "",
 	registerOptions,
-	error,
-	forgotPasswordText,
-}: PasswordFieldProps) => {
+	error
+}: PasswordInputFieldProps) => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	return (
-		<PlainText
+		<TextInputField
 			name={name}
 			label={label}
 			type={isPasswordVisible ? "text" : "password"}
@@ -40,17 +38,6 @@ export const PasswordField = ({
 				>
 					{isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
 				</InputGroup.Text>
-			}
-			afterInputComponent={
-				forgotPasswordText ? (
-					<div className="d-flex justify-content-end">
-						<Form.Text className="text-end hover-underline text-reset">
-							Forgot your password?
-						</Form.Text>
-					</div>
-				) : (
-					<></>
-				)
 			}
 		/>
 	);

@@ -81,7 +81,7 @@ interface LoginBody {
 }
 
 export const login: RequestHandler<
-	unknown,
+unknown,
 	unknown,
 	LoginBody,
 	unknown
@@ -115,6 +115,50 @@ export const login: RequestHandler<
 	}
 };
 
+interface PasswordResetBody {
+	email?: string;
+	password?: string;
+	password2?: string;
+}
+
+export const passwordReset: RequestHandler<
+	unknown,
+	unknown,
+	PasswordResetBody,
+	unknown
+> = async (req, res, next) => {
+	const email = req.body.email;
+	const password = req.body.password;
+	const password2 = req.body.password2;
+	
+	try {
+		if (!email || !password || !password2) {
+			throw createHttpError(400, "Parameters missing");
+		}
+
+		if (password !== password2) {
+			throw createHttpError(401, "Passwords don't match");
+		}
+
+		const user = await UserModel.findOne({ email: email }).exec();
+
+		if (!user) {
+			throw createHttpError(401, "Invalid credentials");
+		}
+
+		const passwordHashed = await bcrypt.hash(password, 10);
+
+		user.password = passwordHashed;
+
+		user.save();
+
+		req.session.userId = user._id;
+		res.status(200).json(user);
+	} catch (error) {
+		next(error);
+	}
+};
+
 export const logout: RequestHandler = (req, res, next) => {
 	req.session.destroy((error) => {
 		if (error) {
@@ -126,6 +170,14 @@ export const logout: RequestHandler = (req, res, next) => {
 };
 
 export const sendOTP: RequestHandler = async (req, res, next) => {
+	if (!req.body.email || !req.body.title || !req.body.text) throw createHttpError(401, "Missing Info");
+	let username;
+	if (!req.body.username) {
+		const user = await UserModel.findOne({email: req.body.email}).exec();
+		if (!user) throw createHttpError(404, "User does not exist yet");
+		username = user.username;
+	} else username = req.body.username;
+
 	try {
 		const otp = await generateOTP();
 		const otpObj = await OTPModel.create({
@@ -133,10 +185,10 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 			otp: otp,
 		});
 		await sendEmail(
-			"Email Verification",
+			`${req.body.title}`,
 			`
-		<h3>Hello, ${req.body.username}!</h3>
-		<p>Please verify your account using this one time password: <h4>${otp}</h4></p>
+		<h3>Hello, ${username}!</h3>
+		<p>${req.body.text} <h4>${otp}</h4></p>
 		`,
 			`${req.body.email}`,
 			`${env.EMAIL_USER}`,

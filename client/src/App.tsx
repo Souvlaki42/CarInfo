@@ -10,12 +10,14 @@ import { NotesPage } from "./pages/NotesPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import styles from "./styles/App.module.css";
+import PasswordResetModal from "./components/modals/PasswordResetModal";
 
 export function App() {
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
+	const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
 
 	useEffect(() => {
 		async function fetchLoggedInUser() {
@@ -60,9 +62,22 @@ export function App() {
 				{showLoginModal && (
 					<LoginModal
 						onDismiss={() => setShowLoginModal(false)}
+						onShowPasswordResetModal={() => {
+							setShowLoginModal(false);
+							setShowPasswordResetModal(true);
+						}}
 						onLoginSuccessful={(user) => {
 							setLoggedInUser(user);
 							setShowLoginModal(false);
+						}}
+					/>
+				)}
+				{showPasswordResetModal && (
+					<PasswordResetModal
+						onDismiss={() => setShowPasswordResetModal(false)}
+						onPasswordResetSuccessful={(user) => {
+							setLoggedInUser(user);
+							setShowPasswordResetModal(false);
 						}}
 					/>
 				)}

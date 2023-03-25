@@ -10,6 +10,8 @@ router.post("/signup", UserController.signUp);
 
 router.post("/login", UserController.login);
 
+router.post("/reset-password", UserController.passwordReset)
+
 router.post("/logout", UserController.logout);
 
 router.post("/sendOTP", UserController.sendOTP);

@@ -155,21 +155,19 @@ export const deleteNote: RequestHandler = async (req, res, next) => {
 };
 
 export const searchNotes: RequestHandler = async (req, res, next) => {
-	const searchQuery = req.body.query;
+	const searchQuery = req.body.query.toLowerCase();
 	const authenticatedUserId = req.session.userId;
 	try {
 		assertIsDefined(authenticatedUserId);
 		assertIsDefined(searchQuery);
 
-		const notes = await NoteModel.find(
-			{
-				$text: { $search: searchQuery, $caseSensitive: false },
-				userId: authenticatedUserId,
-			},
-			{ score: { $meta: "textScore" } }
-		).sort({
-			score: { $meta: "textScore" },
-		});
+		const notes = await (
+			await NoteModel.find({ userId: authenticatedUserId })
+		).filter(
+			(note) =>
+				note.title?.toLowerCase().includes(searchQuery) ||
+				note.text?.toLowerCase().includes(searchQuery)
+		);
 
 		res.status(200).json(notes);
 	} catch (error) {
