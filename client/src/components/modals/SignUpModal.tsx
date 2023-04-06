@@ -7,8 +7,8 @@ import * as UsersInterface from "../../interfaces/users";
 import { SignUpCredentials } from "../../interfaces/users";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
-import { TextInputField } from "../TextInputField";
-import { PasswordInputField } from "../PasswordInputField";
+import { TextInputField } from "../inputs/TextInputField";
+import { PasswordInputField } from "../inputs/PasswordInputField";
 
 interface SignUpModalProps {
 	onDismiss: () => void;

@@ -3,7 +3,7 @@ import { InputGroup } from "react-bootstrap";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { TextInputField } from "./TextInputField";
-import "../styles/componentStyles.css";
+import "../../styles/componentStyles.css";
 
 interface PasswordInputFieldProps {
 	name: string;

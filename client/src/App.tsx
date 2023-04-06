@@ -11,6 +11,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import styles from "./styles/App.module.css";
 import PasswordResetModal from "./components/modals/PasswordResetModal";
+import SettingsModal from "./components/modals/SettingsModal";
 
 export function App() {
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -18,6 +19,7 @@ export function App() {
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
 	const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+	const [showSettingsModal, setshowSettingsModal] = useState(false);
 
 	useEffect(() => {
 		async function fetchLoggedInUser() {
@@ -38,6 +40,7 @@ export function App() {
 					loggedInUser={loggedInUser}
 					onLoginClicked={() => setShowLoginModal(true)}
 					onSignUpClicked={() => setShowSignUpModal(true)}
+					onSettingsClicked={() => setshowSettingsModal(true)}
 					onLogoutSuccessful={() => setLoggedInUser(null)}
 				/>
 				<Container className={styles.pageContainer}>
@@ -78,6 +81,14 @@ export function App() {
 						onPasswordResetSuccessful={(user) => {
 							setLoggedInUser(user);
 							setShowPasswordResetModal(false);
+						}}
+					/>
+				)}
+				{showSettingsModal && (
+					<SettingsModal
+						onDismiss={() => setshowSettingsModal(false)}
+						onSettingsSaved={() => {
+							// setshowSettingsModal(false);
 						}}
 					/>
 				)}

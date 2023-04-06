@@ -7,7 +7,7 @@ import styles from "../../styles/NotesPage.module.css";
 import styleUtils from "../../styles/utils.module.css";
 import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
 import { Note } from "../Note";
-import { SearchInputField } from "../SearchInputField";
+import { SearchInputField } from "../inputs/SearchInputField";
 
 export const NotesPageLoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);

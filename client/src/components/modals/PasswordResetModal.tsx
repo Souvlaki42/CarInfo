@@ -7,8 +7,8 @@ import * as UsersInterface from "../../interfaces/users";
 import { PasswordResetCredentials } from "../../interfaces/users";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
-import { PasswordInputField } from "../PasswordInputField";
-import { TextInputField } from "../TextInputField";
+import { PasswordInputField } from "../inputs/PasswordInputField";
+import { TextInputField } from "../inputs/TextInputField";
 
 interface PasswordResetModalProps {
 	onDismiss: () => void;

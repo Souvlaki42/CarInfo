@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { User } from "../models/user";
 import { NavBarLoggedInView } from "./views/NavBarLoggedInView";
 import { NavBarLoggedOutView } from "./views/NavBarLoggedOutView";
@@ -9,6 +9,7 @@ interface NavBarProps {
 	onSignUpClicked: () => void;
 	onLoginClicked: () => void;
 	onLogoutSuccessful: () => void;
+	onSettingsClicked: () => void;
 }
 
 export const NavBar = ({
@@ -16,6 +17,7 @@ export const NavBar = ({
 	onSignUpClicked,
 	onLoginClicked,
 	onLogoutSuccessful,
+	onSettingsClicked,
 }: NavBarProps) => {
 	return (
 		<Navbar bg="primary" variant="dark" expand="sm" sticky="top">
@@ -45,6 +47,7 @@ export const NavBar = ({
 								onSignUpClicked={onSignUpClicked}
 							/>
 						)}
+						<Button onClick={onSettingsClicked}>Settings</Button>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
