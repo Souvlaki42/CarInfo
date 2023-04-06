@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { Note as NoteModel } from "../../models/note";
-import * as NotesApi from "../../network/notes_api";
+import * as NotesInterface from "../../interfaces/notes";
 import styles from "../../styles/NotesPage.module.css";
 import styleUtils from "../../styles/utils.module.css";
 import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
@@ -23,7 +23,7 @@ export const NotesPageLoggedInView = () => {
 			try {
 				setShowNotesLoadingError(false);
 				setNotesLoading(true);
-				const notes = await NotesApi.fetchNotes();
+				const notes = await NotesInterface.fetchNotes();
 				setNotes(notes);
 			} catch (error) {
 				console.error(error);
@@ -40,10 +40,10 @@ export const NotesPageLoggedInView = () => {
 				setShowNotesLoadingError(false);
 				setNotesLoading(true);
 				if (!searchQuery || searchQuery === "") {
-					const notes = await NotesApi.fetchNotes();
+					const notes = await NotesInterface.fetchNotes();
 					setNotes(notes);
 				} else {
-					const notes = await NotesApi.searchNotes(searchQuery);
+					const notes = await NotesInterface.searchNotes(searchQuery);
 					setNotes(notes);
 				}
 			} catch (error) {
@@ -58,7 +58,7 @@ export const NotesPageLoggedInView = () => {
 
 	async function deleteNote(note: NoteModel) {
 		try {
-			await NotesApi.deleteNote(note._id);
+			await NotesInterface.deleteNote(note._id);
 			setNotes(
 				notes.filter((existingNote) => existingNote._id !== note._id)
 			);
@@ -85,7 +85,11 @@ export const NotesPageLoggedInView = () => {
 
 	return (
 		<>
-		<SearchInputField name="search" placeholder="Search" query={{searchQuery, setSearchQuery}}/>
+			<SearchInputField
+				name="search"
+				placeholder="Search"
+				query={{ searchQuery, setSearchQuery }}
+			/>
 			<Button
 				className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
 				onClick={() => setShowAddNoteModal(true)}

@@ -3,8 +3,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { UnauthorizedError } from "../../utils/httpErrors";
 import { User } from "../../models/user";
-import * as UsersApi from "../../network/users_api";
-import { LoginCredentials } from "../../network/users_api";
+import * as UsersInterface from "../../interfaces/users";
+import { LoginCredentials } from "../../interfaces/users";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { TextInputField } from "../TextInputField";
@@ -16,7 +16,11 @@ interface LoginModalProps {
 	onShowPasswordResetModal: () => void;
 }
 
-export const LoginModal = ({ onDismiss, onLoginSuccessful, onShowPasswordResetModal }: LoginModalProps) => {
+export const LoginModal = ({
+	onDismiss,
+	onLoginSuccessful,
+	onShowPasswordResetModal,
+}: LoginModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
 
 	const {
@@ -27,7 +31,7 @@ export const LoginModal = ({ onDismiss, onLoginSuccessful, onShowPasswordResetMo
 
 	async function onSubmit(credentials: LoginCredentials) {
 		try {
-			const user = await UsersApi.login(credentials);
+			const user = await UsersInterface.login(credentials);
 			onLoginSuccessful(user);
 		} catch (error) {
 			if (error instanceof UnauthorizedError) {
@@ -66,7 +70,12 @@ export const LoginModal = ({ onDismiss, onLoginSuccessful, onShowPasswordResetMo
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
 					/>
-					<Form.Label className={`mb-3 ${styleUtils.link}`} onClick={onShowPasswordResetModal}>Forgot Password?</Form.Label>
+					<Form.Label
+						className={`mb-3 ${styleUtils.link}`}
+						onClick={onShowPasswordResetModal}
+					>
+						Forgot Password?
+					</Form.Label>
 					<Button
 						type="submit"
 						disabled={isSubmitting}

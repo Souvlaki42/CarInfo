@@ -1,4 +1,3 @@
-import { json } from "react-router-dom";
 import { User } from "../models/user";
 import { fetchData } from "../utils/fetchData";
 

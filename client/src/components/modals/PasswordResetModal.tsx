@@ -3,8 +3,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { UnauthorizedError } from "../../utils/httpErrors";
 import { User } from "../../models/user";
-import * as UsersApi from "../../network/users_api";
-import { PasswordResetCredentials } from "../../network/users_api";
+import * as UsersInterface from "../../interfaces/users";
+import { PasswordResetCredentials } from "../../interfaces/users";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { PasswordInputField } from "../PasswordInputField";
@@ -32,16 +32,18 @@ const PasswordResetModal = ({
 		try {
 			if (otpSent) {
 				if (
-					await UsersApi.verifyOTP({
+					await UsersInterface.verifyOTP({
 						email: credentials.email,
 						otp: credentials.otp,
 					})
 				) {
-					const user = await UsersApi.passwordReset(credentials);
+					const user = await UsersInterface.passwordReset(
+						credentials
+					);
 					onPasswordResetSuccessful(user);
 				}
 			} else {
-				await UsersApi.sendOTP(
+				await UsersInterface.sendOTP(
 					{ email: credentials.email },
 					"Reset Password",
 					"Please verify your password reset request using this one time password:"

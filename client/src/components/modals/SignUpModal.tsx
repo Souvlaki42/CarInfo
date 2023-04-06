@@ -3,8 +3,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { ConflictError } from "../../utils/httpErrors";
 import { User } from "../../models/user";
-import * as UsersApi from "../../network/users_api";
-import { SignUpCredentials } from "../../network/users_api";
+import * as UsersInterface from "../../interfaces/users";
+import { SignUpCredentials } from "../../interfaces/users";
 import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { TextInputField } from "../TextInputField";
@@ -31,16 +31,16 @@ export const SignUpModal = ({
 		try {
 			if (otpSent) {
 				if (
-					await UsersApi.verifyOTP({
+					await UsersInterface.verifyOTP({
 						email: credentials.email,
 						otp: credentials.otp,
 					})
 				) {
-					const newUser = await UsersApi.signUp(credentials);
+					const newUser = await UsersInterface.signUp(credentials);
 					onSignUpSuccessful(newUser);
 				}
 			} else {
-				await UsersApi.sendOTP(
+				await UsersInterface.sendOTP(
 					{
 						email: credentials.email,
 						username: credentials.username,

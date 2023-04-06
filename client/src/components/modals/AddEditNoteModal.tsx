@@ -1,8 +1,8 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Note } from "../../models/note";
-import { NoteInput } from "../../network/notes_api";
-import * as NotesApi from "../../network/notes_api";
+import { NoteInput } from "../../interfaces/notes";
+import * as NotesInterface from "../../interfaces/notes";
 import { TextInputField } from "../TextInputField";
 
 interface AddEditNoteDialogProps {
@@ -31,9 +31,12 @@ export const AddEditNoteDialog = ({
 		try {
 			let noteResponse: Note;
 			if (noteToEdit) {
-				noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+				noteResponse = await NotesInterface.updateNote(
+					noteToEdit._id,
+					input
+				);
 			} else {
-				noteResponse = await NotesApi.createNote(input);
+				noteResponse = await NotesInterface.createNote(input);
 			}
 			onNoteSaved(noteResponse);
 		} catch (error) {
