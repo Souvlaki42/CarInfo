@@ -29,14 +29,28 @@ export const Note = ({
 
 	let createdUpdatedText: string;
 	if (updatedAt > createdAt) {
-		createdUpdatedText = `${t("Updated")}: ${formatDate(updatedAt, getLocaleFromLanguage(i18n.language))}`;
+		createdUpdatedText = `${t("Updated")}: ${formatDate(
+			updatedAt,
+			getLocaleFromLanguage(i18n.language)
+		)}`;
 	} else {
-		createdUpdatedText = `${t("Created")}: ${formatDate(createdAt, getLocaleFromLanguage(i18n.language))}`;
+		createdUpdatedText = `${t("Created")}: ${formatDate(
+			createdAt,
+			getLocaleFromLanguage(i18n.language)
+		)}`;
 	}
+
+	let noteCardStyle: CSSModuleClasses[string];
+	if (
+		document.querySelector("html")?.getAttribute("data-bs-theme") ===
+		"light"
+	)
+		noteCardStyle = styles.noteCard;
+	else noteCardStyle = styles.noteCardDark;
 
 	return (
 		<Card
-			className={`${styles.noteCard} ${className}`}
+			className={`${noteCardStyle} ${className}`}
 			onClick={() => onNoteClicked(note)}
 		>
 			<Card.Body className={styles.cardBody}>
