@@ -1,44 +1,46 @@
 import { useState } from "react";
-import { InputGroup } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { TextInputField } from "./TextInputField";
 import "../../styles/componentStyles.css";
 
 interface PasswordInputFieldProps {
 	name: string;
 	label: string;
 	register: UseFormRegister<any>;
-	placeholder?: string;
 	registerOptions?: RegisterOptions;
 	error?: FieldError;
+	[x: string]: any;
 }
 
 export const PasswordInputField = ({
 	name,
 	label,
 	register,
-	placeholder = "",
 	registerOptions,
-	error
+	error,
+	...props
 }: PasswordInputFieldProps) => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	return (
-		<TextInputField
-			name={name}
-			label={label}
-			type={isPasswordVisible ? "text" : "password"}
-			placeholder={placeholder}
-			register={register}
-			registerOptions={registerOptions}
-			error={error}
-			inputGroupText={
+		<Form.Group className={"mb-3"} controlId={`${name}-input`}>
+			<Form.Label>{label}</Form.Label>
+			<InputGroup>
+				<Form.Control
+					type={isPasswordVisible ? "text" : "password"}
+					{...props}
+					{...register(name, registerOptions)}
+					isInvalid={!!error}
+				/>
 				<InputGroup.Text
 					onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 				>
 					{isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
 				</InputGroup.Text>
-			}
-		/>
+			</InputGroup>
+			<Form.Control.Feedback type="invalid">
+				{error?.message}
+			</Form.Control.Feedback>
+		</Form.Group>
 	);
 };

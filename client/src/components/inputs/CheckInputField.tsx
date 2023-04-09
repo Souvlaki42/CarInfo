@@ -34,7 +34,7 @@ export const CheckInputField = ({
 				isInvalid={!!error}
 				type={type}
 				checked={checked}
-				onChange={() => setChecked(!checked)}
+				onChange={() => {setChecked(!checked)}}
 			/>
 		</Form.Group>
 	);

@@ -4,31 +4,52 @@ import { Card } from "react-bootstrap";
 import { Note as NoteModel } from "../models/note";
 import { formatDate } from "../utils/formatDate";
 import { MdDelete } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 interface NoteProps {
-	note: NoteModel,
-    onNoteClicked: (note: NoteModel) => void,
-    onDeleteNoteClicked: (note: NoteModel) => void,
-	className?: string,
+	note: NoteModel;
+	onNoteClicked: (note: NoteModel) => void;
+	onDeleteNoteClicked: (note: NoteModel) => void;
+	className?: string;
 }
 
-export const Note = ({ note, onNoteClicked, onDeleteNoteClicked, className }: NoteProps) => {
+export const Note = ({
+	note,
+	onNoteClicked,
+	onDeleteNoteClicked,
+	className,
+}: NoteProps) => {
 	const { title, text, createdAt, updatedAt } = note;
+	const { i18n, t } = useTranslation();
+
+	function getLocaleFromLanguage(language: string) {
+		if (language === "gr") return "el-GR";
+		else return "en-US";
+	}
 
 	let createdUpdatedText: string;
 	if (updatedAt > createdAt) {
-		createdUpdatedText = `Updated: ${formatDate(updatedAt)}`;
+		createdUpdatedText = `${t("Updated")}: ${formatDate(updatedAt, getLocaleFromLanguage(i18n.language))}`;
 	} else {
-		createdUpdatedText = `Created: ${formatDate(createdAt)}`;
+		createdUpdatedText = `${t("Created")}: ${formatDate(createdAt, getLocaleFromLanguage(i18n.language))}`;
 	}
 
 	return (
-		<Card className={`${styles.noteCard} ${className}`} onClick={() => onNoteClicked(note)}>
+		<Card
+			className={`${styles.noteCard} ${className}`}
+			onClick={() => onNoteClicked(note)}
+		>
 			<Card.Body className={styles.cardBody}>
-				<Card.Title className={styleUtils.flexCenter}>{title}<MdDelete onClick={(e) => {
-                    onDeleteNoteClicked(note);
-                    e.stopPropagation();
-                }} className="text-muted ms-auto" /></Card.Title>
+				<Card.Title className={styleUtils.flexCenter}>
+					{title}
+					<MdDelete
+						onClick={(e) => {
+							onDeleteNoteClicked(note);
+							e.stopPropagation();
+						}}
+						className="text-muted ms-auto"
+					/>
+				</Card.Title>
 				<Card.Text className={styles.cardText}>{text}</Card.Text>
 			</Card.Body>
 			<Card.Footer className="text-muted">

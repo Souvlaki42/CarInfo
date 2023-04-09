@@ -12,14 +12,27 @@ import { PrivacyPage } from "./pages/PrivacyPage";
 import styles from "./styles/App.module.css";
 import PasswordResetModal from "./components/modals/PasswordResetModal";
 import SettingsModal from "./components/modals/SettingsModal";
+import { useTranslation } from "react-i18next";
+
+export interface Settings {
+	darkmode: boolean;
+	language: string;
+}
 
 export function App() {
+	const { i18n } = useTranslation();
 	const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
 	const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
 	const [showSettingsModal, setshowSettingsModal] = useState(false);
+
+	const [settings, setSettings] = useState<Settings>(
+		JSON.parse(localStorage.getItem("settings") as string) as
+			| Settings
+			| { darkmode: false; language: "auto" }
+	);
 
 	useEffect(() => {
 		async function fetchLoggedInUser() {
@@ -32,6 +45,34 @@ export function App() {
 		}
 		fetchLoggedInUser();
 	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("settings", JSON.stringify(settings));
+		document
+			.querySelector("html")
+			?.setAttribute(
+				"data-bs-theme",
+				settings.darkmode === true ? "dark" : "light"
+			);
+		const getLanguage = (language: string) => {
+			if (language === "en" || language === "gr") return language;
+			else return "auto";
+		};
+		document
+			.querySelector("html")
+			?.setAttribute("language", getLanguage(settings.language));
+		switch (document.querySelector("html")?.getAttribute("language")) {
+			case "auto":
+				i18n.changeLanguage(navigator.language.split("-")[0]);
+				break;
+			case "gr":
+				i18n.changeLanguage("gr");
+				break;
+			default:
+				i18n.changeLanguage("en");
+				break;
+		}
+	}, [settings]);
 
 	return (
 		<BrowserRouter>
@@ -87,8 +128,9 @@ export function App() {
 				{showSettingsModal && (
 					<SettingsModal
 						onDismiss={() => setshowSettingsModal(false)}
-						onSettingsSaved={() => {
-							// setshowSettingsModal(false);
+						onSettingsSaved={(settings: Settings) => {
+							setshowSettingsModal(false);
+							setSettings(settings);
 						}}
 					/>
 				)}

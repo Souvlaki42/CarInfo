@@ -8,6 +8,7 @@ import styleUtils from "../../styles/utils.module.css";
 import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
 import { Note } from "../Note";
 import { SearchInputField } from "../inputs/SearchInputField";
+import { useTranslation } from "react-i18next";
 
 export const NotesPageLoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -17,6 +18,8 @@ export const NotesPageLoggedInView = () => {
 	const [showAddNoteModal, setShowAddNoteModal] = useState(false);
 	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
+
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		async function loadNotes() {
@@ -87,7 +90,7 @@ export const NotesPageLoggedInView = () => {
 		<>
 			<SearchInputField
 				name="search"
-				placeholder="Search"
+				placeholder={t("Search")}
 				query={{ searchQuery, setSearchQuery }}
 			/>
 			<Button
@@ -95,18 +98,18 @@ export const NotesPageLoggedInView = () => {
 				onClick={() => setShowAddNoteModal(true)}
 			>
 				<FaPlus />
-				Add new note
+				{t("Add new note")}
 			</Button>
 			{notesLoading && <Spinner animation="border" variant="primary" />}
 			{showNotesLoadingError && (
-				<p>Something went wrong. Please refresh the page.</p>
+				<p>{t("Something went wrong. Please refresh the page.")}</p>
 			)}
 			{!notesLoading && !showNotesLoadingError && (
 				<>
 					{notes.length > 0 ? (
 						notesGrid
 					) : (
-						<p>You don't have any notes yet</p>
+						<p>{t("You don't have any notes yet")}</p>
 					)}
 				</>
 			)}

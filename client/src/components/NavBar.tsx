@@ -3,6 +3,7 @@ import { User } from "../models/user";
 import { NavBarLoggedInView } from "./views/NavBarLoggedInView";
 import { NavBarLoggedOutView } from "./views/NavBarLoggedOutView";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface NavBarProps {
 	loggedInUser: User | null;
@@ -19,6 +20,7 @@ export const NavBar = ({
 	onLogoutSuccessful,
 	onSettingsClicked,
 }: NavBarProps) => {
+	const { t } = useTranslation();
 	return (
 		<Navbar bg="primary" variant="dark" expand="sm" sticky="top">
 			<Container>
@@ -29,10 +31,10 @@ export const NavBar = ({
 				<Navbar.Collapse id="main-navbar">
 					<Nav>
 						<Nav.Link as={Link} to={"/notes"}>
-							Notes
+							{t("Notes")}
 						</Nav.Link>
 						<Nav.Link as={Link} to={"/privacy"}>
-							Privacy
+							{t("Privacy")}
 						</Nav.Link>
 					</Nav>
 					<Nav className="ms-auto">
@@ -47,7 +49,7 @@ export const NavBar = ({
 								onSignUpClicked={onSignUpClicked}
 							/>
 						)}
-						<Button onClick={onSettingsClicked}>Settings</Button>
+						<Button onClick={onSettingsClicked}>{t("Settings")}</Button>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

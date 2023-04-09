@@ -9,6 +9,7 @@ import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { TextInputField } from "../inputs/TextInputField";
 import { PasswordInputField } from "../inputs/PasswordInputField";
+import { useTranslation } from "react-i18next";
 
 interface SignUpModalProps {
 	onDismiss: () => void;
@@ -19,6 +20,7 @@ export const SignUpModal = ({
 	onDismiss,
 	onSignUpSuccessful,
 }: SignUpModalProps) => {
+	const { t } = useTranslation();
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [otpSent, setOtpSent] = useState<boolean>(false);
 	const {
@@ -45,8 +47,8 @@ export const SignUpModal = ({
 						email: credentials.email,
 						username: credentials.username,
 					},
-					"Email Verification",
-					"Please verify your account using this one time password:"
+					t("Email Verification"),
+					`${t("Please verify your account using this one time password")}:`
 				);
 				setOtpSent(true);
 			}
@@ -63,7 +65,7 @@ export const SignUpModal = ({
 	return (
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
-				<Modal.Title>Sign Up</Modal.Title>
+				<Modal.Title>{t("Sign Up")}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				{errorText && (
@@ -72,9 +74,9 @@ export const SignUpModal = ({
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<TextInputField
 						name="username"
-						label="Username"
+						label={t("Username")}
 						type="text"
-						placeholder="Username"
+						placeholder={t("Username")}
 						register={register}
 						registerOptions={{ required: "Required" }}
 						error={errors.username}
@@ -90,17 +92,17 @@ export const SignUpModal = ({
 					/>
 					<PasswordInputField
 						name="password"
-						label="Password"
+						label={t("Password")}
 						register={register}
-						placeholder="Password"
+						placeholder={t("Password")}
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
 					/>
 					<TextInputField
 						name="otp"
-						label="One Time Password"
+						label={t("One Time Password")}
 						type="text"
-						placeholder="One Time Password"
+						placeholder={t("One Time Password")}
 						register={register}
 						registerOptions={
 							otpSent ? { required: "Required" } : {}
@@ -112,7 +114,7 @@ export const SignUpModal = ({
 						disabled={isSubmitting}
 						className={styleUtils.width100}
 					>
-						{otpSent ? "Sign Up" : "Send OTP"}
+						{otpSent ? t("Sign Up") : t("Send OTP")}
 					</Button>
 				</Form>
 			</Modal.Body>

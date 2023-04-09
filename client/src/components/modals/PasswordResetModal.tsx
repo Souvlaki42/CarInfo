@@ -9,6 +9,7 @@ import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { PasswordInputField } from "../inputs/PasswordInputField";
 import { TextInputField } from "../inputs/TextInputField";
+import { useTranslation } from "react-i18next";
 
 interface PasswordResetModalProps {
 	onDismiss: () => void;
@@ -19,6 +20,7 @@ const PasswordResetModal = ({
 	onDismiss,
 	onPasswordResetSuccessful,
 }: PasswordResetModalProps) => {
+	const { t } = useTranslation();
 	const [errorText, setErrorText] = useState<string | null>(null);
 	const [otpSent, setOtpSent] = useState<boolean>(false);
 
@@ -45,8 +47,8 @@ const PasswordResetModal = ({
 			} else {
 				await UsersInterface.sendOTP(
 					{ email: credentials.email },
-					"Reset Password",
-					"Please verify your password reset request using this one time password:"
+					t("Password Reset"),
+					`${t("Please verify your password reset request using this one time password")}:`
 				);
 				setOtpSent(true);
 			}
@@ -63,7 +65,7 @@ const PasswordResetModal = ({
 	return (
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
-				<Modal.Title>Password Reset</Modal.Title>
+				<Modal.Title>{t("Password Reset")}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				{errorText && (
@@ -81,25 +83,25 @@ const PasswordResetModal = ({
 					/>
 					<PasswordInputField
 						name="password"
-						label="Password"
+						label={t("Password")}
 						register={register}
-						placeholder="Password"
+						placeholder={t("Password")}
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
 					/>
 					<PasswordInputField
 						name="password2"
-						label="Verify Password"
+						label={t("Verify Password")}
 						register={register}
-						placeholder="Verify Password"
+						placeholder={t("Verify Password")}
 						registerOptions={{ required: "Required" }}
 						error={errors.password2}
 					/>
 					<TextInputField
 						name="otp"
-						label="One Time Password"
+						label={t("One Time Password")}
 						type="text"
-						placeholder="One Time Password"
+						placeholder={t("One Time Password")}
 						register={register}
 						registerOptions={
 							otpSent ? { required: "Required" } : {}
@@ -111,7 +113,7 @@ const PasswordResetModal = ({
 						disabled={isSubmitting}
 						className={styleUtils.width100}
 					>
-						{otpSent ? "Reset Password" : "Send OTP"}
+						{otpSent ? t("Password Reset") : t("Send OTP")}
 					</Button>
 				</Form>
 			</Modal.Body>

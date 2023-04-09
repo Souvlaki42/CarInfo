@@ -4,6 +4,7 @@ import { Note } from "../../models/note";
 import { NoteInput } from "../../interfaces/notes";
 import * as NotesInterface from "../../interfaces/notes";
 import { TextInputField } from "../inputs/TextInputField";
+import { useTranslation } from "react-i18next";
 
 interface AddEditNoteDialogProps {
 	noteToEdit?: Note;
@@ -16,6 +17,7 @@ export const AddEditNoteDialog = ({
 	onDismiss,
 	onNoteSaved,
 }: AddEditNoteDialogProps) => {
+	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
@@ -49,41 +51,37 @@ export const AddEditNoteDialog = ({
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
 				<Modal.Title>
-					{noteToEdit ? "Edit Note" : "Add Note"}
+					{noteToEdit ? t("Edit Note") : t("Add Note")}
 				</Modal.Title>
 			</Modal.Header>
-
 			<Modal.Body>
 				<Form id="addEditNoteForm" onSubmit={handleSubmit(onSubmit)}>
 					<TextInputField
 						name="title"
-						label="Title"
+						label={t("Title")}
 						type="text"
-						placeholder="Title"
+						placeholder={t("Title")}
 						register={register}
 						registerOptions={{ required: "Required" }}
 						error={errors.title}
 					/>
-
 					<TextInputField
 						name="text"
-						label="Text"
+						label={t("Text")}
 						as="textarea"
 						rows={5}
-						placeholder="Text"
+						placeholder={t("Text")}
 						register={register}
 					/>
+					<Button
+						type="submit"
+						form="addEditNoteForm"
+						disabled={isSubmitting}
+					>
+						{t("Save")}
+					</Button>
 				</Form>
 			</Modal.Body>
-			<Modal.Footer>
-				<Button
-					type="submit"
-					form="addEditNoteForm"
-					disabled={isSubmitting}
-				>
-					Save
-				</Button>
-			</Modal.Footer>
 		</Modal>
 	);
 };

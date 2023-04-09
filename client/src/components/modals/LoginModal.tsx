@@ -9,6 +9,7 @@ import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { TextInputField } from "../inputs/TextInputField";
 import { PasswordInputField } from "../inputs/PasswordInputField";
+import { useTranslation } from "react-i18next";
 
 interface LoginModalProps {
 	onDismiss: () => void;
@@ -21,6 +22,7 @@ export const LoginModal = ({
 	onLoginSuccessful,
 	onShowPasswordResetModal,
 }: LoginModalProps) => {
+	const { t } = useTranslation();
 	const [errorText, setErrorText] = useState<string | null>(null);
 
 	const {
@@ -46,7 +48,7 @@ export const LoginModal = ({
 	return (
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
-				<Modal.Title>Log In</Modal.Title>
+				<Modal.Title>{t("Log In")}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				{errorText && (
@@ -55,18 +57,18 @@ export const LoginModal = ({
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<TextInputField
 						name="username"
-						label="Username"
+						label={t("Username")}
 						type="text"
-						placeholder="Username"
+						placeholder={t("Username")}
 						register={register}
 						registerOptions={{ required: "Required" }}
 						error={errors.username}
 					/>
 					<PasswordInputField
 						name="password"
-						label="Password"
+						label={t("Password")}
+						placeholder={t("Password")}
 						register={register}
-						placeholder="Password"
 						registerOptions={{ required: "Required" }}
 						error={errors.password}
 					/>
@@ -74,14 +76,14 @@ export const LoginModal = ({
 						className={`mb-3 ${styleUtils.link}`}
 						onClick={onShowPasswordResetModal}
 					>
-						Forgot Password?
+						{t("Forgot Password?")}
 					</Form.Label>
 					<Button
 						type="submit"
 						disabled={isSubmitting}
 						className={styleUtils.width100}
 					>
-						Log In
+						{t("Log In")}
 					</Button>
 				</Form>
 			</Modal.Body>

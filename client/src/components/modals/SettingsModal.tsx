@@ -6,6 +6,8 @@ import styleUtils from "../../styles/utils.module.css";
 import { DismissibleAlert } from "../DismissibleAlert";
 import { CheckInputField } from "../inputs/CheckInputField";
 import { SelectInputField } from "../inputs/SelectInputField";
+import { Settings } from "../../App";
+import { useTranslation } from "react-i18next";
 
 interface SettingsCredentials {
 	darkmode: boolean;
@@ -14,12 +16,12 @@ interface SettingsCredentials {
 
 interface SettingsModalProps {
 	onDismiss: () => void;
-	onSettingsSaved: () => void;
+	onSettingsSaved: (settings: Settings) => void;
 }
 
 const SettingsModal = ({ onDismiss, onSettingsSaved }: SettingsModalProps) => {
 	const [errorText, setErrorText] = useState<string | null>(null);
-
+	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
@@ -28,7 +30,10 @@ const SettingsModal = ({ onDismiss, onSettingsSaved }: SettingsModalProps) => {
 
 	async function onSubmit(credentials: SettingsCredentials) {
 		try {
-			alert("Yeah!");
+			onSettingsSaved({
+				darkmode: credentials.darkmode,
+				language: credentials.language,
+			});
 		} catch (error) {
 			if (error instanceof UnauthorizedError) {
 				setErrorText(error.message);
@@ -42,7 +47,7 @@ const SettingsModal = ({ onDismiss, onSettingsSaved }: SettingsModalProps) => {
 	return (
 		<Modal show onHide={onDismiss}>
 			<Modal.Header closeButton>
-				<Modal.Title>Settings</Modal.Title>
+				<Modal.Title>{t("Settings")}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				{errorText && (
@@ -51,22 +56,32 @@ const SettingsModal = ({ onDismiss, onSettingsSaved }: SettingsModalProps) => {
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<CheckInputField
 						name="darkmode"
-						label="Dark Mode"
+						label={t("Dark Mode")}
 						type="switch"
-						defaultChecked={false}
+						defaultChecked={
+							JSON.parse(
+								localStorage.getItem("settings") as string
+							).darkmode
+						}
 						register={register}
 						registerOptions={{}}
 						error={errors.darkmode}
 					/>
 					<SelectInputField
 						name="language"
-						label="Language"
-						defaultOption="auto"
-						options={<>
-							<option value="auto">Default</option>
-							<option value="en">English</option>
-							<option value="gr">Greek</option>
-						</>}
+						label={t("Language")}
+						defaultOption={
+							JSON.parse(
+								localStorage.getItem("settings") as string
+							).language
+						}
+						options={
+							<>
+								<option value="auto">{t("Default")}</option>
+								<option value="en">{t("English")}</option>
+								<option value="gr">{t("Greek")}</option>
+							</>
+						}
 						register={register}
 						registerOptions={{}}
 						error={errors.language}
@@ -76,7 +91,7 @@ const SettingsModal = ({ onDismiss, onSettingsSaved }: SettingsModalProps) => {
 						disabled={isSubmitting}
 						className={styleUtils.width100}
 					>
-						Save Settings
+						{t("Save Settings")}
 					</Button>
 				</Form>
 			</Modal.Body>

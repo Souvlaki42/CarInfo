@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
@@ -8,8 +7,6 @@ interface TextInputFieldProps {
 	register: UseFormRegister<any>;
 	registerOptions?: RegisterOptions;
 	error?: FieldError;
-	inputGroupText?: ReactNode;
-	afterInputComponent?: ReactNode;
 	[x: string]: any;
 }
 
@@ -19,8 +16,6 @@ export const TextInputField = ({
 	register,
 	registerOptions,
 	error,
-	inputGroupText,
-	afterInputComponent,
 	...props
 }: TextInputFieldProps) => {
 	return (
@@ -32,12 +27,10 @@ export const TextInputField = ({
 					{...register(name, registerOptions)}
 					isInvalid={!!error}
 				/>
-				{inputGroupText}
 			</InputGroup>
 			<Form.Control.Feedback type="invalid">
 				{error?.message}
 			</Form.Control.Feedback>
-			{afterInputComponent}
 		</Form.Group>
 	);
 };

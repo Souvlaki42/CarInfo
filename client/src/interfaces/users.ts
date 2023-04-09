@@ -2,7 +2,9 @@ import { User } from "../models/user";
 import { fetchData } from "../utils/fetchData";
 
 export async function getLoggedInUser(): Promise<User> {
-	const response = await fetchData("/api/users", { method: "GET" });
+	const response = await fetchData("/api/users", {
+		method: "GET",
+	});
 	return response.json();
 }
 
@@ -57,35 +59,54 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 	return response.json();
 }
 
-export async function passwordReset(credentials: PasswordResetCredentials): Promise<User> {
-	const response = await fetchData("/api/users/reset-password", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(credentials),
-	});
+export async function passwordReset(
+	credentials: PasswordResetCredentials
+): Promise<User> {
+	const response = await fetchData(
+		"/api/users/reset-password",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(credentials),
+		}
+	);
 	return response.json();
 }
 
 export async function logout() {
-	await fetchData("/api/users/logout", { method: "POST" });
+	await fetchData("/api/users/logout", {
+		method: "POST",
+	});
 }
 
-export async function sendOTP(credentials: SendOTPCredentials, title: string, text: string): Promise<User> {
-	const response = await fetchData("/api/users/sendOTP", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({...credentials, title, text}),
-	});
+export async function sendOTP(
+	credentials: SendOTPCredentials,
+	title: string,
+	text: string
+): Promise<User> {
+	const response = await fetchData(
+		"/api/users/sendOTP",
+		{
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ ...credentials, title, text }),
+		}
+	);
 	return response.json();
 }
 
-export async function verifyOTP(credentials: VerifyOTPCredentials): Promise<User> {
-	const response = await fetchData("/api/users/verifyOTP", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(credentials),
-	});
+export async function verifyOTP(
+	credentials: VerifyOTPCredentials
+): Promise<User> {
+	const response = await fetchData(
+		"/api/users/verifyOTP",
+		{
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(credentials),
+		}
+	);
 	return response.json();
 }
