@@ -13,6 +13,7 @@ import styles from "./styles/App.module.css";
 import PasswordResetModal from "./components/modals/PasswordResetModal";
 import SettingsModal from "./components/modals/SettingsModal";
 import { useTranslation } from "react-i18next";
+import { CarsPage } from "./pages/CarsPage";
 
 export interface Settings {
 	darkmode: boolean;
@@ -86,6 +87,10 @@ export function App() {
 				/>
 				<Container className={styles.pageContainer}>
 					<Routes>
+						<Route
+							path="/"
+							element={<CarsPage loggedInUser={loggedInUser} />}
+						/>
 						<Route
 							path="/notes"
 							element={<NotesPage loggedInUser={loggedInUser} />}

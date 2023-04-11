@@ -7,3 +7,8 @@ export function formatDate(dateString: string, locale: string): string {
         minute: "numeric",
     });
 }
+
+export function getLocaleFromLanguage(language: string) {
+    if (language === "gr") return "el-GR";
+    else return "en-US";
+}

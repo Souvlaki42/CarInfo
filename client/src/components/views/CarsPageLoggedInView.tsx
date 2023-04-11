@@ -3,15 +3,14 @@ import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { Note as NoteModel } from "../../models/note";
 import * as NotesInterface from "../../interfaces/notes";
-import styles from "../../styles/NotesPage.module.css";
+import styles from "../../styles/CarsPage.module.css";
 import styleUtils from "../../styles/utils.module.css";
 import { AddEditNoteDialog } from "../modals/AddEditNoteModal";
-import { Note } from "../Note";
 import { SearchInputField } from "../inputs/SearchInputField";
 import { useTranslation } from "react-i18next";
 import { Car } from "../Car";
 
-export const NotesPageLoggedInView = () => {
+export const CarsPageLoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
 	const [notesLoading, setNotesLoading] = useState(true);
 	const [showNotesLoadingError, setShowNotesLoadingError] = useState(false);
@@ -57,15 +56,10 @@ export const NotesPageLoggedInView = () => {
 	}
 
 	const notesGrid = (
-		<Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
+		<Row xs={1} md={2} xl={3} className={`g-4 ${styles.carsGrid}`}>
 			{notes.map((note) => (
 				<Col key={note._id}>
-					<Note
-						note={note}
-						className={styles.note}
-						onNoteClicked={setNoteToEdit}
-						onDeleteNoteClicked={deleteNote}
-					/>
+					<Car car={{ make: "Toyota", model: "Camry", year: 2021, price: "$25,000", color: "Blue", image: "/toyota_camry.jpg" }}/>
 				</Col>
 			))}
 		</Row>
@@ -83,7 +77,7 @@ export const NotesPageLoggedInView = () => {
 				onClick={() => setShowAddNoteModal(true)}
 			>
 				<FaPlus />
-				{t("Add new note")}
+				{t("Add new car")}
 			</Button>
 			{notesLoading && <Spinner animation="border" variant="primary" />}
 			{showNotesLoadingError && (
@@ -94,7 +88,7 @@ export const NotesPageLoggedInView = () => {
 					{notes.length > 0 ? (
 						notesGrid
 					) : (
-						<p>{t("You don't have any notes yet")}</p>
+						<p>{t("You don't have any cars yet")}</p>
 					)}
 				</>
 			)}

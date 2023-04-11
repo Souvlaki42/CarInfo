@@ -2,7 +2,7 @@ import styles from "../styles/Note.module.css";
 import styleUtils from "../styles/utils.module.css";
 import { Card } from "react-bootstrap";
 import { Note as NoteModel } from "../models/note";
-import { formatDate } from "../utils/formatDate";
+import { formatDate, getLocaleFromLanguage } from "../utils/formatDate";
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
@@ -21,11 +21,6 @@ export const Note = ({
 }: NoteProps) => {
 	const { title, text, createdAt, updatedAt } = note;
 	const { i18n, t } = useTranslation();
-
-	function getLocaleFromLanguage(language: string) {
-		if (language === "gr") return "el-GR";
-		else return "en-US";
-	}
 
 	let createdUpdatedText: string;
 	if (updatedAt > createdAt) {
