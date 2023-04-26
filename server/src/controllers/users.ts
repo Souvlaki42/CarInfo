@@ -96,7 +96,7 @@ unknown,
 
 		const user = await UserModel.findOne({ username: username }).select(
 			"+password +email"
-		);
+		).exec();
 
 		if (!user) {
 			throw createHttpError(401, "Invalid credentials");
@@ -210,7 +210,7 @@ export const verifyOTP: RequestHandler = async (req, res, next) => {
 		await OTPModel.deleteOne({
 			email: req.body.email,
 			otp: req.body.otp,
-		});
+		}).exec();
 		res.status(200).json({ otp: otp });
 	} catch (error) {
 		next(error);
