@@ -4,33 +4,42 @@ import notesRoutes from "./routes/notes";
 import userRoutes from "./routes/users";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
-import session from "express-session";
+import session, { SessionOptions } from "express-session";
 import env from "./utils/validateEnv";
-import MongoStore from "connect-mongo";
+import Redis from "ioredis";
 import { requiresAuth } from "./middleware/auth";
 import cors from "cors";
 import path from "path";
+import RedisStore from "connect-redis";
+import { RedisOptions } from "ioredis/built/cluster/util";
+
+const REDIS_SETTINGS: RedisOptions = {
+	host: env.REDIS_HOST,
+	port: env.REDIS_PORT,
+	password: env.REDIS_PASSWORD,
+}
+
+export const redisClient = new Redis(REDIS_SETTINGS);
+
+const SESSION_SETTINGS: SessionOptions = {
+	secret: env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		maxAge: 60 * 60 * 1000,
+	},
+	rolling: true,
+	store: new RedisStore({
+		client: redisClient,
+	}),
+};
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: env.CLIENT_URI }));
 app.use(morgan("dev"));
 app.use(express.json());
-
-app.use(
-	session({
-		secret: env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			maxAge: 60 * 60 * 1000,
-		},
-		rolling: true,
-		store: MongoStore.create({
-			mongoUrl: env.MONGO_CONNECTION_STRING,
-		}),
-	})
-);
+app.use(session(SESSION_SETTINGS));
 
 app.use("/api/users", userRoutes);
 app.use("/api/notes", requiresAuth, notesRoutes);

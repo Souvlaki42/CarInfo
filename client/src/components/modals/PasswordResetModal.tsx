@@ -48,7 +48,7 @@ const PasswordResetModal = ({
 				await UsersInterface.sendOTP(
 					{ email: credentials.email },
 					t("Password Reset"),
-					`${t("Please verify your password reset request using this one time password")}:`
+					`${t("Please verify your password reset request using this one time password that will expire in 10 minutes")}:`
 				);
 				setOtpSent(true);
 			}

@@ -1,11 +1,11 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import UserModel from "../models/user";
-import OTPModel from "../models/otp";
 import bcrypt from "bcrypt";
 import { generateOTP } from "../utils/generateOTP";
 import { sendEmail } from "../utils/sendEmail";
 import env from "../utils/validateEnv";
+import { redisClient } from "../app";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
 	try {
@@ -180,11 +180,8 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 
 	try {
 		const otp = await generateOTP();
-		const otpObj = await OTPModel.create({
-			email: `${req.body.email}`,
-			otp: otp,
-		});
-		await sendEmail(
+		const otpObj = await redisClient.setex(otp, 600, req.body.email);
+		sendEmail(
 			`${req.body.title}`,
 			`
 		<h3>Hello, ${username}!</h3>
@@ -202,15 +199,9 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 
 export const verifyOTP: RequestHandler = async (req, res, next) => {
 	try {
-		const otp = await OTPModel.findOne({
-			email: req.body.email,
-			otp: req.body.otp,
-		});
-		if (!otp) throw createHttpError(401, "Invalid One Time Password");
-		await OTPModel.deleteOne({
-			email: req.body.email,
-			otp: req.body.otp,
-		}).exec();
+		const otp = await redisClient.get(req.body.otp);
+		if (!otp || otp !== req.body.email) throw createHttpError(401, "Invalid One Time Password");
+		await redisClient.del(req.body.password);
 		res.status(200).json({ otp: otp });
 	} catch (error) {
 		next(error);

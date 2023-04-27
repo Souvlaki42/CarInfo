@@ -48,7 +48,7 @@ export const SignUpModal = ({
 						username: credentials.username,
 					},
 					t("Email Verification"),
-					`${t("Please verify your account using this one time password")}:`
+					`${t("Please verify your account using this one time password that will expire in 10 minutes")}:`
 				);
 				setOtpSent(true);
 			}
