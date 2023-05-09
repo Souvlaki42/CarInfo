@@ -8,6 +8,7 @@ export default cleanEnv(process.env, {
 	EMAIL_HOST: host(),
 	EMAIL_PORT: port(),
 	EMAIL_USER: email(),
+	EMAIL_FROM: email(),
 	EMAIL_PASS: str(),
 	CLIENT_URI: url(),
     REDIS_HOST: host(),

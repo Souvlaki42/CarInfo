@@ -188,8 +188,8 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 		<p>${req.body.text} <h4>${otp}</h4></p>
 		`,
 			`${req.body.email}`,
-			`${env.EMAIL_USER}`,
-			`${env.EMAIL_USER}`,
+			`${env.EMAIL_FROM}`,
+			`${env.EMAIL_FROM}`,
 		);
 		res.status(200).json({ otp: otpObj });
 	} catch (error) {

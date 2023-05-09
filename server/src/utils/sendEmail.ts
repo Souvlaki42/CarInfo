@@ -1,5 +1,7 @@
 import { createTransport } from "nodemailer";
 import env from "./validateEnv";
+import { Options } from "nodemailer/lib/smtp-connection";
+import Mail from "nodemailer/lib/mailer";
 
 export const sendEmail = (
 	subject: string,
@@ -8,7 +10,7 @@ export const sendEmail = (
 	sent_from: string,
 	reply_to: string
 ) => {
-	const TRANSPORTER_OPTIONS = {
+	const TRANSPORTER_OPTIONS: Options = {
 		host: env.EMAIL_HOST,
 		port: env.EMAIL_PORT,
 		auth: {
@@ -20,7 +22,7 @@ export const sendEmail = (
 		},
 	};
 
-	const EMAIL_OPTIONS = {
+	const EMAIL_OPTIONS: Mail.Options = {
 		from: sent_from,
 		to: send_to,
 		replyTo: reply_to,
