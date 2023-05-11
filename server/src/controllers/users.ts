@@ -81,7 +81,7 @@ interface LoginBody {
 }
 
 export const login: RequestHandler<
-unknown,
+	unknown,
 	unknown,
 	LoginBody,
 	unknown
@@ -94,9 +94,9 @@ unknown,
 			throw createHttpError(400, "Parameters missing");
 		}
 
-		const user = await UserModel.findOne({ username: username }).select(
-			"+password +email"
-		).exec();
+		const user = await UserModel.findOne({ username: username })
+			.select("+password +email")
+			.exec();
 
 		if (!user) {
 			throw createHttpError(401, "Invalid credentials");
@@ -130,7 +130,7 @@ export const passwordReset: RequestHandler<
 	const email = req.body.email;
 	const password = req.body.password;
 	const password2 = req.body.password2;
-	
+
 	try {
 		if (!email || !password || !password2) {
 			throw createHttpError(400, "Parameters missing");
@@ -170,10 +170,11 @@ export const logout: RequestHandler = (req, res, next) => {
 };
 
 export const sendOTP: RequestHandler = async (req, res, next) => {
-	if (!req.body.email || !req.body.title || !req.body.text) throw createHttpError(401, "Missing Info");
+	if (!req.body.email || !req.body.title || !req.body.text)
+		throw createHttpError(401, "Missing Info");
 	let username;
 	if (!req.body.username) {
-		const user = await UserModel.findOne({email: req.body.email}).exec();
+		const user = await UserModel.findOne({ email: req.body.email }).exec();
 		if (!user) throw createHttpError(404, "User does not exist yet");
 		username = user.username;
 	} else username = req.body.username;
@@ -181,16 +182,20 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 	try {
 		const otp = await generateOTP();
 		const otpObj = await redisClient.setex(otp, 600, req.body.email);
-		sendEmail(
-			`${req.body.title}`,
-			`
-		<h3>Hello, ${username}!</h3>
-		<p>${req.body.text} <h4>${otp}</h4></p>
-		`,
-			`${req.body.email}`,
-			`${env.EMAIL_FROM}`,
-			`${env.EMAIL_FROM}`,
-		);
+		// sendEmail(req.body.title,
+		// 	`
+		// <h3>Hello, ${username}!</h3>
+		// <p>${req.body.text} <h4>${otp}</h4></p>
+		// `,
+		// 	req.body.email
+		// );
+		sendEmail({
+			recipient: { name: username, email: req.body.email },
+			body: {
+				subject: req.body.title,
+				content: `<h3>Hello, ${username}!</h3><p>${req.body.text} <h4>${otp}</h4></p>`,
+			},
+		});
 		res.status(200).json({ otp: otpObj });
 	} catch (error) {
 		next(error);
@@ -200,7 +205,8 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 export const verifyOTP: RequestHandler = async (req, res, next) => {
 	try {
 		const otp = await redisClient.get(req.body.otp);
-		if (!otp || otp !== req.body.email) throw createHttpError(401, "Invalid One Time Password");
+		if (!otp || otp !== req.body.email)
+			throw createHttpError(401, "Invalid One Time Password");
 		await redisClient.del(req.body.password);
 		res.status(200).json({ otp: otp });
 	} catch (error) {

@@ -12,6 +12,7 @@ import cors from "cors";
 import path from "path";
 import RedisStore from "connect-redis";
 import { RedisOptions } from "ioredis/built/cluster/util";
+import helmet from "helmet";
 
 const REDIS_SETTINGS: RedisOptions = {
 	host: env.REDIS_HOST,
@@ -36,6 +37,7 @@ const SESSION_SETTINGS: SessionOptions = {
 
 const app = express();
 
+app.use(helmet());
 app.use(cors({ origin: env.CLIENT_URI }));
 app.use(morgan("dev"));
 app.use(express.json());

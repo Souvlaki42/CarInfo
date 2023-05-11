@@ -1,43 +1,45 @@
-import { createTransport } from "nodemailer";
 import env from "./validateEnv";
-import { Options } from "nodemailer/lib/smtp-connection";
-import Mail from "nodemailer/lib/mailer";
+import { TransactionalEmailsApi } from "sib-api-v3-typescript";
 
-export const sendEmail = (
-	subject: string,
-	message: string,
-	send_to: string,
-	sent_from: string,
-	reply_to: string
-) => {
-	const TRANSPORTER_OPTIONS: Options = {
-		host: env.EMAIL_HOST,
-		port: env.EMAIL_PORT,
-		auth: {
-			user: env.EMAIL_USER,
-			pass: env.EMAIL_PASS,
-		},
-		tls: {
-			rejectUnauthorized: false,
-		},
-	};
+const sendInBlue = new TransactionalEmailsApi();
+sendInBlue.setApiKey(0, env.EMAIL_API);
 
-	const EMAIL_OPTIONS: Mail.Options = {
-		from: sent_from,
-		to: send_to,
-		replyTo: reply_to,
-		subject: subject,
-		html: message,
-	};
+interface Recipient {
+	name: string;
+	email: string;
+}
 
-	const transporter = createTransport(TRANSPORTER_OPTIONS);
+interface EmailBody {
+	subject: string;
+	content: string;
+}
 
-	transporter.sendMail(EMAIL_OPTIONS, function (err, info) {
-		if (err) {
-			console.error(err);
-			throw err;
-		} else {
-			console.log(info);
-		}
-	});
+interface Email {
+	recipient: Recipient;
+	body: EmailBody;
+}
+
+export const sendEmail = ({
+	recipient: { name, email },
+	body: { subject, content },
+}: Email) => {
+	try {
+		sendInBlue
+			.sendTransacEmail({
+				to: [{ name: name, email: email }],
+				sender: { name: "Souvlaki42", email: "souvlaki42@souvlaki.me" },
+				subject: subject,
+				htmlContent: content,
+			})
+			.then(
+				function (data) {
+					console.log(`Email sent successfully with data: ${data}`);
+				},
+				function (error) {
+					console.error(error);
+				}
+			);
+	} catch (error) {
+		console.error(error);
+	}
 };
