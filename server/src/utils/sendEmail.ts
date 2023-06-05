@@ -1,10 +1,11 @@
 import env from "./validateEnv";
-import { TransactionalEmailsApi } from "sib-api-v3-typescript";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
-const sendInBlue = new TransactionalEmailsApi();
-sendInBlue.setApiKey(0, env.EMAIL_API);
+const mailerSend = new MailerSend({
+	apiKey: env.EMAIL_API,
+});
 
-interface Recipient {
+interface Receiver {
 	name: string;
 	email: string;
 }
@@ -15,31 +16,24 @@ interface EmailBody {
 }
 
 interface Email {
-	recipient: Recipient;
+	receiver: Receiver;
 	body: EmailBody;
 }
 
-export const sendEmail = ({
-	recipient: { name, email },
+export const sendEmail = async ({
+	receiver: { name, email },
 	body: { subject, content },
 }: Email) => {
-	try {
-		sendInBlue
-			.sendTransacEmail({
-				to: [{ name: name, email: email }],
-				sender: { name: "Souvlaki42", email: "souvlaki42@souvlaki.me" },
-				subject: subject,
-				htmlContent: content,
-			})
-			.then(
-				function (data) {
-					console.log(`Email sent successfully with data: ${data}`);
-				},
-				function (error) {
-					console.error(error);
-				}
-			);
-	} catch (error) {
-		console.error(error);
-	}
+	const sentFrom = new Sender(env.EMAIL_FROM, env.EMAIL_NAME);
+	const recipients = [new Recipient(email, name)];
+
+	const emailParams = new EmailParams()
+		.setFrom(sentFrom)
+		.setTo(recipients)
+		.setSubject(subject)
+		.setHtml(content);
+
+	const response = await mailerSend.email.send(emailParams);
+
+	if (response.statusCode !== 200) console.error(response.body);
 };

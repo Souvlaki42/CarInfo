@@ -84,14 +84,14 @@ export async function logout() {
 export async function sendOTP(
 	credentials: SendOTPCredentials,
 	title: string,
-	text: string
+	content: string
 ): Promise<User> {
 	const response = await fetchData(
 		"/api/users/sendOTP",
 		{
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ ...credentials, title, text }),
+			body: JSON.stringify({ ...credentials, title, content }),
 		}
 	);
 	return response.json();

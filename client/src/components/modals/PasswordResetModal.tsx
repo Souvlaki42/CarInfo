@@ -10,6 +10,8 @@ import { DismissibleAlert } from "../DismissibleAlert";
 import { PasswordInputField } from "../inputs/PasswordInputField";
 import { TextInputField } from "../inputs/TextInputField";
 import { useTranslation } from "react-i18next";
+import { render } from "@react-email/render";
+import PasswordReset from "../emails/ResetPassword";
 
 interface PasswordResetModalProps {
 	onDismiss: () => void;
@@ -48,7 +50,7 @@ const PasswordResetModal = ({
 				await UsersInterface.sendOTP(
 					{ email: credentials.email },
 					t("Password Reset"),
-					`${t("Please verify your password reset request using this one time password that will expire in 10 minutes")}:`
+					render(<PasswordReset />)
 				);
 				setOtpSent(true);
 			}

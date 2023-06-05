@@ -10,6 +10,8 @@ import { DismissibleAlert } from "../DismissibleAlert";
 import { TextInputField } from "../inputs/TextInputField";
 import { PasswordInputField } from "../inputs/PasswordInputField";
 import { useTranslation } from "react-i18next";
+import { render } from "@react-email/render";
+import PasswordReset from "../emails/ResetPassword";
 
 interface SignUpModalProps {
 	onDismiss: () => void;
@@ -48,7 +50,7 @@ export const SignUpModal = ({
 						username: credentials.username,
 					},
 					t("Email Verification"),
-					`${t("Please verify your account using this one time password that will expire in 10 minutes")}:`
+					render(<PasswordReset />)
 				);
 				setOtpSent(true);
 			}

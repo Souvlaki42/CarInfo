@@ -4,7 +4,6 @@ import UserModel from "../models/user";
 import bcrypt from "bcrypt";
 import { generateOTP } from "../utils/generateOTP";
 import { sendEmail } from "../utils/sendEmail";
-import env from "../utils/validateEnv";
 import { redisClient } from "../app";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
@@ -182,18 +181,11 @@ export const sendOTP: RequestHandler = async (req, res, next) => {
 	try {
 		const otp = await generateOTP();
 		const otpObj = await redisClient.setex(otp, 600, req.body.email);
-		// sendEmail(req.body.title,
-		// 	`
-		// <h3>Hello, ${username}!</h3>
-		// <p>${req.body.text} <h4>${otp}</h4></p>
-		// `,
-		// 	req.body.email
-		// );
 		sendEmail({
-			recipient: { name: username, email: req.body.email },
+			receiver: { email: req.body.email, name: username },
 			body: {
 				subject: req.body.title,
-				content: `<h3>Hello, ${username}!</h3><p>${req.body.text} <h4>${otp}</h4></p>`,
+				content: req.body.content.replace("otpTag", otp),
 			},
 		});
 		res.status(200).json({ otp: otpObj });

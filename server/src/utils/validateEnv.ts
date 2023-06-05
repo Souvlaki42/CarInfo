@@ -1,5 +1,5 @@
 import { cleanEnv } from "envalid";
-import { port, str, host, url } from "envalid/dist/validators";
+import { port, str, host, url, email } from "envalid/dist/validators";
 
 export default cleanEnv(process.env, {
 	MONGO_URI: str(),
@@ -10,4 +10,6 @@ export default cleanEnv(process.env, {
     REDIS_PORT: port(),
     REDIS_PASSWORD: str(),
 	EMAIL_API: str(),
+	EMAIL_NAME: str(),
+	EMAIL_FROM: email()
 });
