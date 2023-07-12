@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn prisma generate && next build",
     "start": "next start",
     "db": "yarn prisma db push",
     "studio": "yarn prisma studio",
