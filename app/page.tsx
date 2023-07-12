@@ -1,29 +1,12 @@
 import { CarCard } from "@/components/car-card";
+import { prisma } from "@/lib/db";
 
-export default function IndexPage() {
-  const data = [
-    {
-      id: 1,
-      engineNumber: 5151562,
-      frame: "yayyay",
-      year: 2017,
-    },
-    {
-      id: 2,
-      engineNumber: 5256269,
-      frame: "hahagsg",
-      year: 1986,
-    },
-    {
-      id: 3,
-      engineNumber: 4422662,
-      frame: "daaghah",
-      year: 2002,
-    },
-  ];
+export default async function IndexPage() {
+  const cars = await prisma.car.findMany();
+
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      {data.map((car) => (
+      {cars.map((car) => (
         <CarCard
           key={car.id}
           engineNumber={car.engineNumber}
