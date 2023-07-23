@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -9,9 +8,9 @@ import {
 import { FC } from "react";
 
 interface CarCardProps {
-    engineNumber: number;
+    engineNumber: string;
     frame: string;
-    year: number;
+    year: string;
 }
 
 export const CarCard: FC<CarCardProps> = ({ engineNumber, frame, year }) => {
@@ -19,7 +18,7 @@ export const CarCard: FC<CarCardProps> = ({ engineNumber, frame, year }) => {
     <Card>
       <CardHeader>
         <CardTitle>{engineNumber}</CardTitle>
-        {/* <CardDescription>Card Description</CardDescription> */}
+        {/* <CardDescription></CardDescription> */}
       </CardHeader>
       <CardContent>
         <p>{frame}</p>

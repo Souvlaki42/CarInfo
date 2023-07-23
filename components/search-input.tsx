@@ -11,8 +11,7 @@ export const SearchInput = () => {
   const checkSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
     const encoded = encodeURI(query);
-    router.push(`?s=${encoded}`);
-    // Continue searching system
+    router.push(`?search=${encoded}`);
   }
 
   return <Input placeholder="What are you looking?" type="text" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={checkSubmit}/>
