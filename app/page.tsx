@@ -7,7 +7,7 @@ export default async function IndexPage({
 }: {
   searchParams: { search: string };
 }) {
-  const useDate = false;
+
   const { search: searchQuery } = searchParams;
   let cars;
 
@@ -32,12 +32,13 @@ export default async function IndexPage({
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+      {/* <h1>{t("hello")}</h1> */}
       <SearchInput />
       <div className="flex flex-col gap-4">
         {cars.map((car) => (
           <CarCard
             key={car.id}
-            engineNumber={useDate ? car.updatedAt.toLocaleString() : car.engineNumber}
+            engineNumber={car.engineNumber}
             frame={car.frame}
             year={car.year}
           />
