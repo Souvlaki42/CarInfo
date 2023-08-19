@@ -6,6 +6,10 @@
     {
       "title": "Home",
       "href": "/"
+    },
+    {
+      "title": "Create",
+      "href": "/create"
     }
   ],
   "links": {

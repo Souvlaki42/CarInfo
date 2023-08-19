@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import Head from "next/head";
 
 import { fontSans } from "@/lib/fonts";
 import { cn, config } from "@/lib/utils";
@@ -33,9 +32,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
-        <Head>
-          <></>
-        </Head>
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
