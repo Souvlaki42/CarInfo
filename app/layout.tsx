@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/app/other.css";
 import { Metadata } from "next";
 
 import { fontSans } from "@/lib/fonts";
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
   },
 };
 

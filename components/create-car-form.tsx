@@ -19,19 +19,19 @@ import { Input } from "@/components/ui/input";
 const formSchema = z.object({
   engineNumber: z
     .string()
-    .regex(/^\d+$/, { message: "Engine number should contain only numbers." })
-    .min(5, {
-      message: "Engine number must be at least 5 characters.",
-    }),
-  frame: z.string().min(5, {
-    message: "Frame must be at least 5 characters.",
-  }),
+    .regex(/^\d{6}$/, "Engine number must be a 6-digit number"),
+  frame: z
+    .string()
+    .regex(
+      /^[A-HJ-NPR-Z0-9]{17}$/,
+      "Invalid frame (VIN) format. It should be 17 characters long and contain only letters (except I, O, Q) and numbers."
+    ),
   year: z
     .string()
-    .regex(/^\d+$/, { message: "Year should contain only numbers." })
-    .length(4, {
-      message: "Year must be 4 characters.",
-    }),
+    .regex(
+      /^(19|20)\d{2}$/,
+      "Invalid year format. It should be a valid year in the range 1900-2099."
+    ),
 });
 
 export type FormData = z.infer<typeof formSchema>;
@@ -101,7 +101,7 @@ export function CreateCarForm({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Create</Button>
       </form>
     </Form>
   );

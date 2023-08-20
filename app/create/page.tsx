@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { prisma } from "@/lib/db";
 import { CreateCarForm, FormData } from "@/components/create-car-form";
+
+export const metadata: Metadata = {
+  title: `Create`,
+};
 
 async function onSubmit(formData: FormData) {
   "use server";

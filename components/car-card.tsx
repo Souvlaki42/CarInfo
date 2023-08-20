@@ -33,11 +33,11 @@ export const CarCard: FC<CarCardProps> = ({
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="py-0 pl-6 pt-6">
         <CardTitle className="flex justify-between">
-          {engineNumber}
+          Engine Number: {engineNumber}
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={async () => {
               await deleteCar(id);
@@ -48,12 +48,8 @@ export const CarCard: FC<CarCardProps> = ({
           </Button>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>{frame}</p>
-      </CardContent>
-      <CardFooter>
-        <p>{year}</p>
-      </CardFooter>
+      <CardContent>Frame: {frame}</CardContent>
+      <CardFooter>Year: {year}</CardFooter>
     </Card>
   );
 };
