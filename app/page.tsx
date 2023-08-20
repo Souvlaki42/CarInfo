@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { CarCard } from "@/components/car-card";
 import { SearchInput } from "@/components/search-input";
 
-export const revalidate = 0;
+export const revalidate = 5;
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ async function deleteCar(id: string) {
   await prisma.car.delete({ where: { id: id } });
 }
 
-export default async function IndexPage({
+export default async function HomePage({
   searchParams,
 }: {
   searchParams: { search: string };

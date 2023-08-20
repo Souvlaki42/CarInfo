@@ -45,7 +45,7 @@ export const CarCard: FC<CarCardProps> = ({
             }}
           >
             <Trash2Icon className="h-4 w-4" />
-          </Button>{" "}
+          </Button>
         </CardTitle>
       </CardHeader>
       <CardContent>
