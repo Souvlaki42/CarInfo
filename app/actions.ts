@@ -9,15 +9,25 @@ import { FormData as AddData } from "@/components/car-form";
 
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
-export async function ensureAuthenticated(
+export async function getSession(
   callbackUrl: string,
-  authenticate = true
-) {
+  authenticate: true
+): Promise<Session>;
+
+export async function getSession(
+  callbackUrl: string,
+  authenticate: false
+): Promise<null>;
+
+export async function getSession(
+  callbackUrl: string,
+  authenticate: boolean
+): Promise<Session | null> {
   "use server";
   const session = await getServerSession(authOptions);
   if (!session && authenticate)
-    redirect(`/api/auth/signin?callbackUrl=${callbackUrl}`);
-  return session as Session;
+    redirect(`/unauthorized?callbackUrl=${callbackUrl}`);
+  return session;
 }
 
 export async function addCar(formData: AddData, userId: string) {

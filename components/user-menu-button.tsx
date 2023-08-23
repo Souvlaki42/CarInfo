@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import profilePlaceholder from "@/public/profile-placeholder.png";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
-import Image from "next/image";
 
 import { Icons } from "./icons";
 import { buttonVariants } from "./ui/button";
@@ -16,9 +16,13 @@ import {
 
 interface UserMenuButtonProps {
   session: Session | null;
+  callbackUrl: string;
 }
 
-export function UserMenuButton({ session }: UserMenuButtonProps) {
+export function UserMenuButton({
+  session,
+  callbackUrl = "/",
+}: UserMenuButtonProps) {
   const user = session?.user;
 
   return (
@@ -43,11 +47,21 @@ export function UserMenuButton({ session }: UserMenuButtonProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {user ? (
-          <DropdownMenuItem inset onClick={() => signOut({ callbackUrl: "/" })}>
+          <DropdownMenuItem
+            inset
+            onClick={() =>
+              signOut({
+                callbackUrl: `/unauthorized?callbackUrl=${callbackUrl}`,
+              })
+            }
+          >
             <span className="text-center">Sign Out</span>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem inset onClick={() => signIn()}>
+          <DropdownMenuItem
+            inset
+            onClick={() => signIn("google", { callbackUrl })}
+          >
             <span className="text-center">Sign In</span>
           </DropdownMenuItem>
         )}
