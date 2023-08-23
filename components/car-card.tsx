@@ -56,7 +56,7 @@ export function CarCard({ car }: { car: Car }) {
           Έτος: {car.year}
         </CardContent>
         <CardFooter>
-          Τελευταία Αλαγή: {new Date(car.updatedAt).toLocaleString("el-GR")}
+          Τελευταία Αλλαγή: {new Date(car.updatedAt).toLocaleString("el-GR")}
         </CardFooter>
       </Card>
     </>

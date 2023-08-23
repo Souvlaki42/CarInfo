@@ -31,7 +31,11 @@ export default async function HomePage({
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
         <div>
           <form action={passSearch}>
-            <Input name="searchQuery" placeholder="Search" className="w-full" />
+            <Input
+              name="searchQuery"
+              placeholder="Αναζήτηση..."
+              className="w-full"
+            />
           </form>
         </div>
         <Suspense
