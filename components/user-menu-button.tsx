@@ -48,22 +48,28 @@ export function UserMenuButton({
       <DropdownMenuContent>
         {user ? (
           <DropdownMenuItem
-            inset
             onClick={() =>
               signOut({
                 callbackUrl: `/unauthorized?callbackUrl=${callbackUrl}`,
               })
             }
           >
-            <span className="text-center">Αποσύνδεση</span>
+            <span className="px-2 text-center">Αποσύνδεση</span>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem
-            inset
-            onClick={() => signIn("google", { callbackUrl })}
-          >
-            <span className="text-center">Σύνδεση</span>
-          </DropdownMenuItem>
+          <>
+            <DropdownMenuItem onClick={() => signIn("google", { callbackUrl })}>
+              <span className="text-center">Γρήγορη Σύνδεση</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              inset
+              onClick={() =>
+                signIn("google", { callbackUrl }, { prompt: "login" })
+              }
+            >
+              <span className="px-1.5 text-center">Σύνδεση</span>
+            </DropdownMenuItem>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
