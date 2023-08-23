@@ -20,14 +20,14 @@ export type SiteConfig = z.infer<typeof siteConfigSchema>;
 const siteConfigData: SiteConfig = {
   name: "Car Info",
   description:
-    "A tool for car mechanics to manage their clients' data with an easy to use interface.",
+    "Ένα εργαλείο για τους μηχανικούς αυτοκινήτων για να διαχειρίζονται τα δεδομένα των πελατών τους με μια εύχρηστη διεπαφή.",
   mainNav: [
     {
-      title: "Home",
+      title: "Αρχική",
       href: "/",
     },
     {
-      title: "Create",
+      title: "Προσθήκη",
       href: "/add-car",
     },
   ],

@@ -41,7 +41,7 @@ export function UserMenuButton({
         ) : (
           <div>
             <Icons.userMenu />
-            <span className="sr-only">Profile picture</span>
+            <span className="sr-only">Εικόνα λογαριασμού</span>
           </div>
         )}
       </DropdownMenuTrigger>
@@ -55,14 +55,14 @@ export function UserMenuButton({
               })
             }
           >
-            <span className="text-center">Sign Out</span>
+            <span className="text-center">Αποσύνδεση</span>
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem
             inset
             onClick={() => signIn("google", { callbackUrl })}
           >
-            <span className="text-center">Sign In</span>
+            <span className="text-center">Σύνδεση</span>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

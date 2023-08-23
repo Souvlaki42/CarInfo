@@ -1,10 +1,11 @@
 "use client";
 
+import { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Car } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { addCar, updateCar } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,31 +17,29 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Car } from "@prisma/client";
-import { useTransition } from "react";
+import { addCar, updateCar } from "@/app/actions";
 
 const formSchema = z.object({
   engineNumber: z
     .string()
-    .regex(/^\d{6}$/, "Engine number must be a 6-digit number"),
+    .regex(/^\d{6}$/, "Ο αριθμός μηχανής πρέπει να αποτελείται από 6 νούμερα."),
   frame: z
     .string()
     .regex(
       /^[A-HJ-NPR-Z0-9]{17}$/,
-      "Invalid frame (VIN) format. It should be 17 characters long and contain only letters (except I, O, Q) and numbers."
+      "Λάθος πινακίδα. Πρέπει να αποτελείται μόνο από γράμματα (εκτός των I, O, Q) και αριθμούς."
     ),
   year: z
     .string()
     .regex(
       /^(19|20)\d{2}$/,
-      "Invalid year format. It should be a valid year in the range 1900-2099."
+      "Λάθος έτος. Πρέπει να είναι στο εύρος 1900-2099."
     ),
 });
 
 export type FormData = z.infer<typeof formSchema>;
 
-export function CarForm({ userId, car }: { userId: string, car: Car | null}) {
-  
+export function CarForm({ userId, car }: { userId: string; car: Car | null }) {
   const [isPending, startTransition] = useTransition();
 
   const submitForm = async (formData: FormData) => {
@@ -60,10 +59,11 @@ export function CarForm({ userId, car }: { userId: string, car: Car | null}) {
     },
   });
 
-
   return (
     <>
-      <h1 className="mb-3 text-center text-2xl font-bold">{!car ? "Add Car" : "Update Car" }</h1>
+      <h1 className="mb-3 text-center text-2xl font-bold">
+        {!car ? "Προσθήκη Αυτοκινήτου" : "Επεξεργασία Αυτοκινήτου"}
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitForm)} className="space-y-8">
           <FormField
@@ -71,12 +71,12 @@ export function CarForm({ userId, car }: { userId: string, car: Car | null}) {
             name="engineNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Engine Number</FormLabel>
+                <FormLabel>Αριθμός μηχανής</FormLabel>
                 <FormControl>
-                  <Input placeholder="Input the engine number" {...field} />
+                  <Input placeholder="Γράψτε τον αριθμό μηχανής" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is the engine number of the car.
+                  Αυτός είναι ο αριθμός μηχανής του αυτοκινήτου.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -87,11 +87,13 @@ export function CarForm({ userId, car }: { userId: string, car: Car | null}) {
             name="frame"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Frame</FormLabel>
+                <FormLabel>Πινακίδα</FormLabel>
                 <FormControl>
-                  <Input placeholder="Input the frame" {...field} />
+                  <Input placeholder="Γράψτε την πινακίδα" {...field} />
                 </FormControl>
-                <FormDescription>This is the frame of the car.</FormDescription>
+                <FormDescription>
+                  Αυτή είναι η πινακίδα του αυτοκινήτου.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -101,16 +103,20 @@ export function CarForm({ userId, car }: { userId: string, car: Car | null}) {
             name="year"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Year</FormLabel>
+                <FormLabel>Έτος</FormLabel>
                 <FormControl>
-                  <Input placeholder="Input the year" {...field} />
+                  <Input placeholder="Γράψτε το έτος" {...field} />
                 </FormControl>
-                <FormDescription>This is the year of the car.</FormDescription>
+                <FormDescription>
+                  Αυτό είναι το έτος του αυτοκινήτου.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button disabled={isPending} type="submit">{!car ? "Create Car" : "Update Car"}</Button>
+          <Button disabled={isPending} type="submit">
+            {!car ? "Προσθήκη Αυτοκινήτου" : "Επεξεργασία Αυτοκινήτου"}
+          </Button>
         </form>
       </Form>
     </>

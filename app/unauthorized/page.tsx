@@ -20,7 +20,9 @@ export default async function UnauthorizedPage({
     <>
       <SiteHeader session={session} callbackUrl={callbackUrl} />
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-        <h1 className="text-center">Please log in to see this page!</h1>
+        <h1 className="text-center">
+          Παρακαλώ συνδεθείτε για να δείτε αυτήν την σελίδα!
+        </h1>
       </section>
     </>
   );
