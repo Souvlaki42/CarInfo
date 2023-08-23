@@ -1,26 +1,32 @@
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-import { buttonVariants } from "@/components/ui/button";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Icons } from "@/components/icons";
 import { MainNav } from "@/components/main-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { config } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
 
-export function SiteHeader() {
+import { UserMenuButton } from "./user-menu-button";
+
+export async function SiteHeader() {
+  const session = await getServerSession(authOptions);
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <MainNav items={config.mainNav} />
+        <MainNav items={siteConfig.mainNav} />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
+            <UserMenuButton session={session} />
             <Link
-              href={config.links.github}
+              href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
             >
               <div
                 className={buttonVariants({
-                  size: "sm",
+                  size: "icon",
                   variant: "ghost",
                 })}
               >
@@ -29,13 +35,13 @@ export function SiteHeader() {
               </div>
             </Link>
             <Link
-              href={config.links.twitter}
+              href={siteConfig.links.twitter}
               target="_blank"
               rel="noreferrer"
             >
               <div
                 className={buttonVariants({
-                  size: "sm",
+                  size: "icon",
                   variant: "ghost",
                 })}
               >
@@ -50,3 +56,4 @@ export function SiteHeader() {
     </header>
   );
 }
+

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { cn, config } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 interface NavItem {
   title: string;
@@ -16,9 +17,8 @@ interface MainNavProps {
 export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="flex items-center space-x-2">
-        {/* <Icons.logo className="h-6 w-6" /> */}
-        <span className="inline-block font-bold">{config.name}</span>
+      <Link replace href="/" className="flex items-center space-x-2">
+        <span className="inline-block font-bold">{siteConfig.name}</span>
       </Link>
       {items?.length ? (
         <nav className="flex gap-6">
@@ -26,6 +26,7 @@ export function MainNav({ items }: MainNavProps) {
             (item, index) =>
               item.href && (
                 <Link
+                  replace
                   key={index}
                   href={item.href}
                   className={cn(

@@ -1,58 +1,36 @@
-import { prisma } from "@/lib/db";
 import { CarCard } from "@/components/car-card";
-import { SearchInput } from "@/components/search-input";
+import { PaginationBar } from "@/components/pagination-bar";
+import { Input } from "@/components/ui/input";
+import { Suspense } from "react";
+import { countCars, ensureAuthenticated, getCars, passSearch } from "./actions";
 
-export const revalidate = 5;
+const PAGE_SIZE = 3;
 
-export const dynamic = "force-dynamic";
+export default async function HomePage({ searchParams: { page = "1" } }: { searchParams: { page: string } }) {
+  const session = await ensureAuthenticated("/");
+  
+  const currentPage = parseInt(page);
+  const totalItemCount = await countCars();
 
-async function deleteCar(id: string) {
-  "use server";
-  await prisma.car.delete({ where: { id: id } });
-}
+  const totalPages = Math.ceil(totalItemCount / PAGE_SIZE);
+  
+  const skipCount = (currentPage - 1) * PAGE_SIZE;
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: { search: string };
-}) {
-  const { search: searchQuery } = searchParams;
-  let cars;
-
-  if (searchQuery == null || searchQuery == undefined || searchQuery === "") {
-    cars = await prisma.car.findMany({
-      take: 10,
-      orderBy: { updatedAt: "desc" },
-    });
-  } else {
-    cars = await prisma.car.findMany({
-      take: 10,
-      orderBy: { updatedAt: "desc" },
-      where: {
-        OR: [
-          { frame: { contains: searchQuery } },
-          { engineNumber: { contains: searchQuery } },
-          { year: { contains: searchQuery } },
-        ],
-      },
-    });
-  }
-
+  const cars = await getCars(session.user.id, PAGE_SIZE, skipCount);
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      <SearchInput />
-      <div className="flex flex-col gap-4">
-        {cars.map((car) => (
-          <CarCard
-            key={car.id}
-            id={car.id}
-            engineNumber={car.engineNumber}
-            frame={car.frame}
-            year={car.year}
-            deleteCar={deleteCar}
-          />
+       <div>
+      <form action={passSearch}>
+        <Input name="searchQuery" placeholder="Search" className="w-full"/>
+      </form>
+    </div>
+      <Suspense fallback={<h1 className="text-center">Loading!</h1>}>
+        {cars.length === 0 ? (<h1 className="text-center">No cars found!</h1>) : cars.map((car) => (
+          <CarCard key={car.id} car={car} />
         ))}
-      </div>
+        {totalPages > 1 && <PaginationBar currentPage={currentPage} totalPages={totalPages}/>}
+      </Suspense>
     </section>
   );
 }
+
