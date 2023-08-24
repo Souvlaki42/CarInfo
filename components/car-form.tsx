@@ -1,8 +1,8 @@
 "use client";
 
 import { useTransition } from "react";
+import { CarFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Car } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,7 +39,7 @@ const formSchema = z.object({
 
 export type FormData = z.infer<typeof formSchema>;
 
-export function CarForm({ userId, car }: { userId: string; car: Car | null }) {
+export function CarForm({ userId, car }: CarFormProps) {
   const [isPending, startTransition] = useTransition();
 
   const submitForm = async (formData: FormData) => {

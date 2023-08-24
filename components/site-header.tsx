@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Session } from "next-auth";
+import { SiteHeaderProps } from "@/types";
 
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,13 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 import { UserMenuButton } from "./user-menu-button";
 
-export function SiteHeader({
-  session,
-  callbackUrl = "",
-}: {
-  session: Session | null;
-  callbackUrl: string;
-}) {
+export function SiteHeader({ session, callbackUrl = "" }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -28,6 +22,7 @@ export function SiteHeader({
               target="_blank"
               rel="noreferrer"
               className="hidden sm:block"
+              title="GitHub"
             >
               <div
                 className={buttonVariants({
@@ -44,6 +39,7 @@ export function SiteHeader({
               target="_blank"
               rel="noreferrer"
               className="hidden sm:block"
+              title="Twitter"
             >
               <div
                 className={buttonVariants({

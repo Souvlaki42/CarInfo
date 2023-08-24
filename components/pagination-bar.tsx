@@ -1,14 +1,9 @@
 import Link from "next/link";
+import { PaginationBarProps } from "@/types";
 
 import { Button, buttonVariants } from "./ui/button";
 
-export function PaginationBar({
-  currentPage,
-  totalPages,
-}: {
-  currentPage: number;
-  totalPages: number;
-}) {
+export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
   const maxPage = Math.min(totalPages, Math.max(currentPage + 4, 10));
   const minPage = Math.max(1, Math.min(currentPage - 5, maxPage - 9));
 

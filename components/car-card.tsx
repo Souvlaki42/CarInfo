@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Link from "next/link";
-import { Car } from "@prisma/client";
+import { CarCardProps } from "@/types";
 import { PencilIcon, Trash2Icon } from "lucide-react";
 
 import {
@@ -16,7 +16,7 @@ import { deleteCar } from "@/app/actions";
 
 import { Button, buttonVariants } from "./ui/button";
 
-export function CarCard({ car }: { car: Car }) {
+export function CarCard({ car }: CarCardProps) {
   const [isPending, startTransition] = useTransition();
   return (
     <>

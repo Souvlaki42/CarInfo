@@ -1,24 +1,23 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { SearchPageProps } from "@/types";
 
 import { Input } from "@/components/ui/input";
 import { CarCard } from "@/components/car-card";
 import { SiteHeader } from "@/components/site-header";
 
-import { getSession, passSearch, searchCars } from "../actions";
+import { passSearch, searchCars, useSession } from "../actions";
 
 export const metadata: Metadata = {
-  title: "Search Results",
+  title: "Αποτελέσματα Αναζήτησης",
 };
 
 export default async function SearchPage({
   searchParams: { query },
-}: {
-  searchParams: { query: string };
-}) {
-  const session = await getSession(`/search?query=${query}`, true);
+}: SearchPageProps) {
+  const session = await useSession(`/search?query=${query}`, true);
 
-  const cars = await searchCars(session.user.id, query);
+  const cars = await searchCars(session.user.id, query ?? "");
 
   return (
     <>
@@ -26,7 +25,11 @@ export default async function SearchPage({
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
         <div>
           <form action={passSearch}>
-            <Input name="searchQuery" placeholder="Search" className="w-full" />
+            <Input
+              name="searchQuery"
+              placeholder="Αναζήτηση..."
+              className="w-full"
+            />
           </form>
         </div>
         <Suspense

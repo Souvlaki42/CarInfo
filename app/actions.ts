@@ -9,17 +9,17 @@ import { FormData as AddData } from "@/components/car-form";
 
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
-export async function getSession(
+export async function useSession(
   callbackUrl: string,
   authenticate: true
 ): Promise<Session>;
 
-export async function getSession(
+export async function useSession(
   callbackUrl: string,
   authenticate: false
 ): Promise<null>;
 
-export async function getSession(
+export async function useSession(
   callbackUrl: string,
   authenticate: boolean
 ): Promise<Session | null> {

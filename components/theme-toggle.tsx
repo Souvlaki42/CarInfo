@@ -13,6 +13,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      title="Αλλαγή θέματος"
     >
       <Sun className="h-[1.5rem] w-[1.3rem] dark:hidden" />
       <Moon className="hidden h-5 w-5 dark:block" />

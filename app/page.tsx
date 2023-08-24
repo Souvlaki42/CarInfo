@@ -1,22 +1,21 @@
 import { Suspense } from "react";
+import { HomePageProps } from "@/types";
 
 import { Input } from "@/components/ui/input";
 import { CarCard } from "@/components/car-card";
 import { PaginationBar } from "@/components/pagination-bar";
 import { SiteHeader } from "@/components/site-header";
 
-import { countCars, getCars, getSession, passSearch } from "./actions";
+import { countCars, getCars, passSearch, useSession } from "./actions";
 
 const PAGE_SIZE = 3;
 
 export default async function HomePage({
   searchParams: { page = "1" },
-}: {
-  searchParams: { page: string };
-}) {
-  const session = await getSession("/", true);
+}: HomePageProps) {
+  const session = await useSession("/", true);
 
-  const currentPage = parseInt(page);
+  const currentPage = parseInt(page ?? "1");
   const totalItemCount = await countCars();
 
   const totalPages = Math.ceil(totalItemCount / PAGE_SIZE);

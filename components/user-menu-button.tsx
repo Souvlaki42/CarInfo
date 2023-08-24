@@ -33,15 +33,16 @@ export function UserMenuButton({
         {user ? (
           <Image
             src={user.image || profilePlaceholder}
-            alt="Profile picture"
+            alt="Εικόνα λογαριασμού"
             width={32}
             height={32}
             className="w-8 select-none rounded-full"
+            title="Εικόνα λογαριασμού"
           />
         ) : (
-          <div>
+          <div title="Λογαριασμός">
             <Icons.userMenu />
-            <span className="sr-only">Εικόνα λογαριασμού</span>
+            <span className="sr-only">Λογαριασμός</span>
           </div>
         )}
       </DropdownMenuTrigger>
