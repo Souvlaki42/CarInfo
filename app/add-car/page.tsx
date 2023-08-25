@@ -18,7 +18,7 @@ export async function generateMetadata({
 }: AddCarPageProps): Promise<Metadata> {
   const car = await getCachedCar(updateId);
   return {
-    title: !car ? "Προσθήκη Αυτοκινήτου" : "Επεξεργασία Αυτοκινήτου",
+    title: !car ? "Προσθήκη" : "Επεξεργασία",
   };
 }
 

@@ -11,7 +11,7 @@ export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
 
   for (let page = minPage; page <= maxPage; page++) {
     numberedPageItems.push(
-      <Link href={currentPage === page ? "" : `?page=${page}`} key={page}>
+      <Link href={currentPage === page ? "/#" : `?page=${page}`} key={page}>
         <div
           className={`${buttonVariants({
             variant: currentPage === page ? "secondary" : "outline",

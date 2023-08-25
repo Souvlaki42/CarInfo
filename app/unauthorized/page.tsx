@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { UnauthorizedPageProps } from "@/types";
 import { getServerSession } from "next-auth";
 
@@ -14,6 +15,7 @@ export default async function UnauthorizedPage({
   searchParams: { callbackUrl },
 }: UnauthorizedPageProps) {
   const session = await getServerSession(authOptions);
+  if (session != null) redirect(callbackUrl ?? "/");
 
   return (
     <>

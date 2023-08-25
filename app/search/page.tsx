@@ -9,7 +9,7 @@ import { SiteHeader } from "@/components/site-header";
 import { passSearch, searchCars, useSession } from "../actions";
 
 export const metadata: Metadata = {
-  title: "Αποτελέσματα Αναζήτησης",
+  title: "Αναζήτηση",
 };
 
 export default async function SearchPage({
@@ -21,7 +21,10 @@ export default async function SearchPage({
 
   return (
     <>
-      <SiteHeader session={session} callbackUrl={`/search?query=${query}`} />
+      <SiteHeader
+        session={session}
+        callbackUrl={`/search?query=${query ?? ""}`}
+      />
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
         <div>
           <form action={passSearch}>
