@@ -3,10 +3,11 @@ import { Metadata } from "next";
 import { AddCarPageProps } from "@/types";
 import { Car } from "@prisma/client";
 
+import { useSession } from "@/lib/auth";
 import { CarForm } from "@/components/car-form";
 import { SiteHeader } from "@/components/site-header";
 
-import { getCar, useSession } from "../actions";
+import { getCar } from "../actions";
 
 const getCachedCar = cache(async (id: string | null) => {
   const car: Car | null = !id || id === "" ? null : await getCar(id);

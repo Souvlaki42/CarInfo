@@ -2,11 +2,12 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 import { SearchPageProps } from "@/types";
 
+import { useSession } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { CarCard } from "@/components/car-card";
 import { SiteHeader } from "@/components/site-header";
 
-import { passSearch, searchCars, useSession } from "../actions";
+import { passSearch, searchCars } from "../actions";
 
 export const metadata: Metadata = {
   title: "Αναζήτηση",

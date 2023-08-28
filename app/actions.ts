@@ -2,33 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getServerSession, Session } from "next-auth";
 
 import { prisma } from "@/lib/db/prisma";
 import { FormData as AddData } from "@/components/car-form";
-
-import { authOptions } from "./api/auth/[...nextauth]/route";
-
-export async function useSession(
-  callbackUrl: string,
-  authenticate: true
-): Promise<Session>;
-
-export async function useSession(
-  callbackUrl: string,
-  authenticate: false
-): Promise<null>;
-
-export async function useSession(
-  callbackUrl: string,
-  authenticate: boolean
-): Promise<Session | null> {
-  "use server";
-  const session = await getServerSession(authOptions);
-  if (!session && authenticate)
-    redirect(`/unauthorized?callbackUrl=${callbackUrl}`);
-  return session;
-}
 
 export async function addCar(formData: AddData, userId: string) {
   "use server";

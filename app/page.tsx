@@ -1,12 +1,13 @@
 import { Suspense } from "react";
 import { HomePageProps } from "@/types";
 
+import { useSession } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { CarCard } from "@/components/car-card";
 import { PaginationBar } from "@/components/pagination-bar";
 import { SiteHeader } from "@/components/site-header";
 
-import { countCars, getCars, passSearch, useSession } from "./actions";
+import { countCars, getCars, passSearch } from "./actions";
 
 const PAGE_SIZE = 3;
 

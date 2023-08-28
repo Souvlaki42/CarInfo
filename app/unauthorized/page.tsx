@@ -1,11 +1,8 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { UnauthorizedPageProps } from "@/types";
-import { getServerSession } from "next-auth";
 
+import { useSession } from "@/lib/auth";
 import { SiteHeader } from "@/components/site-header";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Ανεξουσιοδότητος",
@@ -14,8 +11,7 @@ export const metadata: Metadata = {
 export default async function UnauthorizedPage({
   searchParams: { callbackUrl },
 }: UnauthorizedPageProps) {
-  const session = await getServerSession(authOptions);
-  if (session != null) redirect(callbackUrl ?? "/");
+  const session = await useSession(callbackUrl, false);
 
   return (
     <>
