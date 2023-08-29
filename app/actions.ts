@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/db";
 import { FormData as AddData } from "@/components/car-form";
 
 export async function addCar(formData: AddData, userId: string) {

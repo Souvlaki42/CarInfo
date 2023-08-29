@@ -1,6 +1,7 @@
 {
-  "name": "next-template",
-  "version": "0.0.2",
+  "name": "car-info",
+  "description": "A tool for car mechanics to manage their customer data with an easy-to-use interface.",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "dev": "next dev",

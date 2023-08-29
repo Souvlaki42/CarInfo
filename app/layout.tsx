@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import { Metadata } from "next";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/lib/config";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import SessionProvider from "@/components/session-provider";
