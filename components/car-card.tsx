@@ -56,7 +56,10 @@ export function CarCard({ car }: CarCardProps) {
           Έτος: {car.year}
         </CardContent>
         <CardFooter>
-          Τελευταία Αλλαγή: {new Date(car.updatedAt).toLocaleString("el-GR")}
+          Τελευταία Αλλαγή:&nbsp;
+          <time dateTime={car.updatedAt.toISOString()}>
+            {new Date(car.updatedAt).toLocaleString("el-GR")}
+          </time>
         </CardFooter>
       </Card>
     </>

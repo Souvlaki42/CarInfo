@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Metadata } from "next";
 import { SearchPageProps } from "@/types";
 
@@ -36,15 +35,11 @@ export default async function SearchPage({
             />
           </form>
         </div>
-        <Suspense
-          fallback={<h1 className="text-center">Παρακαλώ περιμένετε...</h1>}
-        >
-          {cars?.length === 0 ? (
-            <h1 className="text-center">Δεν βρέθηκαν καθόλου αυτοκίνητα!</h1>
-          ) : (
-            cars?.map((car) => <CarCard key={car.id} car={car} />)
-          )}
-        </Suspense>
+        {cars?.length === 0 ? (
+          <h1 className="text-center">Δεν βρέθηκαν καθόλου αυτοκίνητα!</h1>
+        ) : (
+          cars?.map((car) => <CarCard key={car.id} car={car} />)
+        )}
       </section>
     </>
   );

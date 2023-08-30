@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { prisma } from "@/lib/db";
 import { FormData as AddData } from "@/components/car-form";
@@ -45,7 +45,7 @@ export async function getCars(
   skipCount = 0
 ) {
   "use server";
-  if (!userId) return;
+  if (!userId) return notFound();
   const data = await prisma.car.findMany({
     where: { userId },
     orderBy: { updatedAt: "desc" },
@@ -73,7 +73,7 @@ export async function passSearch(formData: FormData) {
 export async function searchCars(userId: string | null, query: string) {
   "use server";
 
-  if (!userId) return;
+  if (!userId) return notFound();
   const data = await prisma.car.findMany({
     where: {
       userId,
