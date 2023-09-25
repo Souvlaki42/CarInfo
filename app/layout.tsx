@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 
 import { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 
 import { siteConfig } from "@/lib/config";
 import { fontSans } from "@/lib/fonts";
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <SessionProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <div className="relative flex min-h-screen flex-col">
+                <NextTopLoader />
                 <div className="flex-1">{children}</div>
               </div>
               <TailwindIndicator />
