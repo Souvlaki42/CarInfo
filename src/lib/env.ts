@@ -8,10 +8,12 @@ export const env = createEnv({
 		GOOGLE_CLIENT_SECRET: z
 			.string()
 			.min(1, "GOOGLE_CLIENT_SECRET is required!"),
+		NEXTAUTH_SECRET: z.string().min(1, "NEXTAUTH_SECRET is required!"),
 	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
 		GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
 		GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 	},
 });
