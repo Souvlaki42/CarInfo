@@ -1,16 +1,13 @@
 import type { AdapterAccount } from "@auth/core/adapters";
+import { sql } from "drizzle-orm";
 import {
 	timestamp,
 	pgTable,
 	text,
 	primaryKey,
 	integer,
+	uuid,
 } from "drizzle-orm/pg-core";
-
-export const testing = pgTable("testing", {
-	id: text("id").notNull().primaryKey(),
-	name: text("name"),
-});
 
 export const users = pgTable("user", {
 	id: text("id").notNull().primaryKey(),
@@ -63,3 +60,26 @@ export const verificationTokens = pgTable(
 		compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
 	})
 );
+
+export const vehicles = pgTable("vehicle", {
+	id: uuid("id").defaultRandom().notNull().primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+	engineNumber: text("engineNumber").notNull(),
+	frameNumber: text("frameNumber").notNull(),
+	modelYear: text("modelYear").notNull(),
+	notes: text("notes").default(""),
+});
+
+export const appointments = pgTable("appointment", {
+	id: uuid("id").defaultRandom().notNull().primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+	vehicleId: uuid("vehicleId")
+		.notNull()
+		.references(() => vehicles.id, { onDelete: "cascade" }),
+	time: timestamp("time", { mode: "date" }).notNull(),
+	notes: text("notes").default(""),
+});

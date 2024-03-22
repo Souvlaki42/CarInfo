@@ -44,7 +44,7 @@ const AccountDropdown = () => {
 
 export const Header = () => {
 	return (
-		<header className="container mx-auto dark:bg-gray-900 py-4 bg-gray-100">
+		<header className="container mx-auto dark:bg-gray-900 py-4 bg-gray-100 rounded-b-lg">
 			<div className="flex justify-between items-center">
 				<div>LOGO</div>
 				<div className="flex items-center gap-4">
