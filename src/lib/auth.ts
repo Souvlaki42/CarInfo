@@ -27,7 +27,7 @@ export const authConfig = {
 	callbacks: {
 		async jwt({ token, user }) {
 			const dbUser = await db.query.users.findFirst({
-				where: (users, { eq }) => eq(users.email, token.email!),
+				where: (users, { eq }) => eq(users.email, token.email ?? ""),
 			});
 
 			if (!dbUser) {
