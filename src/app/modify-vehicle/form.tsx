@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { createVehicle } from "./actions";
+import { createVehicle } from "@/services/vehicles";
 
 const formSchema = z.object({
 	engineNumber: z
@@ -34,14 +34,14 @@ const formSchema = z.object({
 		.regex(/^\d{4}$/)
 		.min(4)
 		.max(4),
-	notes: z.string().default(""),
+	notes: z.string().max(120).default(""),
 });
-export type Vehicle = z.infer<typeof formSchema>;
+type Vehicle = z.infer<typeof formSchema>;
 
 export const ModifyVehicleForm = () => {
 	const router = useRouter();
 
-	const form = useForm<z.infer<typeof formSchema>>({
+	const form = useForm<Vehicle>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			engineNumber: "",
@@ -51,7 +51,7 @@ export const ModifyVehicleForm = () => {
 		},
 	});
 
-	async function onSubmit(values: z.infer<typeof formSchema>) {
+	async function onSubmit(values: Vehicle) {
 		await createVehicle(values);
 		router.push("/");
 	}

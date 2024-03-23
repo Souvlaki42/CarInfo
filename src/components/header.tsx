@@ -18,6 +18,9 @@ const AccountDropdown = () => {
 	const session = useSession();
 	const isLoggedIn = !!session.data;
 
+	const name = session.data?.user.name;
+	const image = session.data?.user.image ?? "";
+
 	const getAvatarFallback = (name?: string | null) => {
 		const parts = name?.trim().split(" ");
 		let shortName = "";
@@ -32,9 +35,6 @@ const AccountDropdown = () => {
 		}
 		return shortName.toUpperCase();
 	};
-
-	const name = session.data?.user.name;
-	const image = session.data?.user.image ?? "";
 
 	return (
 		<DropdownMenu>

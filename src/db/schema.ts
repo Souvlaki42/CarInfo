@@ -71,6 +71,7 @@ export const vehicles = pgTable("vehicle", {
 	modelYear: text("modelYear").notNull(),
 	notes: text("notes").default(""),
 });
+export type Vehicle = typeof vehicles.$inferSelect;
 
 export const appointments = pgTable("appointment", {
 	id: uuid("id").defaultRandom().notNull().primaryKey(),
