@@ -1,7 +1,9 @@
+import { SearchBar } from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Vehicle } from "@/db/schema";
 import { getVehicles } from "@/services/vehicles";
+import { PenLineIcon } from "lucide-react";
 import Link from "next/link";
 
 function CarCard({ vehicle }: { vehicle: Vehicle }) {
@@ -35,15 +37,24 @@ function CarCard({ vehicle }: { vehicle: Vehicle }) {
 	);
 }
 
-export default async function HomePage() {
-	const vehicles = await getVehicles();
+export default async function HomePage({
+	searchParams: { search },
+}: {
+	searchParams: { search: string };
+}) {
+	const vehicles = await getVehicles(search);
 	return (
 		<main className="container h-full mx-auto flex flex-col gap-8 p-16">
-			<div className="flex justify-between items-center mb-8">
+			<div className="flex justify-between items-center mb-4">
 				<h1 className="text-4xl">Vehicles</h1>
 				<Button asChild>
-					<Link href={"/modify-vehicle"}>Modify Vehicle</Link>
+					<Link href={"/modify-vehicle"}>
+						<PenLineIcon className="mr-2" size={18} /> Modify Vehicle
+					</Link>
 				</Button>
+			</div>
+			<div className="mb-4">
+				<SearchBar className="flex gap-2" />
 			</div>
 			<div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{vehicles.map((vehicle) => {

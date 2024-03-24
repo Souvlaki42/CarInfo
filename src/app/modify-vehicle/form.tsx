@@ -66,7 +66,7 @@ export const ModifyVehicleForm = () => {
 						<FormItem>
 							<FormLabel>Engine Number</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} placeholder="Type anything..." />
 							</FormControl>
 							<FormDescription>
 								This is vehicle&apos;s engine number.
@@ -82,7 +82,7 @@ export const ModifyVehicleForm = () => {
 						<FormItem>
 							<FormLabel>Frame</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} placeholder="Type anything..." />
 							</FormControl>
 							<FormDescription>This is vehicle&apos;s frame.</FormDescription>
 							<FormMessage />
@@ -96,7 +96,7 @@ export const ModifyVehicleForm = () => {
 						<FormItem>
 							<FormLabel>Model Year</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} placeholder="Type anything..." />
 							</FormControl>
 							<FormDescription>
 								This is vehicle&apos;s model year.
@@ -112,7 +112,7 @@ export const ModifyVehicleForm = () => {
 						<FormItem>
 							<FormLabel>Notes</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} placeholder="Type anything..." />
 							</FormControl>
 							<FormDescription>
 								These are your notes regarding this vehicle.

@@ -13,13 +13,11 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
+import { Session } from "next-auth";
 
-const AccountDropdown = () => {
-	const session = useSession();
-	const isLoggedIn = !!session.data;
-
-	const name = session.data?.user.name;
-	const image = session.data?.user.image ?? "";
+const AccountDropdown = ({ session }: { session: Session | null }) => {
+	const name = session?.user.name;
+	const image = session?.user.image ?? "";
 
 	const getAvatarFallback = (name?: string | null) => {
 		const parts = name?.trim().split(" ");
@@ -48,21 +46,22 @@ const AccountDropdown = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				{isLoggedIn ? (
-					<DropdownMenuItem onClick={() => signOut()}>
-						<LogOutIcon className="mr-2" /> Sign Out
-					</DropdownMenuItem>
-				) : (
-					<DropdownMenuItem onClick={() => signIn("google")}>
-						<LogInIcon className="mr-2" /> Sign In
-					</DropdownMenuItem>
-				)}
+				<DropdownMenuItem
+					onClick={() =>
+						signOut({
+							callbackUrl: "/",
+						})
+					}
+				>
+					<LogOutIcon className="mr-2" /> Sign Out
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
 
 export const Header = () => {
+	const session = useSession();
 	return (
 		<header className="container mx-auto dark:bg-gray-900 py-2 bg-gray-100 rounded-b-lg">
 			<div className="flex justify-between items-center">
@@ -79,7 +78,12 @@ export const Header = () => {
 					CarInfo
 				</Link>
 				<div className="flex items-center gap-4">
-					<AccountDropdown />
+					{session?.data && <AccountDropdown session={session.data} />}
+					{!session?.data && (
+						<Button variant={"link"} onClick={() => signIn("google")}>
+							<LogInIcon className="mr-2" /> Sign In
+						</Button>
+					)}
 					<ModeToggle />
 				</div>
 			</div>
