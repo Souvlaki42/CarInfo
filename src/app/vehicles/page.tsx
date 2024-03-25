@@ -37,10 +37,11 @@ export default async function VehiclesPage({
 			{vehicles.length === 0 && (
 				<div className="flex flex-col gap-4 justify-center items-center mt-24">
 					<Image
-						src={"/no_data.svg"}
+						src={"/no-data.svg"}
 						width={200}
 						height={200}
 						alt="No data image"
+						loading="lazy"
 					/>
 					<h2 className="uppercase text-2xl">you have no vehicles yet!</h2>
 				</div>

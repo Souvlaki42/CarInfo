@@ -122,10 +122,13 @@ export const Header = () => {
 					className="flex gap-x-2 items-center text-xl hover:underline"
 				>
 					<Image
-						src={"/icon.png"}
+						src={"/logo.webp"}
 						width={60}
 						height={60}
 						alt="the application icon of a magic flying car"
+						loading="lazy"
+						placeholder="blur"
+						blurDataURL="UklGRsoAAABXRUJQVlA4WAoAAAAQAAAACQAACQAAQUxQSD4AAAABYFTbtpK71k/40TllvAU17EsYZMSf4nY7RMQECMTKORVDoLp+K4QXDRVTjk2WzTVT4UJCJOtPCkA2w9B4AFZQOCBmAAAAUAIAnQEqCgAKAAIANCUAToDFeO3g/9ul4qNAAP753l0bq0toznfWeW1+3pkjMTW5a9I2WXWzqV4Adjz9d9txc9P5+i9zGmGbmfPKNfxrYVxz8sXjqNhnBfo2YbwnG3xoInXBgAAA"
 					/>
 					CarInfo
 				</Link>
