@@ -1,65 +1,56 @@
-import { SearchBar } from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Vehicle } from "@/db/schema";
-import { getVehicles } from "@/services/vehicles";
-import { PenLineIcon } from "lucide-react";
+import { SparkleIcon } from "lucide-react";
 import Link from "next/link";
 
-function CarCard({ vehicle }: { vehicle: Vehicle }) {
-	const { engineNumber, frameNumber, modelYear, notes } = vehicle;
-
-	const shortNotes = (str: string) => str.substring(0, 120);
-	const notesExist = !!notes;
-
+export default function HomePage() {
 	return (
-		<Card className="w-full">
-			<CardContent className="p-4 flex flex-col gap-2">
-				<div className="flex flex-row justify-between">
-					<span className="font-bold">Engine</span>
-					<span>{engineNumber}</span>
+		<main>
+			<div className="relative isolate px-6 lg:px-8">
+				<div
+					className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+					aria-hidden="true"
+				>
+					<div
+						className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+						style={{
+							clipPath:
+								"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+						}}
+					/>
 				</div>
-				<div className="flex flex-row justify-between">
-					<span className="font-bold">Frame</span>
-					<span>{frameNumber}</span>
+				<div className="mx-auto max-w-2xl py-48 lg:py-56">
+					<div className="text-center">
+						<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+							{/* Find other awesome devs to pair with online */}
+							CarInfo
+						</h1>
+						<p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
+							{/* This platform is for sharing your screen and working with other
+							random developers online so that you can work together */}
+							Manage your customers&apos; data with an easy-to-use interface.
+						</p>
+						<Button
+							asChild
+							className="mt-10 items-center justify-center gap-x-2"
+						>
+							<Link href="/vehicles">
+								<SparkleIcon size={20} /> Get started
+							</Link>
+						</Button>
+					</div>
 				</div>
-				<div className="flex flex-row justify-between">
-					<span className="font-bold">Year</span>
-					<span>{modelYear}</span>
+				<div
+					className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+					aria-hidden="true"
+				>
+					<div
+						className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+						style={{
+							clipPath:
+								"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+						}}
+					/>
 				</div>
-				{notesExist && (
-					<span className="whitespace-normal overflow-hidden break-words">
-						{shortNotes(notes)}
-					</span>
-				)}
-			</CardContent>
-		</Card>
-	);
-}
-
-export default async function HomePage({
-	searchParams: { search },
-}: {
-	searchParams: { search: string };
-}) {
-	const vehicles = await getVehicles(search);
-	return (
-		<main className="container h-full mx-auto flex flex-col gap-8 p-16">
-			<div className="flex justify-between items-center mb-4">
-				<h1 className="text-4xl">Vehicles</h1>
-				<Button asChild>
-					<Link href={"/modify-vehicle"}>
-						<PenLineIcon className="mr-2" size={18} /> Modify Vehicle
-					</Link>
-				</Button>
-			</div>
-			<div className="mb-4">
-				<SearchBar className="flex gap-2" />
-			</div>
-			<div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-				{vehicles.map((vehicle) => {
-					return <CarCard key={vehicle.id} vehicle={vehicle} />;
-				})}
 			</div>
 		</main>
 	);

@@ -36,9 +36,9 @@ export const SearchBar = ({ className }: { className?: string }) => {
 		const { search } = values;
 
 		if (!!search) {
-			router.push(`/?search=${search}`);
+			router.push(`/vehicles?search=${search}`);
 		} else {
-			router.push("/");
+			router.push("/vehicles");
 		}
 	}
 
@@ -53,8 +53,8 @@ export const SearchBar = ({ className }: { className?: string }) => {
 							<FormControl>
 								<Input
 									{...field}
-									className="w-[440px]"
 									placeholder="Filter stuff"
+									className="w-[50vw]"
 								/>
 							</FormControl>
 							<FormMessage />
@@ -70,7 +70,7 @@ export const SearchBar = ({ className }: { className?: string }) => {
 						variant={"link"}
 						onClick={() => {
 							form.setValue("search", "");
-							router.push("/");
+							router.push("/vehicles");
 						}}
 					>
 						Clear

@@ -3,19 +3,36 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { ModeToggle } from "./mode-toggle";
 import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { LogInIcon, LogOutIcon } from "lucide-react";
+import { DeleteIcon, LogInIcon, LogOutIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
 import { Session } from "next-auth";
+import { useState } from "react";
+import { deleteUser } from "@/services/users";
 
 const AccountDropdown = ({ session }: { session: Session | null }) => {
+	const [isDeleteAccountAlertDialogOpen, setIsDeleteAccountAlertDialogOpen] =
+		useState(false);
+
 	const name = session?.user.name;
 	const image = session?.user.image ?? "";
 
@@ -35,39 +52,74 @@ const AccountDropdown = ({ session }: { session: Session | null }) => {
 	};
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button variant={"ghost"}>
-					<Avatar className="mr-2">
-						<AvatarImage src={image} />
-						<AvatarFallback>{getAvatarFallback(name)}</AvatarFallback>
-					</Avatar>
-					{name}
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuItem
-					onClick={() =>
-						signOut({
-							callbackUrl: "/",
-						})
-					}
-				>
-					<LogOutIcon className="mr-2" /> Sign Out
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+		<>
+			<AlertDialog
+				open={isDeleteAccountAlertDialogOpen}
+				onOpenChange={setIsDeleteAccountAlertDialogOpen}
+			>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+						<AlertDialogDescription>
+							This action cannot be undone. This will permanently delete your
+							account and remove your data from our servers.
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={async () => {
+								await deleteUser();
+								signOut({ callbackUrl: "/" });
+							}}
+						>
+							Delete my account
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button variant={"ghost"}>
+						<Avatar className="mr-2">
+							<AvatarImage src={image} />
+							<AvatarFallback>{getAvatarFallback(name)}</AvatarFallback>
+						</Avatar>
+						{name}
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem
+						onClick={() =>
+							signOut({
+								callbackUrl: "/",
+							})
+						}
+					>
+						<LogOutIcon className="mr-2" /> Sign Out
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						onClick={() => setIsDeleteAccountAlertDialogOpen(true)}
+					>
+						<DeleteIcon className="mr-2" /> Delete Account
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+		</>
 	);
 };
 
 export const Header = () => {
 	const session = useSession();
+	const isLoggedIn = !!session?.data;
+
 	return (
-		<header className="container mx-auto dark:bg-gray-900 py-2 bg-gray-100 rounded-b-lg">
-			<div className="flex justify-between items-center">
+		<header className="dark:bg-gray-900 py-2 bg-gray-100 rounded-b-lg z-10 relative">
+			<div className="container mx-auto flex justify-between items-center">
 				<Link
 					href={"/"}
-					className="flex gap-2 items-center text-xl hover:underline"
+					className="flex gap-x-2 items-center text-xl hover:underline"
 				>
 					<Image
 						src={"/icon.png"}
@@ -77,9 +129,14 @@ export const Header = () => {
 					/>
 					CarInfo
 				</Link>
+				<nav className="flex items-center gap-x-4 text-xl">
+					<Link className="hover:underline" href={"/vehicles"}>
+						Vehicles
+					</Link>
+				</nav>
 				<div className="flex items-center gap-4">
-					{session?.data && <AccountDropdown session={session.data} />}
-					{!session?.data && (
+					{isLoggedIn && <AccountDropdown session={session.data} />}
+					{!isLoggedIn && (
 						<Button variant={"link"} onClick={() => signIn("google")}>
 							<LogInIcon className="mr-2" /> Sign In
 						</Button>

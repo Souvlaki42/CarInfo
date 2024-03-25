@@ -3,11 +3,13 @@
 import { db } from "@/db";
 import { vehicles, Vehicle } from "@/db/schema";
 import { getSession } from "@/lib/auth";
-import { ilike, or } from "drizzle-orm";
-import { revalidatePath, unstable_noStore as noStore } from "next/cache";
+import { and, eq, ilike, or } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const getVehicles = async (search?: string): Promise<Vehicle[]> => {
-	noStore();
+	const session = await getSession();
+	if (!session) throw new Error("You should be logged in to get vehicles");
+
 	const where = !!search
 		? or(
 				ilike(vehicles.engineNumber, `%${search}%`),
@@ -16,7 +18,25 @@ export const getVehicles = async (search?: string): Promise<Vehicle[]> => {
 				ilike(vehicles.notes, `%${search}%`)
 		  )
 		: undefined;
-	const data = await db.select().from(vehicles).where(where);
+	const data = await db.query.vehicles.findMany({
+		where: and(eq(vehicles.userId, session.user.id), where),
+	});
+	return data;
+};
+
+export const getVehicle = async (
+	vehicleId: string
+): Promise<Vehicle | undefined> => {
+	const session = await getSession();
+	if (!session) throw new Error("You should be logged in to get vehicle by id");
+
+	const data = await db.query.vehicles.findFirst({
+		where: and(
+			eq(vehicles.userId, session.user.id),
+			eq(vehicles.id, vehicleId)
+		),
+	});
+
 	return data;
 };
 
@@ -29,5 +49,18 @@ export const createVehicle = async (
 
 	await db.insert(vehicles).values({ ...vehicle, userId: session.user.id });
 
-	revalidatePath("/");
+	revalidatePath("/vehicles");
+};
+
+export const deleteVehicle = async (vehicleId: string): Promise<void> => {
+	const session = await getSession();
+	if (!session) throw new Error("You should be logged in to delete vehicles");
+
+	const vehicle = await getVehicle(vehicleId);
+	if (vehicle?.userId !== session.user.id)
+		throw new Error("You are not authorized!");
+
+	await db.delete(vehicles).where(eq(vehicles.id, vehicleId));
+
+	revalidatePath("/vehicles");
 };

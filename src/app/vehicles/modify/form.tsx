@@ -53,7 +53,7 @@ export const ModifyVehicleForm = () => {
 
 	async function onSubmit(values: Vehicle) {
 		await createVehicle(values);
-		router.push("/");
+		router.push("/vehicles");
 	}
 
 	return (
